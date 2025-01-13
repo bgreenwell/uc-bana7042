@@ -1,0 +1,439 @@
+---
+title: "BANA 7042: Statistical Modeling"
+subtitle: "Lecture 1: Review of linear regression"
+author: "Brandon M. Greenwell, PhD"
+from: markdown+emoji
+format: 
+    revealjs:
+        df-print: paged
+        code-fold: true
+        code-summary: "Show R code"
+        scrollable: true
+        embed-resources: true
+---
+
+```{r, include=FALSE}
+palette("Okabe-Ito")
+```
+
+## A useful quote to remember
+
+> All models are wrong, but some are useful.
+> 
+> -George Box
+
+
+## Ames housing data
+
+* Data describing the sale of individual residential property in Ames, Iowa
+from 2006 to 2010
+* There are 2930 observations on 81 variables involved in assessing home
+values:
+  - 23 nominal
+  - 23 ordinal
+  - 14 discrete
+  - 20 continuous
+* Paper: [https://jse.amstat.org/v19n3/decock.pdf](https://jse.amstat.org/v19n3/decock.pdf)
+
+
+## Ames housing data {.scrollable}
+
+```{r}
+#| echo: true
+ames <- AmesHousing::make_ames()  # install.packages("AmesHousing")
+ames$Sale_Price <- ames$Sale_Price / 10000
+head(ames)
+```
+
+
+## Ames housing data
+
+We'll focus on a handful of variables:
+
+* `Sale_Price` - Sale price of the house / \$10K (response variable)
+* `Gr_Liv_Area` - Above grade (ground) living area square feet
+* `Overall_Qual⁠` - Rates the overall material and finish of the house
+
+
+## Inference for a single variable {.smaller}
+
+* Is it useful to test the hypothesis that `Sale_Price` = \$160K?
+
+. . .
+
+* No! Because `Sale_Price` is not a constant, but a random variable whose value varies from home to home (and year to year, etc.)
+
+. . .
+
+* We're more interested in questions such as:
+
+  - What is the chance that `Sale_Price` > \$160K? (above median sale price)
+  - What is the chance that `Sale_Price` < \$105K? (lowest decile)
+  - What is the chance that \$129,500 < `Sale_Price` < \$213,500? (within IQR)
+
+
+## Distribution of `Sale-Price`
+
+Can look at historgram and empirical [CDF](https://en.wikipedia.org/wiki/Cumulative_distribution_function):
+
+```{r}
+#| echo: true
+#| fig-align: center
+#| fig-width: 6
+#| fig-asp: 0.5
+par(mfrow = c(1, 2), las = 1)
+hist(ames$Sale_Price, br = 50, xlab = "Sale price ($)", freq = FALSE, main = "")
+plot(ecdf(ames$Sale_Price), xlab = "Sale price ($)", main = "",
+     col = adjustcolor(1, alpha.f = 0.1))
+```
+
+
+## Distribution of `Sale-Price`
+
+* Histograms and ECDFs are nonparammetric in nature
+* A simple parametric approach might assume a particular distribution for `Sale_Price`
+* For instance, we might assume `Sale_Price` $\sim N\left(\mu, \sigma^2\right)$
+* How can we estimate $\mu$ and $\sigma$?
+
+. . .
+
+```{r}
+#| echo: true
+# Maximum likelihiid estimates
+c("sample mean" = mean(ames$Sale_Price), "sample stdev" = sd(ames$Sale_Price))
+```
+
+. . .
+
+* Is the normal distribution a reasonable assumption here?
+
+
+## Normal QQ plot
+
+* Normal quantile-quantile (Q-Q) plot* can be used to asses the "normalityness" of a set of observations
+
+* Q-Q plots can, in general, be used to compare data with any distribution!
+
+```{r}
+#| echo: true
+#| fig-align: center
+#| fig-width: 6
+#| fig-asp: 0.618
+qqnorm(ames$Sale_Price, col = 2, las = 1)
+qqline(ames$Sale_Price)
+```
+
+
+## Normality tests :vomiting_face: 
+
+* Normality tests, like the [Shapiro-Wilk](https://en.wikipedia.org/wiki/Shapiro%E2%80%93Wilk_test)^[In R, see `?shapiro.test` for details.] and [Anderson-Darling](https://en.wikipedia.org/wiki/Anderson%E2%80%93Darling_test) tests, can also be used to assess normality
+
+  - I STRONGLY ADVISE AGAINST USING THEM!
+  
+* No data is normally distributes, what we care about is whether enough a normal approximation is close enough!
+
+* Normality tests provide a $p$-value, which only gives a yes/no conclusion
+
+
+## Normality tests :vomiting_face: 
+
+Recall that $p$-values are a function of sample size!
+
+```{r}
+#| echo: true
+# Shapiro-Wilk test results vs. sample size
+set.seed(101)  # for reproducibility
+x <- replicate(100, c(
+  shapiro.test(rt(10, df = 40))$p.value,
+  shapiro.test(rt(100, df = 40))$p.value,
+  shapiro.test(rt(500, df = 40))$p.value,
+  shapiro.test(rt(1000, df = 40))$p.value,
+  shapiro.test(rt(2500, df = 40))$p.value,
+  shapiro.test(rt(5000, df = 40))$p.value
+))
+rownames(x) <- paste0("n=", c(10, 100, 500, 1000, 2500, 5000))
+rowMeans(x < 0.05)
+```
+
+
+## Normality tests :vomiting_face: 
+
+```{r}
+#| echo: false
+#| par: true
+#| fig.width: 6
+#| fig.asp: 0.618
+#| out.width: "100%"
+x <- seq(from = -5, to = 5, length = 500)
+y1 <- dnorm(x)
+y2 <- dt(x, df = 40)
+# palette("Okabe-Ito")
+plot(x, y1, type = "l", xlab = "", ylab = "Density")
+lines(x, y2, col = 2)
+legend("topleft", legend = c("Standard normal", "t (df = 40)"), lty = 1,
+       col = c(1, 2), inset = 0.01, bty = "n")
+# palette("default")
+```
+
+1. Are these two distributions significantly different?
+
+2. Are these two distributions practically different?
+
+
+## What can we do if the normality assumption isn't justified?
+
+* Try transformations
+  - Logarithm or square root for positive data
+  - [Power transformation](https://en.wikipedia.org/wiki/Power_transform) (like the well-known Box-Cox procedure)
+
+* Try a more appropriate distribution (e.g., Poisson or gamma distribution)
+
+* Try more advanced nonparametric approaches, like [bootstrapping](https://en.wikipedia.org/wiki/Bootstrapping_(statistics))!
+
+
+## Modeling the mean response
+
+* Assume that $Y \sim N\left(\mu, \sigma^2\right)$, where
+
+$$\mu = \mu\left(x\right) = \beta_0 + \beta_1 x = E\left(Y|x\right)$$
+
+. . .
+
+* In other words: $Y \sim N\left(\beta_0 + \beta_1 x, \sigma^2\right)$
+* Alternatively, we could write $Y = \beta_0 + \beta_1 x + \epsilon$, where $\epsilon \sim N\left(0, \sigma^2\right)$
+* This is called the simple linear regression (SLR) model
+
+
+## The idea behind SLR
+
+![](https://2012books.lardbucket.org/books/beginning-statistics/section_14/88a6e0919d8617c025826c1e187ad591.jpg)
+
+[Image source](https://2012books.lardbucket.org/books/beginning-statistics/s14-03-modelling-linear-relationships.html)
+
+
+## Arsenic experiment example
+
+```{r}
+#| echo: true
+#| fig-align: center
+#| fig-width: 6
+#| fig-asp: 0.618
+plot(investr::arsenic, las = 1)  # see ?investr::arsenic for details
+```
+
+
+## Least squares (LS) estimation
+
+Idea of LS is to find $\beta_0$ and $\beta_1$ so that the sum of squared residuals (i.e., errors) is minimized:
+$$SSE = \sum_{i=1}^n\left(y_i - \beta_0 - \beta_1x_i\right)^2$$
+
+. . .
+
+Pretty straightforward optimization problem that leads to closed-form solution (but no point in memorizing the formulas!)
+
+
+## Concept of LS estimation
+
+![](https://miro.medium.com/v2/resize:fit:720/format:webp/1*tQkyTR9yxDcS1GKVFhdQQA.jpeg)
+
+[Image source](https://towardsdatascience.com/how-least-squares-regression-estimates-are-actually-calculated-662d237a4d7e)
+
+
+## `Sale_Price` and `Gr_Liv_Area`
+
+```{r}
+#| echo: true
+plot(Sale_Price ~ Gr_Liv_Area, data = ames, las = 1)
+```
+
+
+## SLR fit
+
+```{r}
+#| echo: true
+summary(fit <- lm(Sale_Price ~ Gr_Liv_Area, data = ames))
+```
+
+
+## Is this a good fit?
+
+```{r}
+#| echo: true
+#| fig-align: center
+#| fig-width: 6
+#| fig-asp: 0.618
+plot(Sale_Price ~ Gr_Liv_Area, data = ames)
+abline(fit, lwd = 2, col = 2)  # add SLR fit
+```
+
+Which assumptions seem violated to some degree?
+
+
+## Residual diagnostics
+
+* The standard residual is defined as $e_i = y_i - \hat{y}_i$ and can be regarded as the *observed error*
+* The residuals hold a lot of properties that make them useful for diagnosing potential issues with the model (e.g., suggesting potential transformations to try)
+* Many other kinds of residuals exist for different purposes (e.g., standardized, [studentized](https://en.wikipedia.org/wiki/Studentized_residual), jackknife or [PRESS](https://en.wikipedia.org/wiki/PRESS_statistic) residuals, etc.)
+
+
+## What can residual plots tell us?
+
+* Residuals vs. predictor values (**checking non-linearity**).
+
+* Residuals vs. fitted values (**non-constant variance, non-linearity, and outliers**)
+
+* Residuals vs. time or another sequence (**checking independence**)
+
+* Residuals vs. omitted predictor values (**missing potentially important predictors**)
+
+* Normal QQ plot of residuals (**non-normality**).
+
+* And much, much more!
+
+
+## Residual analysis for `Sale_Price ~ Gr_Liv_Area`
+```{r}
+#| echo: true
+#| fig-align: center
+#| fig-width: 6
+#| fig-asp: 0.618
+par(mfrow = c(2, 3), las = 1)
+plot(fit, which = 1:6)
+```
+
+What assumptions appear to be in violation?
+
+
+## Let's try a log transformation
+
+```{r}
+#| echo: true
+#| fig-align: center
+#| fig-width: 6
+#| fig-asp: 0.618
+fit2 <- lm(log(Sale_Price) ~ Gr_Liv_Area, data = ames)
+plot(log(Sale_Price) ~ Gr_Liv_Area, data = ames)
+abline(fit2, lwd = 2, col = 2)  # add SLR fit
+```
+
+
+## Let's try a log transformation
+
+```{r}
+#| echo: true
+summary(fit2)
+```
+
+
+## Residual analysis for `log(Sale_Price) ~ Gr_Liv_Area`
+```{r}
+#| echo: true
+#| fig-align: center
+#| fig-width: 6
+#| fig-asp: 0.618
+par(mfrow = c(2, 3), las = 1)
+plot(fit2, which = 1:6)
+```
+
+Any better?
+
+
+## Multiple linear regression
+
+* The (normal) multiple linear regression model assumes $Y \sim N\left(\mu\left(\boldsymbol{x}\right), \sigma^2\right)$, where $$\mu\left(\boldsymbol{x}\right) = \beta_0 + \sum_{i=1}^p \beta_i x_i = \boldsymbol{x}^\top\boldsymbol{\beta}$$
+
+* LS estimation still provides unbiased estimate of $\boldsymbol{\beta} = \left(\beta_0, \beta_1, \dots, \beta_p\right)^\top$: $\hat{\boldsymbol{\beta}} = \left(\boldsymbol{X}^\top\boldsymbol{X}\right)^{-1}\boldsymbol{X}^\top\boldsymbol{y}$
+
+* Fitted values: $\hat{\boldsymbol{y}} = \boldsymbol{X}\left(\boldsymbol{X}^\top\boldsymbol{X}\right)^{-1}\boldsymbol{X}^\top\boldsymbol{y} = \boldsymbol{H}\boldsymbol{y}$
+
+* $\boldsymbol{H}$ is the well-known "[hat matrix](https://en.wikipedia.org/wiki/Projection_matrix)"
+
+
+## Categorical variables
+
+* Categorical variables can be handled in a number of ways in linear models, including
+
+  - [Dummy encoding](https://en.wikipedia.org/wiki/Dummy_variable_(statistics)) (nominal)
+  - Orthogonal polynomials (ordinal)
+
+
+## Categorical variables
+
+Let's look at two (nominal) categorical variables (in your homework, you'll look at `Overall_Qual`, and ordered factor with many levels):
+
+```{r}
+#| echo: true
+table(ames$Central_Air)
+table(ames$Paved_Drive)
+```
+
+
+## Categorical variables
+
+```{r}
+#| echo: true
+#| fig-align: center
+#| fig-width: 6
+#| fig-asp: 0.618
+plot(log(Sale_Price) ~ Central_Air, data = ames, las = 1, col = c(2, 3))
+```
+
+
+## Categorical variables
+
+```{r}
+#| echo: true
+#| fig-align: center
+#| fig-width: 6
+#| fig-asp: 0.618
+plot(log(Sale_Price) ~ Paved_Drive, data = ames, las = 1, col = c(2, 3, 4))
+```
+
+If one of these homes downgraded from a paved driveway to a gravel driveway, would that **cause** the sale price to decrease? (Think very carefully here!)
+
+
+## Categorical variables
+
+R dummy encodes nominal factors by default:
+
+```{r}
+#| echo: true
+#| fig-align: center
+#| fig-width: 6
+#| fig-asp: 0.618
+fit3 <- lm(log(Sale_Price) ~ Gr_Liv_Area + Central_Air + Paved_Drive, 
+           data = ames)
+summary(fit3)
+```
+
+How do you interpret the coefficients here?
+
+
+## Variable/model selection
+
+* Variable/model selection is a very noisy problem! (Often best to avoid, if feasible)
+* Ask the domain experts about important variables (don't just rely on algorithms)
+* P(selecting the "right" variables) = 0 ([source](https://www.youtube.com/watch?v=DF1WsYZ94Es))
+* "All ~~models~~ subsets of variables are wrong, but some are useful!"
+* In regression settings, regularization (e.g., [ridge regression](https://en.wikipedia.org/wiki/Ridge_regression) and the [LASSO](https://en.wikipedia.org/wiki/Lasso_(statistics))) is often more useful! (Think about the impact of [multicollinearity](https://en.wikipedia.org/wiki/Multicollinearity) on variable selection)
+
+
+## Data splitting
+
+* If prediction is the goal (e.g., compared to inference and hypothesis testing), the model performance should be assessed rigorously
+
+* Data splitting techniques ae key and the type of data splitting to use often depends on the situation (e.g., cross-sectional vs. time-series data)
+
+* In simplest terms, random split the data into two parts: A and B. Build a model on part A and see how well it does with predicting the response in part B.
+
+* [Leakage](https://reproducible.cs.princeton.edu/) is a huge concern here, so data splitting has to be done carefully!
+
+
+## Data splitting: $k$-fold cross-validation {.smaller}
+
+![](https://bradleyboehmke.github.io/HOML/images/cv.png)
+
+The [PRESS statistic](https://en.wikipedia.org/wiki/PRESS_statistic) in linear regression is a special case ($k = n$) we get for free!
+
+
+## Questions?

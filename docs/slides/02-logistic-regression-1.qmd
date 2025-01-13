@@ -1,0 +1,346 @@
+---
+title: "BANA 7042: Statistical Modeling"
+subtitle: "Lecture 2: Logistic Regression (Part I)"
+author: "Brandon M. Greenwell, PhD"
+from: markdown+emoji
+execute:
+  echo: true
+format: 
+    revealjs:
+        fig-align: center
+        fig-width: 6
+        fig-asp: 0.618
+        df-print: paged
+        code-fold: true
+        code-summary: "Show R code"
+        scrollable: true
+        embed-resources: true
+---
+
+```{r, include=FALSE}
+palette("Okabe-Ito")
+```
+
+
+## Western collaborative group study
+
+$N = 3154$ healthy young men aged 39--59 from the San Francisco area were assessed for their personality type. All were free from coronary heart disease at the start of the research. Eight and a half years later change in this situation was recorded.
+
+```{r}
+# install.packages("faraway")
+head(wcgs <- faraway::wcgs)
+```
+
+
+## Structure of `wcgs` data
+
+```{r}
+str(wcgs)
+```
+
+
+## Description of each variable
+
+```{r}
+?wcgs
+```
+* `age`: age in years
+* `height`: height in inches
+* `weight`: weight in pounds
+* `sdp`: systolic blood pressure in mm Hg
+* `dbp`: diastolic blood pressure in mm Hg
+* `chol`: fasting serum cholesterol in mm %
+* `behave`: behavior type which is a factor with levels A1 A2 B3 B4
+* `cigs`: number of cigarettes smoked per day
+* `dibep`: behavior type a factor with levels A (Agressive) B (Passive)
+* `chd`: coronary heat disease developed is a factor with levels no yes
+* `typechd`: type of coronary heart disease is a factor with levels angina infdeath none silent
+* `timechd`: time of CHD event or end of follow-up
+* `arcus`: arcus senilis is a factor with levels absent present
+
+
+## For now, we'll focus on 3 variables
+
+```{r}
+summary(wcgs[, c("chd", "height", "cigs")])
+```
+
+. . .
+
+</br></br>
+Anything interesting stick out?
+
+
+## Visualizing discrete data
+
+Pie chart of response :vomiting_face:
+
+```{r}
+# Construct a pie chart of the (binary) response; I'm not a fan of pie charts in general
+ptab <- prop.table(table(wcgs$chd))  # convert frequencies to proportions
+ptab  # inspect output
+pie(prop.table(table(wcgs$chd)),
+    main = "Pie chart of Coronary Heart Disease")
+```
+
+
+## Visualizing discrete data
+
+Bar charts tend to be more effective
+```{r}
+barplot(ptab, las = 1, col = "forestgreen")
+```
+
+
+## Visualizing discrete data
+
+Mosaic plot showing relationship between `cigs` and `chd`; not incredibly useful IMO unless both variables are categorical
+
+```{r}
+plot(chd ~ cigs, data = wcgs, notch = TRUE) 
+```
+
+
+## Visualizing discrete data
+
+Nonparametric density plot of `height` by `chd` status
+
+```{r}
+library(lattice)
+
+densityplot(~ height, groups = chd, data = wcgs, auto.key = TRUE)
+```
+
+
+## Visualizing discrete data
+
+Boxplot of `cigs` vs. `chd` status
+```{r}
+plot(cigs ~ chd, data = wcgs)
+```
+
+
+## Visualizing discrete data
+
+* Detour: decision trees are immensely useful tools for exploring new data sets
+
+* Useful resource: http://pages.stat.wisc.edu/~loh/treeprogs/guide/LohISI14.pdf
+
+* Ultimate reference: https://bgreenwell.github.io/treebook/ :smile:
+
+
+## Visualizing discrete data
+
+Standard [CART-like decision tree](https://cran.r-project.org/web/packages/rpart/vignettes/longintro.pdf) 
+```{r}
+rpart.plot::rpart.plot(rpart::rpart(chd ~ ., data = wcgs))
+```
+
+
+## Visualizing discrete data
+
+[Conditional inference tree](https://cran.r-project.org/web/packages/partykit/vignettes/ctree.pdf) using only variables of interest
+```{r}
+plot(partykit::ctree(chd ~ height + cigs, data = wcgs))
+```
+
+
+## Observations so far...
+
+* It seems that the `cigs` is positively associated with the binary
+response `chd`
+* It is not clear how, if at all, `height` is associated with `chd`
+* **Question**: how can we build a model to examine these potential associations?
+
+
+## Linear models
+
+Recall that in linear regression we model the *conditional* mean response as a linear function in some fixed, but known parameters $\boldsymbol{\beta}$:
+
+$$
+E\left(Y|\boldsymbol{x}\right) = \beta_0 + \beta_1x_1 + \dots \beta_px_p = \boldsymbol{\beta}^\top\boldsymbol{x}
+$$
+
+. . .
+
+If $Y$ is a binary random variable, then what is $E\left(Y|\boldsymbol{x}\right)$?
+
+
+## The linear probability (LP) model
+
+It turns out that $E\left(Y|\boldsymbol{x}\right) = P\left(Y = 1|\boldsymbol{x}\right)$. The [LP model](https://en.wikipedia.org/wiki/Linear_probability_model#:~:text=In%20statistics%2C%20a%20linear%20probability,one%20or%20more%20explanatory%20variables.) assumes that
+$$
+P\left(Y = 1|\boldsymbol{x}\right) = \beta_0 + \beta_1x_1 + \dots \beta_px_p = \boldsymbol{\beta}^\top\boldsymbol{x}
+$$
+
+. . .
+
+Is this reasonable?
+
+
+## The LP model: `chd` vs. `cigs`
+
+```{r}
+y <- ifelse(wcgs$chd == "yes", 1, 0)
+summary(fit <- lm(y ~ cigs, data = wcgs))
+```
+
+Are the standard errors here appropriate? Why/why not?
+
+
+## The LP model: `chd` vs. `cigs`
+
+```{r}
+plot(y ~ cigs, data = wcgs, ylim = c(0, 1), las = 1)
+abline(fit, col = 2)
+```
+
+
+## The LP model: `chd` vs. `cigs`
+
+```{r}
+plot(y ~ cigs, data = wcgs, ylim = c(0, 1), las = 1)
+abline(fit, col = 2)
+```
+
+
+## The logistic regression (LR) model
+
+Assume $Y \sim \mathrm{Bernoulli}\left(p\right)$, where 
+$$
+p = p\left(\boldsymbol{x}\right) = P\left(Y = 1|\boldsymbol{x}\right)
+$$
+and
+$$
+\mathrm{logit}\left(p\right) = \log\left(\frac{p}{1-p}\right) = \boldsymbol{\beta}^\top\boldsymbol{x}
+$$
+In other words, LR models the [logit](https://en.wikipedia.org/wiki/Logit) of the mean response as a linear function in $\boldsymbol{\beta}$; we'll refer to the term $\eta = \boldsymbol{\beta}^\top\boldsymbol{x}$ as the [linear predictor](https://en.wikipedia.org/wiki/Linear_predictor_function#:~:text=In%20statistics%20and%20in%20machine,outcome%20of%20a%20dependent%20variable.). Why does this make more sense?
+
+
+## The logistic regression (LR) model
+
+Can always solve for $p$ to get predictions on the raw probability scale:
+$$
+p\left(\boldsymbol{x}\right) = \frac{\exp\left(\boldsymbol{\beta}^\top\boldsymbol{x}\right)}{1 + \exp\left(\boldsymbol{\beta}^\top\boldsymbol{x}\right)}
+$$
+
+. . .
+
+Note how the LR model is nonlinear in $p$!
+
+
+## Fitting an LR model in R
+
+* Use the `glm()` function instead of `lm()`
+* GLM stands for [generalized linear model](https://en.wikipedia.org/wiki/Generalized_linear_model), which includes the LR and ordinary linear regression models as special cases
+* Many (but not all) of the models we'll discuss in throughout this course belong to the class of GLMs
+* Note how we have to specifcy the `family` argument! (see `?glm` for details)
+* The response can be a 0/1 indicator or a factor variable (but careful with interpretation and [which class is sued as the baseline](https://stats.stackexchange.com/questions/207427/confused-with-the-reference-level-in-logistic-regression-in-r)):
+```{r}
+levels(wcgs$chd)
+```
+
+
+## Fitting an LR model in R 
+
+```{r}
+summary(fit.lr <- glm(chd ~ cigs, data = wcgs, family = binomial))
+```
+
+
+## Fitting an LR model in R 
+
+```{r}
+prob <- predict(fit.lr, newdata = data.frame(cigs = 0:99), type = "response")
+plot(y ~ cigs, data = wcgs, ylab = "chd", las = 1, xlim = c(0, 99))
+lines(0:99, y = prob, col = 2)
+abline(fit, col = 3, lty = 2)
+legend("topright", legend = c("LR fit", "LP fit"), lty = c(1, 2), col = c(2, 3))
+```
+
+
+## Fitting an LR model in R 
+
+```{r}
+prob <- predict(fit.lr, newdata = data.frame(cigs = 0:999), type = "response")
+plot(y ~ cigs, data = wcgs, ylab = "chd", las = 1, xlim = c(0, 999))
+lines(0:999, y = prob, col = 2)
+abline(fit, col = 3, lty = 2)
+legend("topright", legend = c("LR fit", "LP fit"), lty = c(1, 2), col = c(2, 3))
+```
+
+
+## Fitting an LR model in R 
+
+```{r}
+summary(fit.lr2 <- glm(chd ~ cigs + height, data = wcgs, family = binomial))
+```
+
+
+## Interpreting LR coefficients {.smaller}
+
+* Let $p = P\left(Y = 1\right)$ and $1 - p = P\left(Y = 0\right)$
+* The odds of the event $Y = 1$ occuring is deined as $p / \left(1 - p\right)$
+* For a fair coin, the probability of getting tails is $p = 0.5$ and the probability of getting heads is $1 - p = 0.5$. Therefore, the odds of getting tails vs. heads is $p / (1 - p) = 0.5 / 0.5 = 1$. (We might also say the odds of getting tails is "1 to 1").
+* For a fair :game_die:, the probability of rolling a 2 is $p = 1/6$ and the probability of not rolling a 2 is $1 - p = 5/6$. Therefore, the odds of rolling a 2 vs. not rolling a 2 is $\frac{p}{1 - p} = \frac{1/6}{5/6} = \frac{1}{5}$. (We might also say the odds of rolling a 2 is "1 to 5").
+
+## Interpreting LR coefficients {.smaller}
+
+The logit models the *log odds* of success (i.e., $Y = 1|\boldsymbol{x}$)
+$$
+\log\left(\mathrm{odds}\right) = \log\left(\frac{p}{1-p}\right) = \beta_0 + \beta_1x_1 + \beta_2x_2 + \dots \beta_px_p
+$$
+Exponentiating, we get
+$$
+\mathrm{odds} = \frac{p}{1-p} = \exp{\left(\beta_0\right)}\times\exp{\left(\beta_1x_1\right)}\times\exp{\left(\beta_2x_2\right)}\times\dots\times\exp{\left(\beta_px_p\right)}
+$$
+
+* In the LR model, $\beta_i$ represents the change in the *log odds* when $x_i$ increases by one unit (all else held constant)
+* In the LR model, $\exp\left(\beta_i\right)$ represents the *multiplicative increase* in the odds when $x_i$ increases by one unit (all else held constant)
+* CANNOT interpret the coefficients in terms of $p$ directly...effect plots to the rescue!!
+
+
+## WCGS study
+
+```{r}
+coef(fit.lr2)
+```
+
+. . .
+
+* Holding `height` constant, for every additional cigarette smoked per day the predicted log odds of developing `chd` increase by `r round(coef(fit.lr2)["cigs"], 3)`
+
+* Holding `height` constant, for every additional cigarette smoked per day the predicted odds of developing `chd` increase multiplicatively by `r round(exp(coef(fit.lr2)["cigs"]), 3)`
+
+
+## Effect plots
+
+Lot's of different methods and packages:
+* Marginal effects via [effects](https://cran.r-project.org/package=effects) library
+* Partial dependence (PD) plots and [individual conditional expectation]() (ICE) plots via the [pdp]() package
+* Marginal effect and PD plots via the [plotmo]() library
+* And many, many more
+* Generally similar in shape when the model is additive in nature (i.e., no interaction effects)
+
+
+## Effect plots
+
+The [plotmo]() library is an "easy button" for quick and rough effect plots (other variables are held fixed at their median value) and supports a wide range of models
+```{r}
+plotmo::plotmo(fit.lr2)
+```
+
+
+## Effect plots
+
+I generally prefer PD plots; see [Greenwell (2017)](https://journal.r-project.org/archive/2017/RJ-2017-016/RJ-2017-016.pdf) for details
+```{r}
+library(pdp)
+library(ggplot2)
+
+theme_set(theme_bw())
+partial(fit.lr2, pred.var = "cigs", prob = TRUE, plot = TRUE, 
+        plot.engine = "ggplot2") + 
+    ylim(0, 1) + 
+    ylab("Probability")
+```
