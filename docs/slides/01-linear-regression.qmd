@@ -647,7 +647,7 @@ Adjusted R-squared ($R_{adj}^2$)
 
 * In simplest terms, random split the data into two parts: A and B. Build a model on part A and see how well it does with predicting the response in part B.
 
-* [Leakage](https://reproducible.cs.princeton.edu/) is a huge concern here, so data splitting has to be done carefully!
+* [Leakage](https://reproducible.cs.princeton.edu/) is a huge concern here, so data splitting ALWAYS has to be done carefully!
 
 
 ## Data splitting: $k$-fold cross-validation {.smaller}
