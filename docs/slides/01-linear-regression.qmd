@@ -552,7 +552,7 @@ Increasing the order can result in an ill-conditioned $\boldsymbol{X}^\top\bolds
 
 ## Categorical variables
 
-Let's look at two (nominal) categorical variables (in your homework, you'll look at `Overall_Qual`, and ordered factor with many levels):
+Let's look at two (nominal) categorical variables:
 
 ```{r}
 #| echo: true
