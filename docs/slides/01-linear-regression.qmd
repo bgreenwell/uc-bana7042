@@ -1,19 +1,59 @@
 ---
-title: "BANA 7042: Statistical Modeling"
-subtitle: "Lecture 1: Review of linear regression"
+title: "Linear Regression (A Brief Review)"
 author: "Brandon M. Greenwell, PhD"
+institute: "University of Cincinnati"
 from: markdown+emoji
 format: 
     revealjs:
         df-print: paged
         code-fold: true
         code-summary: "Show R code"
+        code-copy: true
+        logo: images/uc.png
+        chalkboard: true
+        slide-number: true
         scrollable: true
-        embed-resources: true
+        embed-resources: false
+        footer: "BANA 7042: Statistical Modeling"
 ---
 
 ```{r, include=FALSE}
 palette("Okabe-Ito")
+
+```{r, setup}
+library(knitr)
+
+opts_chunk$set(
+  echo = TRUE,
+  dpi = 300,     
+  #fig.retina = 3,  
+  fig.align = "center",
+  fig.width = 6,
+  fig.asp = 0.618,
+  out.width = "100%",
+ # size = "small",
+  message = FALSE,
+  warning = FALSE,
+  error = FALSE
+)
+
+knit_hooks$set(
+  par = function(before, options, envir) {
+    if (before && options$fig.show != "none") {
+      par(
+        mar = c(4, 4, 0.1, 0.1), 
+        cex.lab = 0.95, 
+        cex.axis = 0.8,  # was 0.9
+        mgp = c(2, 0.7, 0), 
+        tcl = -0.3, 
+        las = 1
+      )
+      if (is.list(options$par)) {
+        do.call(par, options$par)
+      }
+    }
+  }
+)
 ```
 
 ## A useful quote to remember
@@ -72,7 +112,7 @@ We'll focus on a handful of variables:
   - What is the chance that \$129,500 < `Sale_Price` < \$213,500? (within IQR)
 
 
-## Distribution of `Sale-Price`
+## Distribution of `Sale_Price`
 
 Can look at historgram and empirical [CDF](https://en.wikipedia.org/wiki/Cumulative_distribution_function):
 
@@ -88,12 +128,12 @@ plot(ecdf(ames$Sale_Price), xlab = "Sale price ($)", main = "",
 ```
 
 
-## Distribution of `Sale-Price`
+## Distribution of `Sale_Price`
 
 * Histograms and ECDFs are nonparammetric in nature
 * A simple parametric approach might assume a particular distribution for `Sale_Price`
 * For instance, we might assume `Sale_Price` $\sim N\left(\mu, \sigma^2\right)$
-* How can we estimate $\mu$ and $\sigma$?
+* How can we estimate $\mu$ and $\sigma^2$?
 
 . . .
 
@@ -180,6 +220,27 @@ legend("topleft", legend = c("Standard normal", "t (df = 40)"), lty = 1,
 2. Are these two distributions practically different?
 
 
+## Is linear regression reasonable here?
+
+```{r}
+x <- rep(c(1:10 / 10, 1.5, 2), each = 30)
+y <- 1 + 2*x^2 + rnorm(length(x), sd = 1)
+par(mfrow = c(1, 2), las = 1)
+plot(x, y)
+hist(y, 50)
+```
+
+
+## Is linear regression reasonable here?
+
+```{r}
+fit <- lm(y ~ x)
+res <- residuals(fit)
+qqnorm(res, las = 1)
+qqline(res, col = 2)
+```
+
+
 ## What can we do if the normality assumption isn't justified?
 
 * Try transformations
@@ -188,7 +249,7 @@ legend("topleft", legend = c("Standard normal", "t (df = 40)"), lty = 1,
 
 * Try a more appropriate distribution (e.g., Poisson or gamma distribution)
 
-* Try more advanced nonparametric approaches, like [bootstrapping](https://en.wikipedia.org/wiki/Bootstrapping_(statistics))!
+* Try more advanced approaches, like the nonparametric [bootstrapping](https://en.wikipedia.org/wiki/Bootstrapping_(statistics))!
 
 
 ## Modeling the mean response
@@ -243,7 +304,8 @@ Pretty straightforward optimization problem that leads to closed-form solution (
 
 ```{r}
 #| echo: true
-plot(Sale_Price ~ Gr_Liv_Area, data = ames, las = 1)
+plot(Sale_Price ~ Gr_Liv_Area, data = ames, las = 1,
+     col = adjustcolor(1, alpha.f = 0.3))
 ```
 
 
@@ -262,7 +324,8 @@ summary(fit <- lm(Sale_Price ~ Gr_Liv_Area, data = ames))
 #| fig-align: center
 #| fig-width: 6
 #| fig-asp: 0.618
-plot(Sale_Price ~ Gr_Liv_Area, data = ames)
+plot(Sale_Price ~ Gr_Liv_Area, data = ames,
+     col = adjustcolor(1, alpha.f = 0.3))
 abline(fit, lwd = 2, col = 2)  # add SLR fit
 ```
 
@@ -274,6 +337,19 @@ Which assumptions seem violated to some degree?
 * The standard residual is defined as $e_i = y_i - \hat{y}_i$ and can be regarded as the *observed error*
 * The residuals hold a lot of properties that make them useful for diagnosing potential issues with the model (e.g., suggesting potential transformations to try)
 * Many other kinds of residuals exist for different purposes (e.g., standardized, [studentized](https://en.wikipedia.org/wiki/Studentized_residual), jackknife or [PRESS](https://en.wikipedia.org/wiki/PRESS_statistic) residuals, etc.)
+
+
+## Properties of the residuals
+
+* $\sum_{i=1}^n e_i = 0$ (**Why?**)
+
+* $\sum_{i=1}^n e_i^2$ is a minimum
+
+* $\sum_{i=1}^n X_ie_i = 0$
+
+* $\sum_{i=1}^n \hat{Y}_ie_i = 0$
+
+* The LS regression line passes through the point $\left(\bar{X}, \bar{Y}\right)$ (i.e., the center of the training data)
 
 
 ## What can residual plots tell us?
@@ -312,7 +388,8 @@ What assumptions appear to be in violation?
 #| fig-width: 6
 #| fig-asp: 0.618
 fit2 <- lm(log(Sale_Price) ~ Gr_Liv_Area, data = ames)
-plot(log(Sale_Price) ~ Gr_Liv_Area, data = ames)
+plot(log(Sale_Price) ~ Gr_Liv_Area, data = ames,
+     col = adjustcolor(1, alpha.f = 0.3))
 abline(fit2, lwd = 2, col = 2)  # add SLR fit
 ```
 
@@ -338,7 +415,7 @@ plot(fit2, which = 1:6)
 Any better?
 
 
-## Multiple linear regression
+## Multiple linear regression (MLR)
 
 * The (normal) multiple linear regression model assumes $Y \sim N\left(\mu\left(\boldsymbol{x}\right), \sigma^2\right)$, where $$\mu\left(\boldsymbol{x}\right) = \beta_0 + \sum_{i=1}^p \beta_i x_i = \boldsymbol{x}^\top\boldsymbol{\beta}$$
 
@@ -347,6 +424,122 @@ Any better?
 * Fitted values: $\hat{\boldsymbol{y}} = \boldsymbol{X}\left(\boldsymbol{X}^\top\boldsymbol{X}\right)^{-1}\boldsymbol{X}^\top\boldsymbol{y} = \boldsymbol{H}\boldsymbol{y}$
 
 * $\boldsymbol{H}$ is the well-known "[hat matrix](https://en.wikipedia.org/wiki/Projection_matrix)"
+
+
+## Polynomial regression
+
+* [Polynomial regression](https://en.wikipedia.org/wiki/Polynomial_regression) is just a special case of the MLR model
+
+* A second order model in a single predictor: $$Y = \beta_0 + \beta_1 X + \beta_2 X^2 + \epsilon$$
+
+* A *k*-th order model in a single predictor (Typically $k \le 3$): $$Y = \beta_0 + \sum_{j=1}^k\beta_j X^j + \epsilon$$ 
+
+
+## Example: paper strength data
+
+Data concerning the strength of kraft paper and the percentage of hardwood in the batch of pulp from which the paper was produced.
+
+```{r}
+# Load the hardwood conentration data
+url <- "https://bgreenwell.github.io/uc-bana7052/data/hardwood.csv"
+hardwood <- read.csv(url)
+
+# Print first few observations
+head(hardwood)
+```
+
+
+## Example: paper strength data
+
+```{r}
+#| par: true
+plot(hardwood, pch = 19)
+```
+
+
+## Example: paper strength data
+
+```{r}
+#| par: true
+fit1 <- lm(TsStr ~ HwdCon, data = hardwood)
+investr::plotFit(fit1, pch = 19, col.fit = "red2")
+```
+
+
+## Example: paper strength data
+
+```{r}
+#| code-fold: true
+par(mfrow = c(1, 2), las = 1)
+
+# Plot residuals vs HwdCon (i.e., X)
+par(mfrow = c(1, 2))
+plot(x = hardwood$HwdCon, y = residuals(fit1), xlab = "HwdCon",
+     ylab = "Residuals", main = "Residuals vs HwdCon")
+abline(h = 0, lty = "dotted")
+plot(fit1, which = 1, caption = "", main = "Residuals vs Fitted")
+```
+
+
+## Example: paper strength data
+
+```{r}
+#| par: true
+fit2 <- lm(TsStr ~ HwdCon + I(HwdCon^2), data = hardwood)
+investr::plotFit(fit2, pch = 19, col.fit = "red2")
+```
+
+
+## Example: paper strength data
+
+```{r}
+#| code-fold: true
+par(mfrow = c(2, 3), las = 1)
+for (i in 1:6) {  # try higher-order models
+  fit <- lm(TsStr ~ poly(HwdCon, degree = i), data = hardwood)
+  investr::plotFit(fit, main = paste("Degree =", i))
+}
+```
+
+
+## Example: paper strength data
+
+```{r}
+#| code-fold: true
+par(mfrow = c(2, 3))
+for (i in 1:6) {  # try higher-order models
+  fit <- lm(TsStr ~poly(HwdCon, degree = i), data = hardwood)
+  investr::plotFit(fit, main = paste("Degree =", i), 
+                   interval = "confidence", shade = TRUE,
+                   xlim = c(-10, 30))
+}
+```
+
+
+## Polynomial regression
+
+Some cautions :warning:
+
+Keep the order of the model as low as possible
+
+* Avoid interpolating the data or *over fitting*
+
+* Use the simplest model possible to explain the data, but no simpler (*parsimony*)
+
+* An $n - 1$ order model can perfectly fit a data set with $n$ observations (Why is this bad :thinking:)
+
+
+## Polynomial regression
+
+Two model-building strategies:
+
+1. Fit the lowest order polynomial possible and build up (forward selection)
+    
+2. Fit the highest order polynomial of interest, and remove terms one at a time (backward elimination)
+    
+These two procedures may not result in the same final model
+
+Increasing the order can result in an ill-conditioned $\boldsymbol{X}^\top\boldsymbol{X}$ and [multicollinearity](https://en.wikipedia.org/wiki/Multicollinearity) 
 
 
 ## Categorical variables
@@ -407,6 +600,34 @@ summary(fit3)
 ```
 
 How do you interpret the coefficients here?
+
+
+## Coefficient of determination
+
+The coefficient of determination is the proportion of the variance in the dependent variable that is predictable from the independent variables in the model.
+
+:::: {.columns}
+
+::: {.column width="50%"}
+R-squared ($R^2$)
+
+* $R^2 = \frac{SSR}{SST} = 1 - \frac{SSE}{SST}$
+
+* $R^2$ will always increase as more terms are added to the model! 
+:::
+
+::: {.column width="50%"}
+Adjusted R-squared ($R_{adj}^2$)
+
+<!-- * $R_{adj}^2 = 1 - \left(\frac{n - 1}{n - p}\right)\frac{SSE}{SST}$ -->
+* $R_{adj}^2 = 1 - \frac{MSE}{SST/\left(n - 1\right)}$
+
+* Penalizes $R^2$ if there are "too many" terms in the model
+
+* $R_{adj}^2$ and $MSE$ provide equivalent information
+:::
+
+::::
 
 
 ## Variable/model selection
