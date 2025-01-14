@@ -146,9 +146,7 @@ Can look at historgram and empirical [CDF](https://en.wikipedia.org/wiki/Cumulat
 
 ```{r}
 #| echo: true
-#| fig-align: center
-#| fig-width: 6
-#| fig-asp: 0.5
+#| par: true
 par(mfrow = c(1, 2), las = 1)
 hist(ames$Sale_Price, br = 50, xlab = "Sale price ($)", freq = FALSE, main = "")
 plot(ecdf(ames$Sale_Price), xlab = "Sale price ($)", main = "",
@@ -184,9 +182,7 @@ c("sample mean" = mean(ames$Sale_Price), "sample stdev" = sd(ames$Sale_Price))
 
 ```{r}
 #| echo: true
-#| fig-align: center
-#| fig-width: 6
-#| fig-asp: 0.618
+#| par: true
 qqnorm(ames$Sale_Price, col = 2, las = 1)
 qqline(ames$Sale_Price)
 ```
@@ -229,9 +225,6 @@ rowMeans(x < 0.05)
 ```{r}
 #| echo: false
 #| par: true
-#| fig.width: 6
-#| fig.asp: 0.618
-#| out.width: "100%"
 x <- seq(from = -5, to = 5, length = 500)
 y1 <- dnorm(x)
 y2 <- dt(x, df = 40)
@@ -262,6 +255,8 @@ hist(y, 50)
 ## Is linear regression reasonable here?
 
 ```{r}
+#| echo: true
+#| par: true
 fit <- lm(y ~ x)
 res <- residuals(fit)
 qqnorm(res, las = 1)
@@ -304,9 +299,7 @@ $$\mu = \mu\left(x\right) = \beta_0 + \beta_1 x = E\left(Y|x\right)$$
 
 ```{r}
 #| echo: true
-#| fig-align: center
-#| fig-width: 6
-#| fig-asp: 0.618
+#| par: true
 plot(investr::arsenic, las = 1)  # see ?investr::arsenic for details
 ```
 
@@ -332,6 +325,7 @@ Pretty straightforward optimization problem that leads to closed-form solution (
 
 ```{r}
 #| echo: true
+#| par: true
 plot(Sale_Price ~ Gr_Liv_Area, data = ames, las = 1,
      col = adjustcolor(1, alpha.f = 0.3))
 ```
@@ -349,9 +343,7 @@ summary(fit <- lm(Sale_Price ~ Gr_Liv_Area, data = ames))
 
 ```{r}
 #| echo: true
-#| fig-align: center
-#| fig-width: 6
-#| fig-asp: 0.618
+#| par: true
 plot(Sale_Price ~ Gr_Liv_Area, data = ames,
      col = adjustcolor(1, alpha.f = 0.3))
 abline(fit, lwd = 2, col = 2)  # add SLR fit
@@ -398,9 +390,7 @@ Which assumptions seem violated to some degree?
 ## Residual analysis for `Sale_Price ~ Gr_Liv_Area`
 ```{r}
 #| echo: true
-#| fig-align: center
-#| fig-width: 6
-#| fig-asp: 0.618
+#| par: true
 par(mfrow = c(2, 3), las = 1)
 plot(fit, which = 1:6)
 ```
@@ -412,9 +402,7 @@ What assumptions appear to be in violation?
 
 ```{r}
 #| echo: true
-#| fig-align: center
-#| fig-width: 6
-#| fig-asp: 0.618
+#| par: true
 fit2 <- lm(log(Sale_Price) ~ Gr_Liv_Area, data = ames)
 plot(log(Sale_Price) ~ Gr_Liv_Area, data = ames,
      col = adjustcolor(1, alpha.f = 0.3))
@@ -433,9 +421,7 @@ summary(fit2)
 ## Residual analysis for `log(Sale_Price) ~ Gr_Liv_Area`
 ```{r}
 #| echo: true
-#| fig-align: center
-#| fig-width: 6
-#| fig-asp: 0.618
+#| par: true
 par(mfrow = c(2, 3), las = 1)
 plot(fit2, which = 1:6)
 ```
@@ -468,6 +454,7 @@ Any better?
 Data concerning the strength of kraft paper and the percentage of hardwood in the batch of pulp from which the paper was produced.
 
 ```{r}
+#| echo: true
 # Load the hardwood conentration data
 url <- "https://bgreenwell.github.io/uc-bana7052/data/hardwood.csv"
 hardwood <- read.csv(url)
@@ -480,6 +467,7 @@ head(hardwood)
 ## Example: paper strength data
 
 ```{r}
+#| echo: true
 #| par: true
 plot(hardwood, pch = 19)
 ```
@@ -488,6 +476,7 @@ plot(hardwood, pch = 19)
 ## Example: paper strength data
 
 ```{r}
+#| echo: true
 #| par: true
 fit1 <- lm(TsStr ~ HwdCon, data = hardwood)
 investr::plotFit(fit1, pch = 19, col.fit = "red2")
@@ -497,7 +486,8 @@ investr::plotFit(fit1, pch = 19, col.fit = "red2")
 ## Example: paper strength data
 
 ```{r}
-#| code-fold: true
+#| echo: true
+#| par: true
 par(mfrow = c(1, 2), las = 1)
 
 # Plot residuals vs HwdCon (i.e., X)
@@ -512,6 +502,7 @@ plot(fit1, which = 1, caption = "", main = "Residuals vs Fitted")
 ## Example: paper strength data
 
 ```{r}
+#| echo: true
 #| par: true
 fit2 <- lm(TsStr ~ HwdCon + I(HwdCon^2), data = hardwood)
 investr::plotFit(fit2, pch = 19, col.fit = "red2")
@@ -521,7 +512,8 @@ investr::plotFit(fit2, pch = 19, col.fit = "red2")
 ## Example: paper strength data
 
 ```{r}
-#| code-fold: true
+#| echo: true
+#| par: true
 par(mfrow = c(2, 3), las = 1)
 for (i in 1:6) {  # try higher-order models
   fit <- lm(TsStr ~ poly(HwdCon, degree = i), data = hardwood)
@@ -533,7 +525,8 @@ for (i in 1:6) {  # try higher-order models
 ## Example: paper strength data
 
 ```{r}
-#| code-fold: true
+#| echo: true
+#| par: true
 par(mfrow = c(2, 3))
 for (i in 1:6) {  # try higher-order models
   fit <- lm(TsStr ~poly(HwdCon, degree = i), data = hardwood)
@@ -593,9 +586,7 @@ table(ames$Paved_Drive)
 
 ```{r}
 #| echo: true
-#| fig-align: center
-#| fig-width: 6
-#| fig-asp: 0.618
+#| par: true
 plot(log(Sale_Price) ~ Central_Air, data = ames, las = 1, col = c(2, 3))
 ```
 
@@ -604,9 +595,7 @@ plot(log(Sale_Price) ~ Central_Air, data = ames, las = 1, col = c(2, 3))
 
 ```{r}
 #| echo: true
-#| fig-align: center
-#| fig-width: 6
-#| fig-asp: 0.618
+#| par: true
 plot(log(Sale_Price) ~ Paved_Drive, data = ames, las = 1, col = c(2, 3, 4))
 ```
 
@@ -619,9 +608,7 @@ R dummy encodes nominal factors by default:
 
 ```{r}
 #| echo: true
-#| fig-align: center
-#| fig-width: 6
-#| fig-asp: 0.618
+#| par: true
 fit3 <- lm(log(Sale_Price) ~ Gr_Liv_Area + Central_Air + Paved_Drive, 
            data = ames)
 summary(fit3)

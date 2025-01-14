@@ -317,7 +317,7 @@ Brandon M. Greenwell, PhD
 <section id="distribution-of-sale_price" class="slide level2">
 <h2>Distribution of <code>Sale_Price</code></h2>
 <p>Can look at historgram and empirical <a href="https://en.wikipedia.org/wiki/Cumulative_distribution_function">CDF</a>:</p>
-<div class="cell" data-layout-align="center">
+<div class="cell" data-layout-align="center" data-par="true">
 <details class="code-fold">
 <summary>Show R code</summary>
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href=""></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>), <span class="at">las =</span> <span class="dv">1</span>)</span>
@@ -361,7 +361,7 @@ Brandon M. Greenwell, PhD
 <li><p>Normal quantile-quantile (Q-Q) plot* can be used to asses the “normalityness” of a set of observations</p></li>
 <li><p>Q-Q plots can, in general, be used to compare data with any distribution!</p></li>
 </ul>
-<div class="cell" data-layout-align="center">
+<div class="cell" data-layout-align="center" data-par="true">
 <details class="code-fold">
 <summary>Show R code</summary>
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href=""></a><span class="fu">qqnorm</span>(ames<span class="sc">$</span>Sale_Price, <span class="at">col =</span> <span class="dv">2</span>, <span class="at">las =</span> <span class="dv">1</span>)</span>
@@ -430,7 +430,7 @@ Brandon M. Greenwell, PhD
 <img data-src="01-linear-regression_files/figure-revealjs/unnamed-chunk-8-1.png" class="quarto-figure quarto-figure-center r-stretch" style="width:100.0%"></section>
 <section id="is-linear-regression-reasonable-here-1" class="slide level2">
 <h2>Is linear regression reasonable here?</h2>
-<div class="cell" data-layout-align="center">
+<div class="cell" data-layout-align="center" data-par="true">
 <details class="code-fold">
 <summary>Show R code</summary>
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href=""></a>fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(y <span class="sc">~</span> x)</span>
@@ -474,7 +474,7 @@ Brandon M. Greenwell, PhD
 </section>
 <section id="arsenic-experiment-example" class="slide level2">
 <h2>Arsenic experiment example</h2>
-<div class="cell" data-layout-align="center">
+<div class="cell" data-layout-align="center" data-par="true">
 <details class="code-fold">
 <summary>Show R code</summary>
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href=""></a><span class="fu">plot</span>(investr<span class="sc">::</span>arsenic, <span class="at">las =</span> <span class="dv">1</span>)  <span class="co"># see ?investr::arsenic for details</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -496,7 +496,7 @@ Brandon M. Greenwell, PhD
 </section>
 <section id="sale_price-and-gr_liv_area" class="slide level2">
 <h2><code>Sale_Price</code> and <code>Gr_Liv_Area</code></h2>
-<div class="cell" data-layout-align="center">
+<div class="cell" data-layout-align="center" data-par="true">
 <details class="code-fold">
 <summary>Show R code</summary>
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href=""></a><span class="fu">plot</span>(Sale_Price <span class="sc">~</span> Gr_Liv_Area, <span class="at">data =</span> ames, <span class="at">las =</span> <span class="dv">1</span>,</span>
@@ -536,7 +536,7 @@ F-statistic:  2923 on 1 and 2928 DF,  p-value: &lt; 2.2e-16</code></pre>
 </section>
 <section id="is-this-a-good-fit" class="slide level2">
 <h2>Is this a good fit?</h2>
-<div class="cell" data-layout-align="center">
+<div class="cell" data-layout-align="center" data-par="true">
 <details class="code-fold">
 <summary>Show R code</summary>
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href=""></a><span class="fu">plot</span>(Sale_Price <span class="sc">~</span> Gr_Liv_Area, <span class="at">data =</span> ames,</span>
@@ -578,7 +578,7 @@ F-statistic:  2923 on 1 and 2928 DF,  p-value: &lt; 2.2e-16</code></pre>
 </section>
 <section id="residual-analysis-for-sale_price-gr_liv_area" class="slide level2">
 <h2>Residual analysis for <code>Sale_Price ~ Gr_Liv_Area</code></h2>
-<div class="cell" data-layout-align="center">
+<div class="cell" data-layout-align="center" data-par="true">
 <details class="code-fold">
 <summary>Show R code</summary>
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href=""></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">3</span>), <span class="at">las =</span> <span class="dv">1</span>)</span>
@@ -590,7 +590,7 @@ F-statistic:  2923 on 1 and 2928 DF,  p-value: &lt; 2.2e-16</code></pre>
 </section>
 <section id="lets-try-a-log-transformation" class="slide level2">
 <h2>Let’s try a log transformation</h2>
-<div class="cell" data-layout-align="center">
+<div class="cell" data-layout-align="center" data-par="true">
 <details class="code-fold">
 <summary>Show R code</summary>
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href=""></a>fit2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="fu">log</span>(Sale_Price) <span class="sc">~</span> Gr_Liv_Area, <span class="at">data =</span> ames)</span>
@@ -632,7 +632,7 @@ F-statistic:  2749 on 1 and 2928 DF,  p-value: &lt; 2.2e-16</code></pre>
 </section>
 <section id="residual-analysis-for-logsale_price-gr_liv_area" class="slide level2">
 <h2>Residual analysis for <code>log(Sale_Price) ~ Gr_Liv_Area</code></h2>
-<div class="cell" data-layout-align="center">
+<div class="cell" data-layout-align="center" data-par="true">
 <details class="code-fold">
 <summary>Show R code</summary>
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href=""></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">3</span>), <span class="at">las =</span> <span class="dv">1</span>)</span>
@@ -704,7 +704,7 @@ F-statistic:  2749 on 1 and 2928 DF,  p-value: &lt; 2.2e-16</code></pre>
 <img data-src="01-linear-regression_files/figure-revealjs/unnamed-chunk-20-1.png" class="quarto-figure quarto-figure-center r-stretch" style="width:100.0%"></section>
 <section id="example-paper-strength-data-3" class="slide level2">
 <h2>Example: paper strength data</h2>
-<div class="cell" data-layout-align="center">
+<div class="cell" data-layout-align="center" data-par="true">
 <details class="code-fold">
 <summary>Show R code</summary>
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href=""></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>), <span class="at">las =</span> <span class="dv">1</span>)</span>
@@ -732,7 +732,7 @@ F-statistic:  2749 on 1 and 2928 DF,  p-value: &lt; 2.2e-16</code></pre>
 <img data-src="01-linear-regression_files/figure-revealjs/unnamed-chunk-22-1.png" class="quarto-figure quarto-figure-center r-stretch" style="width:100.0%"></section>
 <section id="example-paper-strength-data-5" class="slide level2">
 <h2>Example: paper strength data</h2>
-<div class="cell" data-layout-align="center">
+<div class="cell" data-layout-align="center" data-par="true">
 <details class="code-fold">
 <summary>Show R code</summary>
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href=""></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">3</span>), <span class="at">las =</span> <span class="dv">1</span>)</span>
@@ -746,7 +746,7 @@ F-statistic:  2749 on 1 and 2928 DF,  p-value: &lt; 2.2e-16</code></pre>
 <img data-src="01-linear-regression_files/figure-revealjs/unnamed-chunk-23-1.png" class="quarto-figure quarto-figure-center r-stretch" style="width:100.0%"></section>
 <section id="example-paper-strength-data-6" class="slide level2">
 <h2>Example: paper strength data</h2>
-<div class="cell" data-layout-align="center">
+<div class="cell" data-layout-align="center" data-par="true">
 <details class="code-fold">
 <summary>Show R code</summary>
 <div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href=""></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">3</span>))</span>
@@ -816,7 +816,7 @@ F-statistic:  2749 on 1 and 2928 DF,  p-value: &lt; 2.2e-16</code></pre>
 </section>
 <section id="categorical-variables-2" class="slide level2">
 <h2>Categorical variables</h2>
-<div class="cell" data-layout-align="center">
+<div class="cell" data-layout-align="center" data-par="true">
 <details class="code-fold">
 <summary>Show R code</summary>
 <div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href=""></a><span class="fu">plot</span>(<span class="fu">log</span>(Sale_Price) <span class="sc">~</span> Central_Air, <span class="at">data =</span> ames, <span class="at">las =</span> <span class="dv">1</span>, <span class="at">col =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">3</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -826,7 +826,7 @@ F-statistic:  2749 on 1 and 2928 DF,  p-value: &lt; 2.2e-16</code></pre>
 <img data-src="01-linear-regression_files/figure-revealjs/unnamed-chunk-26-1.png" class="quarto-figure quarto-figure-center r-stretch" style="width:100.0%"></section>
 <section id="categorical-variables-3" class="slide level2">
 <h2>Categorical variables</h2>
-<div class="cell" data-layout-align="center">
+<div class="cell" data-layout-align="center" data-par="true">
 <details class="code-fold">
 <summary>Show R code</summary>
 <div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href=""></a><span class="fu">plot</span>(<span class="fu">log</span>(Sale_Price) <span class="sc">~</span> Paved_Drive, <span class="at">data =</span> ames, <span class="at">las =</span> <span class="dv">1</span>, <span class="at">col =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -838,7 +838,7 @@ F-statistic:  2749 on 1 and 2928 DF,  p-value: &lt; 2.2e-16</code></pre>
 <section id="categorical-variables-4" class="slide level2">
 <h2>Categorical variables</h2>
 <p>R dummy encodes nominal factors by default:</p>
-<div class="cell" data-layout-align="center">
+<div class="cell" data-layout-align="center" data-par="true">
 <details class="code-fold">
 <summary>Show R code</summary>
 <div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href=""></a>fit3 <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="fu">log</span>(Sale_Price) <span class="sc">~</span> Gr_Liv_Area <span class="sc">+</span> Central_Air <span class="sc">+</span> Paved_Drive, </span>
