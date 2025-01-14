@@ -56,6 +56,34 @@ knit_hooks$set(
 )
 ```
 
+
+## About me {.smaller}
+
+:::: {.columns}
+
+::: {.column width="50%"}
+- :man_student: B.S. & M.S. in Applied Statistics ([WSU](https://www.wright.edu/))
+- :man_student: Ph.D. in Applied Matehmatics ([AFIT](https://www.afit.edu/))
+- :clapper: Director, Data Science at [84.51˚](https://www.8451.com/) 
+- :man_teacher: UC LCB adjunct (~8 years)
+- Some R packages :package: :
+  - [pdp](https://CRAN.R-project.org/package=pdp) (partial dependence plots)
+  - [vip](https://CRAN.R-project.org/package=vip) (variable importance plots)
+  - [fastshap](https://CRAN.R-project.org/package=fastshap) (faster SHAP values)
+- Some books :books: :
+  - [Hands-On Machine Learning with R](https://bradleyboehmke.github.io/HOML/) 
+  - [Tree-Based Methods for Statistical Learning](https://www.routledge.com/Tree-Based-Methods-for-Statistical-Learning-in-R/Greenwell/p/book/9780367532468?srsltid=AfmBOoq9xbq6yMdXzO2BUsLfLVm0XyVDFyFmqu4sh5xkCcZBLXMUZ4jI)
+:::
+
+::: {.column width="50%"}
+![](images/logos.png){width="50%" fig-align=center}
+
+![](images/books.png){width="50%" fig-align=center}
+:::
+
+::::
+
+
 ## A useful quote to remember
 
 > All models are wrong, but some are useful.
