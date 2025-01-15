@@ -41,7 +41,7 @@ knit_hooks$set(
   par = function(before, options, envir) {
     if (before && options$fig.show != "none") {
       par(
-        mar = c(4, 4, 0.1, 0.1), 
+        mar = c(4, 4, 2, 0.1), 
         cex.lab = 0.95, 
         cex.axis = 0.8,  # was 0.9
         mgp = c(2, 0.7, 0), 
@@ -241,29 +241,6 @@ legend("topleft", legend = c("Standard normal", "t (df = 40)"), lty = 1,
 2. Are these two distributions practically different?
 
 
-## Is linear regression reasonable here?
-
-```{r}
-x <- rep(c(1:10 / 10, 1.5, 2), each = 30)
-y <- 1 + 2*x^2 + rnorm(length(x), sd = 1)
-par(mfrow = c(1, 2), las = 1)
-plot(x, y)
-hist(y, 50)
-```
-
-
-## Is linear regression reasonable here?
-
-```{r}
-#| echo: true
-#| par: true
-fit <- lm(y ~ x)
-res <- residuals(fit)
-qqnorm(res, las = 1)
-qqline(res, col = 2)
-```
-
-
 ## What can we do if the normality assumption isn't justified?
 
 * Try transformations
@@ -301,6 +278,30 @@ $$\mu = \mu\left(x\right) = \beta_0 + \beta_1 x = E\left(Y|x\right)$$
 #| echo: true
 #| par: true
 plot(investr::arsenic, las = 1)  # see ?investr::arsenic for details
+```
+
+
+## Is linear regression reasonable here?
+
+```{r}
+x <- rep(c(1:10 / 10, 1.5, 2), each = 30)
+y <- 1 + 2*x^2 + rnorm(length(x), sd = 1)
+par(mfrow = c(1, 2), las = 1)
+plot(x, y, col = "dodgerblue2")
+#abline(lm(y ~ x), lwd = 2)
+hist(y, main = "", col = "dodgerblue2", border = "white")
+```
+
+
+## Is linear regression reasonable here?
+
+```{r}
+#| echo: true
+#| par: true
+fit <- lm(y ~ x)
+res <- residuals(fit)
+qqnorm(res, las = 1)
+qqline(res, col = 2)
 ```
 
 

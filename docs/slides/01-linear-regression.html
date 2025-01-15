@@ -414,33 +414,6 @@ Brandon M. Greenwell, PhD
 <li><p>Are these two distributions practically different?</p></li>
 </ol>
 </section>
-<section id="is-linear-regression-reasonable-here" class="slide level2">
-<h2>Is linear regression reasonable here?</h2>
-<div class="cell" data-layout-align="center">
-<details class="code-fold">
-<summary>Show R code</summary>
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href=""></a>x <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span> <span class="sc">/</span> <span class="dv">10</span>, <span class="fl">1.5</span>, <span class="dv">2</span>), <span class="at">each =</span> <span class="dv">30</span>)</span>
-<span id="cb8-2"><a href=""></a>y <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">+</span> <span class="dv">2</span><span class="sc">*</span>x<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> <span class="fu">rnorm</span>(<span class="fu">length</span>(x), <span class="at">sd =</span> <span class="dv">1</span>)</span>
-<span id="cb8-3"><a href=""></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>), <span class="at">las =</span> <span class="dv">1</span>)</span>
-<span id="cb8-4"><a href=""></a><span class="fu">plot</span>(x, y)</span>
-<span id="cb8-5"><a href=""></a><span class="fu">hist</span>(y, <span class="dv">50</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-
-</div>
-<img data-src="01-linear-regression_files/figure-revealjs/unnamed-chunk-8-1.png" class="quarto-figure quarto-figure-center r-stretch" style="width:100.0%"></section>
-<section id="is-linear-regression-reasonable-here-1" class="slide level2">
-<h2>Is linear regression reasonable here?</h2>
-<div class="cell" data-layout-align="center" data-par="true">
-<details class="code-fold">
-<summary>Show R code</summary>
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href=""></a>fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(y <span class="sc">~</span> x)</span>
-<span id="cb9-2"><a href=""></a>res <span class="ot">&lt;-</span> <span class="fu">residuals</span>(fit)</span>
-<span id="cb9-3"><a href=""></a><span class="fu">qqnorm</span>(res, <span class="at">las =</span> <span class="dv">1</span>)</span>
-<span id="cb9-4"><a href=""></a><span class="fu">qqline</span>(res, <span class="at">col =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-
-</div>
-<img data-src="01-linear-regression_files/figure-revealjs/unnamed-chunk-9-1.png" class="quarto-figure quarto-figure-center r-stretch" style="width:100.0%"></section>
 <section id="what-can-we-do-if-the-normality-assumption-isnt-justified" class="slide level2">
 <h2>What can we do if the normality assumption isn’t justified?</h2>
 <ul>
@@ -477,7 +450,35 @@ Brandon M. Greenwell, PhD
 <div class="cell" data-layout-align="center" data-par="true">
 <details class="code-fold">
 <summary>Show R code</summary>
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href=""></a><span class="fu">plot</span>(investr<span class="sc">::</span>arsenic, <span class="at">las =</span> <span class="dv">1</span>)  <span class="co"># see ?investr::arsenic for details</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href=""></a><span class="fu">plot</span>(investr<span class="sc">::</span>arsenic, <span class="at">las =</span> <span class="dv">1</span>)  <span class="co"># see ?investr::arsenic for details</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+
+</div>
+<img data-src="01-linear-regression_files/figure-revealjs/unnamed-chunk-8-1.png" class="quarto-figure quarto-figure-center r-stretch" style="width:100.0%"></section>
+<section id="is-linear-regression-reasonable-here" class="slide level2">
+<h2>Is linear regression reasonable here?</h2>
+<div class="cell" data-layout-align="center">
+<details class="code-fold">
+<summary>Show R code</summary>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href=""></a>x <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span> <span class="sc">/</span> <span class="dv">10</span>, <span class="fl">1.5</span>, <span class="dv">2</span>), <span class="at">each =</span> <span class="dv">30</span>)</span>
+<span id="cb9-2"><a href=""></a>y <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">+</span> <span class="dv">2</span><span class="sc">*</span>x<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> <span class="fu">rnorm</span>(<span class="fu">length</span>(x), <span class="at">sd =</span> <span class="dv">1</span>)</span>
+<span id="cb9-3"><a href=""></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>), <span class="at">las =</span> <span class="dv">1</span>)</span>
+<span id="cb9-4"><a href=""></a><span class="fu">plot</span>(x, y, <span class="at">col =</span> <span class="st">"dodgerblue2"</span>)</span>
+<span id="cb9-5"><a href=""></a><span class="co">#abline(lm(y ~ x), lwd = 2)</span></span>
+<span id="cb9-6"><a href=""></a><span class="fu">hist</span>(y, <span class="at">main =</span> <span class="st">""</span>, <span class="at">col =</span> <span class="st">"dodgerblue2"</span>, <span class="at">border =</span> <span class="st">"white"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+
+</div>
+<img data-src="01-linear-regression_files/figure-revealjs/unnamed-chunk-9-1.png" class="quarto-figure quarto-figure-center r-stretch" style="width:100.0%"></section>
+<section id="is-linear-regression-reasonable-here-1" class="slide level2">
+<h2>Is linear regression reasonable here?</h2>
+<div class="cell" data-layout-align="center" data-par="true">
+<details class="code-fold">
+<summary>Show R code</summary>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href=""></a>fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(y <span class="sc">~</span> x)</span>
+<span id="cb10-2"><a href=""></a>res <span class="ot">&lt;-</span> <span class="fu">residuals</span>(fit)</span>
+<span id="cb10-3"><a href=""></a><span class="fu">qqnorm</span>(res, <span class="at">las =</span> <span class="dv">1</span>)</span>
+<span id="cb10-4"><a href=""></a><span class="fu">qqline</span>(res, <span class="at">col =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 
 </div>
