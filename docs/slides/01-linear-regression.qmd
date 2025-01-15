@@ -84,13 +84,6 @@ knit_hooks$set(
 ::::
 
 
-## A useful quote to remember
-
-> All models are wrong, but some are useful.
-> 
-> -George Box
-
-
 ## Ames housing data
 
 * Data describing the sale of individual residential property in Ames, Iowa
@@ -121,6 +114,252 @@ We'll focus on a handful of variables:
 * `Sale_Price` - Sale price of the house / \$10K (response variable)
 * `Gr_Liv_Area` - Above grade (ground) living area square feet
 * `Overall_Qual⁠` - Rates the overall material and finish of the house
+
+
+## Statistical relationships
+
+```{r, par=TRUE}
+#| par: true
+# Simulate data from different SLR models
+set.seed(101)  # for reproducibility
+x <- seq(from = 0, to = 4, length = 100)
+y <- cbind(
+  1 + x + rnorm(length(x)),  # linear
+  1 + (x - 2)^2 + rnorm(length(x)),  # quadratic
+  1 + log(x + 0.1) + rnorm(length(x), sd = 0.3),  # logarithmic
+  1 + rnorm(length(x))  # no association
+)
+
+# Scatterplot of X vs. each Y in a 2-by-2 grid
+par(mfrow = c(2, 2))
+for (i in 1:4) {
+  plot(x, y[, i], col = adjustcolor("cornflowerblue", alpha.f = 0.7),
+       pch = 19, xlab = "X", ylab = "Y")
+}
+```
+
+
+## Are $X$ and $Y$ correlated?
+
+```{r, par=TRUE}
+plot(x, y[, 3], col = adjustcolor("cornflowerblue", alpha.f = 0.7),
+     pch = 19, xlab = "X", ylab = "Y")
+r <- round(cor(x, y[, 3]), digits = 3)
+legend("bottomright", legend = paste0("r = ", r), bty = "n", inset = 0.01)
+```
+
+
+## Pearson's correlation coefficient 
+
+* The (Pearson) correlation between two random variables $X$ and $Y$ is given by
+
+$$Cor\left(X, Y\right) = \rho = \frac{Cov\left(X,Y\right)}{\sigma_X\sigma_Y}$$
+
+* Given a sample of $n$ pairs $\left\{\left(x_i, y_i\right)\right\}_{i=1}^n$, we estimate $\rho$ with $r = S_{xy} / \sqrt{S_{xx}S_{yy}}$, where, for example, $$S_{xx} = \sum_{i=1}^n\left(x_i - \bar{x}\right)^2 \text{ and } S_{xy} = \sum_{i=1}^n\left(x_i - \bar{x}\right)\left(y_i - \bar{y}\right)$$
+
+
+## Pearson's correlation coefficient
+
+* Range: $-1 \le r \le 1$
+
+* What does it measure?
+
+  - Pearson's correlation coefficient is a **unitless** measure of the strength of the **linear** relationship between two variables
+
+* Other useful correlation measures also exist:
+
+  - Spearman's rank correlation (or Spearman's $\rho$) only assumes a *monotonic relationship* between $X$ and $Y$
+
+    * Equivalent to computing $r$ on the *ranks* of $X$ and $Y$
+
+
+## Pearson's correlation coefficient
+
+* It is common to test the hypothesis $H_0: \rho = 0$ vs. $H_1: \rho \ne 0$
+
+  - Rejecting $H_0$ is only evidence that $\rho$ is **not exactly zero** (NOT VERY USEFUL, OR INTERESTING)
+
+  - A $p$-value **does not measure the magnitude/strength of the (linear) association**
+
+  - Sample size affects the $p$-value! :scream:
+
+
+## Are $x$ and $y$ correlated?
+
+```{r}
+#| par: true
+set.seed(1051)  # for reproducibility
+n <- 1000 
+x <- rnorm(n)
+y <- 1 + 0.001*x + rnorm(n)
+plot(x, y, asp = 1, col = adjustcolor("black", alpha.f = 0.3))
+```
+
+
+## Pearson's correlation coefficient
+
+::: columns
+::: {.column width="50%"}
+```{r}
+set.seed(1050)  # for reproducibility
+n <- 100
+x <- rnorm(n)
+y <- 1 + 0.001*x + rnorm(n)
+cor.test(x, y)
+```
+:::
+
+::: {.column width="50%"}
+```{r}
+set.seed(1051)  # for reproducibility
+n <- 10000000  # n = ten million
+x <- rnorm(n)
+y <- 1 + 0.001*x + rnorm(n)
+cor.test(x, y)
+```
+:::
+:::
+
+The real question is, are $X$ and $Y$ *practically* uncorrelated?
+
+
+## Correlation is not causation
+
+<iframe width="800" height="450" src="https://www.youtube.com/embed/ntnalq-2nNU" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen>
+
+</iframe>
+
+------------------------------------------------------------------------
+
+::: r-fit-text
+[Fun with spurious correlations](http://www.tylervigen.com/spurious-correlations){preview-link="true" style="text-align: center"}
+:::
+
+![](images/spurious-correlation.png)
+
+------------------------------------------------------------------------
+
+
+## All models are wrong!
+
+<center>
+
+![](images/all-models.jpeg){width="100%"}
+</center>
+
+Also, see [this talk](https://statmodeling.stat.columbia.edu/wp-content/uploads/2012/03/tarpey.pdf) by my old adviser, Thad Tarpey: "All Models are Right... most are useless."
+
+
+# Simple Linear Regression (SLR)
+
+## Pearson's correlation vs. SLR
+
+* There's a formal relationship between Pearson's correlation coefficient ($\rho$) and the SLR model
+
+* "Simple" linear relationships can be described by an *intercept* and *slope*:
+
+  - $y = mx + b$ (algebra)
+  - $\mu = \beta_0 + \beta_1x$ (statistics)
+
+* "Simple" here means two variables, $x$ and $y$ (but $y$ can be linearly related to several variables)
+
+
+## Example: Ames housing
+
+Check out [this paper](http://jse.amstat.org/v19n3/decock.pdf) for useful background on the Ames housing data in regression 
+
+
+## Example: Ames housing
+
+```{r}
+head(cbind(ames$Sale_Price, ames$Gr_Liv_Area))
+cor.test(ames$Sale_Price, y = ames$Gr_Liv_Area)  # see ?cor.test
+```
+
+This doesn't tell us much about the nature of the linear relationship between `Gr_Liv_Area` and `Sale_Price`
+
+
+## Statistical relationships
+
+```{r statistical-relationships}
+library(ggplot2) 
+
+p1 <- ggplot(investr::crystal, aes(x = time, y = weight)) +
+  geom_point() +
+  labs(x = "Time (hours)", 
+       y = "Weight (grams)", 
+       title = "Crystal weight data")
+p2 <- ggplot(investr::arsenic, aes(x = actual, y = measured)) +
+  geom_point() +
+  labs(x = "True amount of arsenic", 
+       y = "Measured amount of arsenic",
+       title = "Arsenic concentration data")
+gridExtra::grid.arrange(p1, p2, nrow = 1)
+```
+
+
+## Examples of statistical relationships
+
+-   Simple linear regression: $Y = \beta_0 + \beta_1 X + \epsilon$
+
+-   Multiple linear regression: $Y = \beta_0 + \sum_{i=1}^p \beta_p X_p + \epsilon$
+
+-   Polynomial regression: $Y = \beta_0 + \sum_{i=1}^p \beta_p X^p + \epsilon$
+
+-   Logarithmic: $Y = \beta_0 + \beta_1 \log\left(X + 0.1\right) + \epsilon$
+
+-   Nonlinear regression: $Y = \frac{\beta_1 X}{\left(\beta_2 + X\right)} + \epsilon$
+
+-   Multiplicative: $Y = \beta X \epsilon$
+
+    -   $\log\left(Y\right) = \alpha + \log\left(X\right) + \log\left(\epsilon\right)$
+
+Assuming $\epsilon \sim D\left(\mu, \sigma\right)$
+
+
+## Simple linear regression (SLR)
+
+* Data: $\left\{\left(X_i, Y_i\right)\right\}_{i=1}^n$
+
+* Model: $Y_i = \beta_0 + \beta_1 X_i + \epsilon_i$
+
+  - $Y_i$ is a continuous response
+
+  - $X_i$ is a continuous predictor
+
+  - $\beta_0$ is the intercept of the regression line (also called the *bias term*)
+
+  - $\beta_1$ is the slope of the regression line
+
+  - $\epsilon_i \stackrel{iid}{\sim} D\left(0, \sigma^2\right)$
+
+
+## Assumptions about the errors $\epsilon_i$
+
+For $i$ and $j$ in $\left\{1, 2, \dots, n\right\}$ and $i \ne j$
+
+1)  $\quad E\left(\epsilon_i\right) = 0$
+
+2)  $\quad Var\left(\epsilon_i\right) = \sigma^2$ (homoscedacticity :scream:)
+
+3)  $\quad Cov\left(\epsilon_i, \epsilon_j\right) = 0$ (independence)
+
+
+
+Assumptions 1--3 can be summarized as $\epsilon_i \stackrel{iid}{\sim} D\left(0, \sigma^2\right)$, where $iid$ refers to [independent and identically distributed](https://en.wikipedia.org/wiki/Independent_and_identically_distributed_random_variables).
+
+
+## Properties of SLR
+
+-   Simple linear regression: $Y_i = \beta_0 + \beta_1 X_i + \epsilon_i$
+
+    -   Assumes the model is **linear in the regression coefficients** $\beta_0$ and $\beta_1$
+
+-   The error term is a random variable; hence, $Y_i$ is also a random variable (**Why?** :thinking:)
+
+    -   What is $E\left(Y_i|X_i\right)$ and $Var\left(Y_i|X_i\right)$?
+
+-   $Cor\left(Y_i, Y_j\right) = 0$ $\forall i \ne j$ (**Why?** :thinking:)
 
 
 ## Inference for a single variable {.smaller}
@@ -362,7 +601,7 @@ Which assumptions seem violated to some degree?
 
 ## Properties of the residuals
 
-* $\sum_{i=1}^n e_i = 0$ (**Why?**)
+* $\sum_{i=1}^n e_i = 0$ 
 
 * $\sum_{i=1}^n e_i^2$ is a minimum
 
@@ -388,7 +627,9 @@ Which assumptions seem violated to some degree?
 * And much, much more!
 
 
-## Residual analysis for `Sale_Price ~ Gr_Liv_Area`
+## `Sale_Price ~ Gr_Liv_Area`
+
+Residual analysis:
 ```{r}
 #| echo: true
 #| par: true
@@ -419,7 +660,9 @@ summary(fit2)
 ```
 
 
-## Residual analysis for `log(Sale_Price) ~ Gr_Liv_Area`
+## `log(Sale_Price) ~ Gr_Liv_Area`
+
+Residual analysis:
 ```{r}
 #| echo: true
 #| par: true
@@ -430,7 +673,9 @@ plot(fit2, which = 1:6)
 Any better?
 
 
-## Multiple linear regression (MLR)
+# Multiple Linear Regression (MLR)
+
+## MLR in a nutshell :peanuts:
 
 * The (normal) multiple linear regression model assumes $Y \sim N\left(\mu\left(\boldsymbol{x}\right), \sigma^2\right)$, where $$\mu\left(\boldsymbol{x}\right) = \beta_0 + \sum_{i=1}^p \beta_i x_i = \boldsymbol{x}^\top\boldsymbol{\beta}$$
 
