@@ -19,6 +19,40 @@ format:
 
 ```{r, include=FALSE}
 palette("Okabe-Ito")
+
+library(knitr)
+
+opts_chunk$set(
+  echo = TRUE,
+  dpi = 300,     
+  #fig.retina = 3,  
+  fig.align = "center",
+  fig.width = 6,
+  fig.asp = 0.618,
+  out.width = "100%",
+ # size = "small",
+  message = FALSE,
+  warning = FALSE,
+  error = FALSE
+)
+
+knit_hooks$set(
+  par = function(before, options, envir) {
+    if (before && options$fig.show != "none") {
+      par(
+        mar = c(4, 4, 2, 0.1), 
+        cex.lab = 0.95, 
+        cex.axis = 0.8,  # was 0.9
+        mgp = c(2, 0.7, 0), 
+        tcl = -0.3, 
+        las = 1
+      )
+      if (is.list(options$par)) {
+        do.call(par, options$par)
+      }
+    }
+  }
+)
 ```
 
 
@@ -76,6 +110,7 @@ Anything interesting stick out?
 Pie chart of response :vomiting_face:
 
 ```{r}
+#| par: true
 # Construct a pie chart of the (binary) response; I'm not a fan of pie charts in general
 ptab <- prop.table(table(wcgs$chd))  # convert frequencies to proportions
 ptab  # inspect output
@@ -88,24 +123,27 @@ pie(prop.table(table(wcgs$chd)),
 
 Bar charts tend to be more effective
 ```{r}
+#| par: true
 barplot(ptab, las = 1, col = "forestgreen")
 ```
 
 
 ## Visualizing discrete data
 
-Mosaic plot showing relationship between `cigs` and `chd`; not incredibly useful IMO unless both variables are categorical
+[Mosaic plot](https://en.wikipedia.org/wiki/Mosaic_plot) showing relationship between `cigs` and `chd`; not incredibly useful IMO unless both variables are categorical
 
 ```{r}
-plot(chd ~ cigs, data = wcgs, notch = TRUE) 
+#| par: true
+plot(chd ~ cigs, data = wcgs) 
 ```
 
 
 ## Visualizing discrete data
 
-Nonparametric density plot of `height` by `chd` status
+Nonparametric density plot of `height` by `chd` status using [lattice](https://cran.r-project.org/package=lattice) graphics:
 
 ```{r}
+#| par: true
 library(lattice)
 
 densityplot(~ height, groups = chd, data = wcgs, auto.key = TRUE)
@@ -116,31 +154,58 @@ densityplot(~ height, groups = chd, data = wcgs, auto.key = TRUE)
 
 Boxplot of `cigs` vs. `chd` status
 ```{r}
-plot(cigs ~ chd, data = wcgs)
+#| par: true
+plot(cigs ~ chd, data = wcgs, col = c(2, 3))
 ```
 
 
 ## Visualizing discrete data
 
-* Detour: decision trees are immensely useful tools for exploring new data sets
-
-* Useful resource: http://pages.stat.wisc.edu/~loh/treeprogs/guide/LohISI14.pdf
-
-* Ultimate reference: https://bgreenwell.github.io/treebook/ :smile:
+Boxplot of `cigs` vs. `chd` status
+```{r}
+#| par: true
+plot(cigs ~ chd, data = wcgs, col = c(2, 3))
+```
 
 
 ## Visualizing discrete data
 
-Standard [CART-like decision tree](https://cran.r-project.org/web/packages/rpart/vignettes/longintro.pdf) 
+Boxplot of `height` vs. `chd` status with *notches*
 ```{r}
+#| par: true
+plot(height ~ chd, data = wcgs, col = c(2, 3), notch = TRUE)
+```
+
+
+## Visualizing discrete data (detour)
+
+* [Decision trees](https://en.wikipedia.org/wiki/Decision_tree) :evergreen_tree::palm_tree::deciduous_tree: are immensely useful for exploring new data sets!
+
+* Some useful resources: 
+
+  - See the documentation for R packages [rpart](https://cran.r-project.org/package=rpart), [party](https://cran.r-project.org/package=party), and [partykit](https://cran.r-project.org/package=rpart)
+
+  - [Fifty Years of Classification and Regression Trees](http://pages.stat.wisc.edu/~loh/treeprogs/guide/LohISI14.pdf)
+
+  - [Recursive Partitioning and Applications](https://www.amazon.com/Recursive-Partitioning-Applications-Springer-Statistics/dp/1441968237) (logistic regression and trees)
+
+  - The ultimate [tree book](https://bgreenwell.github.io/treebook/) :sunglasses:
+
+
+## Visualizing discrete data
+
+Standard [CART-like decision tree](https://cran.r-project.org/web/packages/rpart/vignettes/longintro.pdf) using [rpart](https://cran.r-project.org/package=rpart) and [rpart.plot](https://cran.r-project.org/package=rpart.plot) (all variables allowed):
+```{r}
+#| par: true
 rpart.plot::rpart.plot(rpart::rpart(chd ~ ., data = wcgs))
 ```
 
 
 ## Visualizing discrete data
 
-[Conditional inference tree](https://cran.r-project.org/web/packages/partykit/vignettes/ctree.pdf) using only variables of interest
+[Conditional inference tree](https://cran.r-project.org/web/packages/partykit/vignettes/ctree.pdf) using [partykit](https://cran.r-project.org/package=partykit) (using only variables of interest):
 ```{r}
+#| par: true
 plot(partykit::ctree(chd ~ height + cigs, data = wcgs))
 ```
 
@@ -191,14 +256,7 @@ Are the standard errors here appropriate? Why/why not?
 ## The LP model: `chd` vs. `cigs`
 
 ```{r}
-plot(y ~ cigs, data = wcgs, ylim = c(0, 1), las = 1)
-abline(fit, col = 2)
-```
-
-
-## The LP model: `chd` vs. `cigs`
-
-```{r}
+#| par: true
 plot(y ~ cigs, data = wcgs, ylim = c(0, 1), las = 1)
 abline(fit, col = 2)
 ```
@@ -219,7 +277,7 @@ In other words, LR models the [logit](https://en.wikipedia.org/wiki/Logit) of th
 
 ## The logistic regression (LR) model
 
-Can always solve for $p$ to get predictions on the raw probability scale:
+Can always solve for $p$ to get predictions on the raw probability scale (**Homework 2** :smile:):
 $$
 p\left(\boldsymbol{x}\right) = \frac{\exp\left(\boldsymbol{\beta}^\top\boldsymbol{x}\right)}{1 + \exp\left(\boldsymbol{\beta}^\top\boldsymbol{x}\right)}
 $$
@@ -235,7 +293,7 @@ Note how the LR model is nonlinear in $p$!
 * GLM stands for [generalized linear model](https://en.wikipedia.org/wiki/Generalized_linear_model), which includes the LR and ordinary linear regression models as special cases
 * Many (but not all) of the models we'll discuss in throughout this course belong to the class of GLMs
 * Note how we have to specifcy the `family` argument! (see `?glm` for details)
-* The response can be a 0/1 indicator or a factor variable (but careful with interpretation and [which class is sued as the baseline](https://stats.stackexchange.com/questions/207427/confused-with-the-reference-level-in-logistic-regression-in-r)):
+* The response can be a 0/1 indicator or a factor variable (be careful with interpretation and [which class is used as the baseline](https://stats.stackexchange.com/questions/207427/confused-with-the-reference-level-in-logistic-regression-in-r)):
 ```{r}
 levels(wcgs$chd)
 ```
@@ -250,7 +308,9 @@ summary(fit.lr <- glm(chd ~ cigs, data = wcgs, family = binomial))
 
 ## Fitting an LR model in R 
 
+Let's compare the fitted LR and LP models:
 ```{r}
+#| par: true
 prob <- predict(fit.lr, newdata = data.frame(cigs = 0:99), type = "response")
 plot(y ~ cigs, data = wcgs, ylab = "chd", las = 1, xlim = c(0, 99))
 lines(0:99, y = prob, col = 2)
@@ -261,7 +321,9 @@ legend("topright", legend = c("LR fit", "LP fit"), lty = c(1, 2), col = c(2, 3))
 
 ## Fitting an LR model in R 
 
+Let's compare the fitted LR and LP models:
 ```{r}
+#| par: true
 prob <- predict(fit.lr, newdata = data.frame(cigs = 0:999), type = "response")
 plot(y ~ cigs, data = wcgs, ylab = "chd", las = 1, xlim = c(0, 999))
 lines(0:999, y = prob, col = 2)
@@ -272,17 +334,31 @@ legend("topright", legend = c("LR fit", "LP fit"), lty = c(1, 2), col = c(2, 3))
 
 ## Fitting an LR model in R 
 
+Now let's include an additional predictor (i.e., `height`):
 ```{r}
 summary(fit.lr2 <- glm(chd ~ cigs + height, data = wcgs, family = binomial))
 ```
 
 
-## Interpreting LR coefficients {.smaller}
+## Interpreting LR coefficients
 
 * Let $p = P\left(Y = 1\right)$ and $1 - p = P\left(Y = 0\right)$
-* The odds of the event $Y = 1$ occuring is deined as $p / \left(1 - p\right)$
-* For a fair coin, the probability of getting tails is $p = 0.5$ and the probability of getting heads is $1 - p = 0.5$. Therefore, the odds of getting tails vs. heads is $p / (1 - p) = 0.5 / 0.5 = 1$. (We might also say the odds of getting tails is "1 to 1").
-* For a fair :game_die:, the probability of rolling a 2 is $p = 1/6$ and the probability of not rolling a 2 is $1 - p = 5/6$. Therefore, the odds of rolling a 2 vs. not rolling a 2 is $\frac{p}{1 - p} = \frac{1/6}{5/6} = \frac{1}{5}$. (We might also say the odds of rolling a 2 is "1 to 5").
+* The odds of $Y = 1$ occuring is defined as $p / \left(1 - p\right)$
+* For a fair coin :coin:, the probability of getting tails is $p = 0.5$. Therefore, the odds of getting tails vs. heads is $p / (1 - p) = 0.5 / 0.5 = 1$. (We might also say the odds of getting tails is "1 to 1").
+
+. . .
+
+</br>
+
+:::{.r-stack}
+For a fair die :game_die:, what are the odds of rolling a 2?
+:::
+
+
+## Solution {visibility="hidden"}
+
+* For a fair die :game_die:, the probability of rolling a 2 is $p = 1/6$ and the probability of not rolling a 2 is $1 - p = 5/6$. Therefore, the odds of rolling a 2 vs. not rolling a 2 is $\frac{p}{1 - p} = \frac{1/6}{5/6} = \frac{1}{5}$. (We might also say the odds of rolling a 2 is "1 to 5").
+
 
 ## Interpreting LR coefficients {.smaller}
 
@@ -290,14 +366,14 @@ The logit models the *log odds* of success (i.e., $Y = 1|\boldsymbol{x}$)
 $$
 \log\left(\mathrm{odds}\right) = \log\left(\frac{p}{1-p}\right) = \beta_0 + \beta_1x_1 + \beta_2x_2 + \dots \beta_px_p
 $$
-Exponentiating, we get
+Exponentiating both, we get
 $$
 \mathrm{odds} = \frac{p}{1-p} = \exp{\left(\beta_0\right)}\times\exp{\left(\beta_1x_1\right)}\times\exp{\left(\beta_2x_2\right)}\times\dots\times\exp{\left(\beta_px_p\right)}
 $$
 
 * In the LR model, $\beta_i$ represents the change in the *log odds* when $x_i$ increases by one unit (all else held constant)
 * In the LR model, $\exp\left(\beta_i\right)$ represents the *multiplicative increase* in the odds when $x_i$ increases by one unit (all else held constant)
-* CANNOT interpret the coefficients in terms of $p$ directly...effect plots to the rescue!!
+* CANNOT interpret the coefficients in terms of $p$ directly...effect plots to the rescue :ring_buoy:!!
 
 
 ## WCGS study
@@ -308,25 +384,27 @@ coef(fit.lr2)
 
 . . .
 
-* Holding `height` constant, for every additional cigarette smoked per day the predicted log odds of developing `chd` increase by `r round(coef(fit.lr2)["cigs"], 3)`
+* Holding `height` constant, for every additional cigarette smoked per day the predicted log odds of developing `chd` increases by `r round(coef(fit.lr2)["cigs"], 3)`
 
-* Holding `height` constant, for every additional cigarette smoked per day the predicted odds of developing `chd` increase multiplicatively by `r round(exp(coef(fit.lr2)["cigs"]), 3)`
+* Holding `height` constant, for every additional cigarette smoked per day the predicted odds of developing `chd` increases multiplicatively by `r round(exp(coef(fit.lr2)["cigs"]), 3)`
 
 
 ## Effect plots
 
 Lot's of different methods and packages:
+
 * Marginal effects via [effects](https://cran.r-project.org/package=effects) library
-* Partial dependence (PD) plots and [individual conditional expectation]() (ICE) plots via the [pdp]() package
-* Marginal effect and PD plots via the [plotmo]() library
-* And many, many more
-* Generally similar in shape when the model is additive in nature (i.e., no interaction effects)
+* [Partial dependence (PD) plots](https://christophm.github.io/interpretable-ml-book/pdp.html) and [individual conditional expectation]() (ICE) plots via the [pdp]() package
+* Marginal effect and PD plots via the [plotmo]([plotmo](http://www.milbo.org/doc/plotmo-notes.pdf)) library
+* And many, many more (see [R's ML Task View](https://cran.r-project.org/web/views/MachineLearning.html))
+* All have there own assumptions and drawbacks; typically, similar in shape when the model is additive in nature (i.e., no interaction effects)
 
 
 ## Effect plots
 
-The [plotmo]() library is an "easy button" for quick and rough effect plots (other variables are held fixed at their median value) and supports a wide range of models
+The [plotmo](http://www.milbo.org/doc/plotmo-notes.pdf) library is an "easy button" for quick and dirty effect plots (other variables are held fixed at their median or most frequent value) and supports a wide range of models
 ```{r}
+#| par: true
 plotmo::plotmo(fit.lr2)
 ```
 
@@ -335,12 +413,117 @@ plotmo::plotmo(fit.lr2)
 
 I generally prefer PD plots; see [Greenwell (2017)](https://journal.r-project.org/archive/2017/RJ-2017-016/RJ-2017-016.pdf) for details
 ```{r}
+#| par: true
 library(pdp)
 library(ggplot2)
 
 theme_set(theme_bw())
 partial(fit.lr2, pred.var = "cigs", prob = TRUE, plot = TRUE, 
-        plot.engine = "ggplot2") + 
+        plot.engine = "ggplot2", rug = TRUE) + 
     ylim(0, 1) + 
     ylab("Probability")
 ```
+
+
+## Effect plots
+
+Can easily extend these methods to two or three variables:
+```{r}
+#| par: true
+pd.2d <- partial(fit.lr2, pred.var = c("cigs", "height"), chull = TRUE)
+plotPartial(pd.2d)
+```
+
+
+## Effect plots
+
+Three-dimensional plots look cool, but generally aren't all that useful:
+```{r}
+#| par: true
+lattice::wireframe(yhat ~ height * cigs, data = pd.2d, shade = TRUE)
+```
+
+
+## ML estimation (Bernoulli)
+
+* In the linear model, LS and ML estimation are equivalent and rather straightforward
+
+* [In LR, ML estimation is more common](https://en.wikipedia.org/wiki/Logistic_regression#Model_fitting)^[Technically, there are a number of ways to estimate the parameters of an LR model, but ML estimation is most common.]
+
+* Recall that if $Y_i \stackrel{iid}{\sim} Bernoulli\left(p\right)$, then the [likilhood function](https://en.wikipedia.org/wiki/Likelihood_function) is defined as
+
+$$
+L\left(p\right) = \prod_{i=1}^n p^{y_i} \left(1-p\right)^{1-y_i}
+$$
+
+
+## ML estimation (Bernoulli)
+
+* Theoretically, goal is to maximize $L\left(p\right)$
+
+* In practice, it's easier to work with the *log likelihood* $l\left(p\right) = log\left[L\left(p\right)\right]$
+
+$$
+\begin{align}
+l\left(p\right) &= \log\left[\prod_{i=1}^n p^{y_i} \left(1-p\right)^{1-y_i}\right]\\
+&= \cdots\\
+&= \log\left(p\right)\sum_{i=1}^ny_i + \log\left(1-p\right)\sum_{i=1}^n\left(n-y_i\right)
+\end{align}
+$$
+
+
+## ML estimation (LR)
+
+* In LR, 
+$$
+p_i = p\left(\boldsymbol{x}_i\right) = \frac{\exp\left(\boldsymbol{\beta}^\top\boldsymbol{x}_i\right)}{1 + \exp\left(\boldsymbol{\beta}^\top\boldsymbol{x}_i\right)}
+$$
+
+* This becomes a more complicated optimization problem!
+
+* Equivalent to minimizing [log loss](https://scikit-learn.org/dev/modules/generated/sklearn.metrics.log_loss.html) in machine learning
+
+* Log loss is a [proper scoring rule](https://www.fharrell.com/post/class-damage/)
+
+
+## ML estimation (LR)
+
+Maximizing the log-likelihood is equivalent to minimizing the *negative log-likelihood* (which is more convenient):
+```{r}
+# Response (as a binary 0/1 variable)
+y <- ifelse(wcgs$chd == "yes", 1, 0)
+
+# Model matrix; includes a column for the intercept by default
+X <- model.matrix(~ cigs + height, data = wcgs)
+
+# Function to compute the negative log-liklihood (as a function of the betas)
+nll <- function(beta) {
+  lp <- X %*% beta  # linear predictor; same as b0 + b1*x1 + b2*x2 + ...
+  -sum(y * lp - log(1 + exp(lp)))
+}
+
+# Use general optimization; would be better to use gradient and hessian info (e.g., first and second derivative info)
+lp.fit <- lm(y ~ cigs + height, data = wcgs)
+optim(coef(lp.fit), fn = nll, 
+      control = list("maxit" = 9999, "reltol" = 1e-20))
+```
+
+
+## Extending the general F-test
+
+In LR, we move from a general linear F-test to a [likelihood ratio test](https://en.wikipedia.org/wiki/Likelihood-ratio_test) based on the $\chi^2$ distribution:
+```{r}
+anova(fit.lr, fit.lr2, test = "Chi")
+```
+
+
+## Confidence intervals
+
+Lot's of ways to do this (some bad, some better). R defaults to using a [profile likelihood](https://en.wikipedia.org/wiki/Likelihood_function) method:
+
+```{r}
+confint(fit.lr2, level = 0.95)
+```
+
+
+## Questions:question::question::question:
