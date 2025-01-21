@@ -497,7 +497,7 @@ F-statistic: 34.42 on 1 and 3152 DF,  p-value: 4.91e-09</code></pre>
 <section id="the-logistic-regression-lr-model" class="slide level2">
 <h2>The logistic regression (LR) model</h2>
 <p>Assume <span class="math inline">\(Y \sim \mathrm{Bernoulli}\left(p\right)\)</span>, where <span class="math display">\[
-p = p\left(\boldsymbol{x}\right) = P\left(Y = 1|\boldsymbol{x}\right)
+p = p\left(\boldsymbol{x}\right) = P\left(Y = 1|\boldsymbol{x}\right) = E\left(Y|\boldsymbol{x}\right)
 \]</span> and <span class="math display">\[
 \mathrm{logit}\left(p\right) = \log\left(\frac{p}{1-p}\right) = \boldsymbol{\beta}^\top\boldsymbol{x}
 \]</span> In other words, LR models the <a href="https://en.wikipedia.org/wiki/Logit">logit</a> of the mean response as a linear function in <span class="math inline">\(\boldsymbol{\beta}\)</span>; we’ll refer to the term <span class="math inline">\(\eta = \boldsymbol{\beta}^\top\boldsymbol{x}\)</span> as the <a href="https://en.wikipedia.org/wiki/Linear_predictor_function#:~:text=In%20statistics%20and%20in%20machine,outcome%20of%20a%20dependent%20variable.">linear predictor</a>. Why does this make more sense?</p>

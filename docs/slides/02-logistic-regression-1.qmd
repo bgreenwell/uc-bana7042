@@ -266,7 +266,7 @@ abline(fit, col = 2)
 
 Assume $Y \sim \mathrm{Bernoulli}\left(p\right)$, where 
 $$
-p = p\left(\boldsymbol{x}\right) = P\left(Y = 1|\boldsymbol{x}\right)
+p = p\left(\boldsymbol{x}\right) = P\left(Y = 1|\boldsymbol{x}\right) = E\left(Y|\boldsymbol{x}\right)
 $$
 and
 $$
