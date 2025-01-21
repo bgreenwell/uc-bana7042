@@ -1,20 +1,20 @@
 ---
-title: "BANA 7042: Statistical Modeling"
-subtitle: "Lecture 2: Logistic Regression (Part I)"
+title: "Logistic Regression (Part I)"
 author: "Brandon M. Greenwell, PhD"
+institute: "University of Cincinnati"
 from: markdown+emoji
-execute:
-  echo: true
 format: 
     revealjs:
-        fig-align: center
-        fig-width: 6
-        fig-asp: 0.618
         df-print: paged
         code-fold: true
         code-summary: "Show R code"
+        code-copy: true
+        logo: images/uc.png
+        chalkboard: true
+        slide-number: true
         scrollable: true
-        embed-resources: true
+        embed-resources: false
+        footer: "BANA 7042: Statistical Modeling"
 ---
 
 ```{r, include=FALSE}
@@ -58,7 +58,7 @@ knit_hooks$set(
 
 ## Western collaborative group study
 
-$N = 3154$ healthy young men aged 39--59 from the San Francisco area were assessed for their personality type. All were free from coronary heart disease at the start of the research. Eight and a half years later change in this situation was recorded.
+$N = 3154$ healthy young men aged 39--59 from the San Francisco area were assessed for their personality type. All were free from coronary heart disease at the start of the research. Eight and a half years later change in this situation was recorded. See `?faraway::wcgs` in R.
 
 ```{r}
 # install.packages("faraway")

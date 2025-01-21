@@ -31,8 +31,8 @@ d. The associated model is a poor fit of the data
 
 **Question 4** LR is used to predict the probability of a ___?
 
-a. Categorical independent variable
-b. Categorical dependent variable.
+a. Binary independent variable
+b. Binary dependent variable.
 c. Continuous dependent variable.
 d. Continuous independent variable.
 
