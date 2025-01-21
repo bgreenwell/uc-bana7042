@@ -821,13 +821,45 @@ NULL</code></pre>
 </div>
 </div>
 </section>
-<section id="extending-the-general-f-test" class="slide level2">
-<h2>Extending the general F-test</h2>
-<p>In LR, we move from a general linear F-test to a <a href="https://en.wikipedia.org/wiki/Likelihood-ratio_test">likelihood ratio test</a> based on the <span class="math inline">\(\chi^2\)</span> distribution:</p>
+<section id="wald-statistic" class="slide level2">
+<h2>Wald statistic</h2>
+<ul>
+<li>Consider the usual marginal test: <span class="math inline">\(H_0: \beta_j = 0\)</span> vs.&nbsp;<span class="math inline">\(H_1: \beta_j \ne 0\)</span></li>
+<li>Assymptotically speaking, <span class="math inline">\(Z_i = \hat{\beta}_i / \mathrm{SE}\left(\hat{\beta}_i\right)\)</span> has a standard normal distribution under <span class="math inline">\(H_0\)</span></li>
+<li>This leads to the usual <a href="https://en.wikipedia.org/wiki/Wald_test">Wald-based confidence intervals</a>, etc.</li>
+<li>Better (but more complicated) approaches available, like <a href="https://en.wikipedia.org/wiki/Likelihood-ratio_test#:~:text=In%20statistics%2C%20the%20likelihood%2Dratio,the%20ratio%20of%20their%20likelihoods.">likelihood ratio tests</a>, <a href="https://en.wikipedia.org/wiki/Likelihood_function#Profile_likelihood">profile likelihood methods</a>, and the <a href="https://en.wikipedia.org/wiki/Bootstrapping_(statistics)">bootstrap</a>.</li>
+</ul>
+</section>
+<section id="extending-the-general-linear-f-test" class="slide level2">
+<h2>Extending the general linear F-test</h2>
+<p>In LR, we move from a general linear F-test to a <a href="https://en.wikipedia.org/wiki/Likelihood-ratio_test">likelihood ratio test</a> based on the <span class="math inline">\(\chi^2\)</span> distribution: <span class="math display">\[
+X = -2\log\left(\frac{L_{H_0}}{L_{H_1}}\right) = D_{H_0} - D_{H_1} \sim \chi^2\left(df\right)
+\]</span></p>
+<p>Try by hand:</p>
 <div class="cell" data-layout-align="center">
 <details class="code-fold">
 <summary>Show R code</summary>
-<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href=""></a><span class="fu">anova</span>(fit.lr, fit.lr2, <span class="at">test =</span> <span class="st">"Chi"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href=""></a>fit.H0 <span class="ot">&lt;-</span> <span class="fu">glm</span>(chd <span class="sc">~</span> cigs, <span class="at">data =</span> wcgs, <span class="at">family =</span> binomial)</span>
+<span id="cb38-2"><a href=""></a>fit.H1 <span class="ot">&lt;-</span> <span class="fu">glm</span>(chd <span class="sc">~</span> cigs <span class="sc">+</span> height, <span class="at">data =</span> wcgs, <span class="at">family =</span> binomial)</span>
+<span id="cb38-3"><a href=""></a>D.H0 <span class="ot">&lt;-</span> <span class="fu">deviance</span>(fit.H0)</span>
+<span id="cb38-4"><a href=""></a>D.H1 <span class="ot">&lt;-</span> <span class="fu">deviance</span>(fit.H1)</span>
+<span id="cb38-5"><a href=""></a>chisq.stat <span class="ot">&lt;-</span> D.H0 <span class="sc">-</span> D.H1</span>
+<span id="cb38-6"><a href=""></a>pval <span class="ot">&lt;-</span> <span class="fu">pchisq</span>(chisq.stat, <span class="at">df =</span> <span class="dv">1</span>, <span class="at">lower.tail =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb38-7"><a href=""></a><span class="fu">c</span>(<span class="st">"stat"</span> <span class="ot">=</span> chisq.stat, <span class="st">"pval"</span> <span class="ot">=</span> pval)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>     stat      pval 
+0.9202473 0.3374101 </code></pre>
+</div>
+</div>
+</section>
+<section id="extending-the-general-linear-f-test-1" class="slide level2">
+<h2>Extending the general linear F-test</h2>
+<p>Can do this automatically using R’s <code>anova()</code> function:</p>
+<div class="cell" data-layout-align="center">
+<details class="code-fold">
+<summary>Show R code</summary>
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href=""></a><span class="fu">anova</span>(fit.H0, fit.H1, <span class="at">test =</span> <span class="st">"Chi"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <div data-pagedtable="false">
@@ -844,7 +876,7 @@ NULL</code></pre>
 <div class="cell" data-layout-align="center">
 <details class="code-fold">
 <summary>Show R code</summary>
-<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href=""></a><span class="fu">confint</span>(fit.lr2, <span class="at">level =</span> <span class="fl">0.95</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href=""></a><span class="fu">confint</span>(fit.lr2, <span class="at">level =</span> <span class="fl">0.95</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>                  2.5 %      97.5 %

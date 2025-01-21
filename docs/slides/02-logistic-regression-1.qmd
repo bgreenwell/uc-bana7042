@@ -509,11 +509,38 @@ optim(coef(lp.fit), fn = nll,
 ```
 
 
-## Extending the general F-test
+## Wald statistic
+
+* Consider the usual marginal test: $H_0: \beta_j = 0$ vs. $H_1: \beta_j \ne 0$
+* Assymptotically speaking, $Z_i = \hat{\beta}_i / \mathrm{SE}\left(\hat{\beta}_i\right)$ has a standard normal distribution under $H_0$
+* This leads to the usual [Wald-based confidence intervals](https://en.wikipedia.org/wiki/Wald_test), etc.
+* Better (but more complicated) approaches available, like [likelihood ratio tests](https://en.wikipedia.org/wiki/Likelihood-ratio_test#:~:text=In%20statistics%2C%20the%20likelihood%2Dratio,the%20ratio%20of%20their%20likelihoods.), [profile likelihood methods](https://en.wikipedia.org/wiki/Likelihood_function#Profile_likelihood), and the [bootstrap](https://en.wikipedia.org/wiki/Bootstrapping_(statistics)).
+
+
+## Extending the general linear F-test
 
 In LR, we move from a general linear F-test to a [likelihood ratio test](https://en.wikipedia.org/wiki/Likelihood-ratio_test) based on the $\chi^2$ distribution:
+$$
+X = -2\log\left(\frac{L_{H_0}}{L_{H_1}}\right) = D_{H_0} - D_{H_1} \sim \chi^2\left(df\right)
+$$
+
+Try by hand:
 ```{r}
-anova(fit.lr, fit.lr2, test = "Chi")
+fit.H0 <- glm(chd ~ cigs, data = wcgs, family = binomial)
+fit.H1 <- glm(chd ~ cigs + height, data = wcgs, family = binomial)
+D.H0 <- deviance(fit.H0)
+D.H1 <- deviance(fit.H1)
+chisq.stat <- D.H0 - D.H1
+pval <- pchisq(chisq.stat, df = 1, lower.tail = FALSE)
+c("stat" = chisq.stat, "pval" = pval)
+```
+
+
+## Extending the general linear F-test
+
+Can do this automatically using R's `anova()` function:
+```{r}
+anova(fit.H0, fit.H1, test = "Chi")
 ```
 
 

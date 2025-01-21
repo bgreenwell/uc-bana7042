@@ -46,21 +46,21 @@ d. 0.05
 
 ## Part II: short answer response (3 points each)
 
-**Question 6.** For ease of notation, let $\eta = \boldsymbol{x}^\top\boldsymbol{\beta} = \beta_0 + \beta_1 x_1 + \beta_2 x_1 + \cdots + \beta_p x_p$ be the linear predictor. For the LR model 
+**Question 6.** For ease of notation, let $\eta = \boldsymbol{x}^\top\boldsymbol{\beta} = \beta_0 + \beta_1 x_1 + \beta_2 x_1 + \cdots + \beta_p x_p$ be the linear predictor. For the LR model, where 
 $$
-\mathrm{logit}\left(p\right) = \boldsymbol{x}^\top\boldsymbol{\beta}
+\mathrm{logit}\left(p\right) = \boldsymbol{x}^\top\boldsymbol{\beta},
 $$
 show that 
 $$
 p = \frac{1}{1 + \exp\left(-\eta\right)}
 $$
 
-**Question 7:** (2 pts.) Using historical data from past offers, your company uses a logistic regression model to predict the likelihood that a customer will reddem an offer that was sent to them (e.g., a coupon). The model is to be used on a new set of $n = 500$ customers from the same population that the original training sample came from. However, your stakeholder asks an additional question. In addition to predicting the probability that each of the 500 new customers will redeem the offer sent to them, you're asked to also provide an estimate of the total number of offers that will be reddemd. Discuss how you would approach this problem. (No wrong asnwer here so don't Google it, I just want to hear your group's solution in detail.)
+**Question 7:** (2 pts.) Using historical data from past offers sent to customers, your company uses a logistic regression model to predict the likelihood that a customer will redeem a particular offer that was sent to them (e.g., a coupon for milk). The model is to be used on a new set of $n = 500$ customers from the same population that the original training sample came from. However, your stakeholder asks another question. In addition to predicting the probability that each of the 500 new customers will redeem the offer sent to them, you're asked to also provide an estimate of the total number of offers that will be redeeemd. Discuss how you would approach this problem. (No wrong asnwer here so don't Google it, I just want to hear your group's solution in detail.)
 
 For the next few questions, you'll be using the blood donation data available from the [UC Irvine Machine Learning Repository](https://archive.ics.uci.edu/); you can download the data from [here](https://archive.ics.uci.edu/dataset/176/blood+transfusion+service+center).
 
 **Question 8** Import the data into R and fit a simple logistic regression model using `Donated_Blood` as the binary response and `Recency` as the predictor. Interpret the coefficient of `Recenecy` (be sure to use full sentences and include the units). How would you interpret the estimated intercept in this model?
 
-**Question 9** Plot the fitted LR model from **Question XYZ** on the probability scale. The donation center asks you to estimate the `Recency` associated with a predicted likelihood of donating of $p = 0.5$. (In Pharmacology, this is referred to as the [median effective dose](https://en.wikipedia.org/wiki/Effective_dose_(pharmacology)).) Provide this estimate using your fitted model and describe how you arrived at this value.
+**Question 9** Plot the fitted LR model from **Question 8** on the probability scale (i.e., `Recency` on the $x$-axis and the predicted probability of donating on the $y$-axis). The donation center asks you to estimate the `Recency` associated with a predicted likelihood of donating of $p = 0.5$. (In Pharmacology, this is referred to as the [median effective dose](https://en.wikipedia.org/wiki/Effective_dose_(pharmacology)).) Provide an estimate using your fitted model and describe how you arrived at this value.
 
 **Question 10** Fit an LR model using all four predictors and provide an interpretation for each coefficient estimate. Without "Googling" or "ChatGPT-ing", come up with a way of measuring the realtive "importance" of each variable. (There's a million ways to do this, none of which are perfect, so please use your own intuition and expertise to devise a way to accomplish this.) Which variable seems most important in predicting `Donate_Blood`? Provide a table with the ranking of each variable. Describe how your group arrived at these rankings. What are some potential drawbacks of your approach?
