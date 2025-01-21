@@ -841,8 +841,8 @@ X = -2\log\left(\frac{L_{H_0}}{L_{H_1}}\right) = D_{H_0} - D_{H_1} \sim \chi^2\l
 <summary>Show R code</summary>
 <div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href=""></a>fit.H0 <span class="ot">&lt;-</span> <span class="fu">glm</span>(chd <span class="sc">~</span> cigs, <span class="at">data =</span> wcgs, <span class="at">family =</span> binomial)</span>
 <span id="cb38-2"><a href=""></a>fit.H1 <span class="ot">&lt;-</span> <span class="fu">glm</span>(chd <span class="sc">~</span> cigs <span class="sc">+</span> height, <span class="at">data =</span> wcgs, <span class="at">family =</span> binomial)</span>
-<span id="cb38-3"><a href=""></a>D.H0 <span class="ot">&lt;-</span> <span class="fu">deviance</span>(fit.H0)</span>
-<span id="cb38-4"><a href=""></a>D.H1 <span class="ot">&lt;-</span> <span class="fu">deviance</span>(fit.H1)</span>
+<span id="cb38-3"><a href=""></a>D.H0 <span class="ot">&lt;-</span> <span class="fu">deviance</span>(fit.H0)  <span class="co"># same as `-2*logLik(fit.H0)`</span></span>
+<span id="cb38-4"><a href=""></a>D.H1 <span class="ot">&lt;-</span> <span class="fu">deviance</span>(fit.H1)  <span class="co"># same as `-2*logLik(fit.H1)`</span></span>
 <span id="cb38-5"><a href=""></a>chisq.stat <span class="ot">&lt;-</span> D.H0 <span class="sc">-</span> D.H1</span>
 <span id="cb38-6"><a href=""></a>pval <span class="ot">&lt;-</span> <span class="fu">pchisq</span>(chisq.stat, <span class="at">df =</span> <span class="dv">1</span>, <span class="at">lower.tail =</span> <span class="cn">FALSE</span>)</span>
 <span id="cb38-7"><a href=""></a><span class="fu">c</span>(<span class="st">"stat"</span> <span class="ot">=</span> chisq.stat, <span class="st">"pval"</span> <span class="ot">=</span> pval)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>

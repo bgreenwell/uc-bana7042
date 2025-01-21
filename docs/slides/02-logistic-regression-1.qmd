@@ -528,8 +528,8 @@ Try by hand:
 ```{r}
 fit.H0 <- glm(chd ~ cigs, data = wcgs, family = binomial)
 fit.H1 <- glm(chd ~ cigs + height, data = wcgs, family = binomial)
-D.H0 <- deviance(fit.H0)
-D.H1 <- deviance(fit.H1)
+D.H0 <- deviance(fit.H0)  # same as `-2*logLik(fit.H0)`
+D.H1 <- deviance(fit.H1)  # same as `-2*logLik(fit.H1)`
 chisq.stat <- D.H0 - D.H1
 pval <- pchisq(chisq.stat, df = 1, lower.tail = FALSE)
 c("stat" = chisq.stat, "pval" = pval)
