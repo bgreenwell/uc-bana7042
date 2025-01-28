@@ -228,15 +228,12 @@ Does anyone recall how VIFs are computed? Try running this with `dibep` still in
 
 * Not sure we can combine `sdb` and `dbp` in any useful way?!
 
-* `height` and `weight` can be combined into a single number called [body mass index](https://en.wikipedia.org/wiki/Body_mass_index) (BMI)
-
-  - $\text{BMI} = \frac{\text{mass}_\text{lb}}{\text{height}_\text{in}^2} \times 703$
+* `height` and `weight` can be combined into a single number called [body mass index](https://en.wikipedia.org/wiki/Body_mass_index) (BMI): $\text{BMI} = \frac{\text{mass}_\text{lb}}{\text{height}_\text{in}^2} \times 703$
 
 ```{r}
 wcgs$bmi <- with(wcgs, 703 * weight / (height^2))
 head(wcgs[, c("height", "weight", "bmi")])
 ```
-
 
 
 ## Full model (again again)

@@ -608,10 +608,7 @@ arcus  1.060879  1        1.029990</code></pre>
 <ul>
 <li><p>Feature engineering is useful in cases where it makes sense!</p></li>
 <li><p>Not sure we can combine <code>sdb</code> and <code>dbp</code> in any useful way?!</p></li>
-<li><p><code>height</code> and <code>weight</code> can be combined into a single number called <a href="https://en.wikipedia.org/wiki/Body_mass_index">body mass index</a> (BMI)</p>
-<ul>
-<li><span class="math inline">\(\text{BMI} = \frac{\text{mass}_\text{lb}}{\text{height}_\text{in}^2} \times 703\)</span></li>
-</ul></li>
+<li><p><code>height</code> and <code>weight</code> can be combined into a single number called <a href="https://en.wikipedia.org/wiki/Body_mass_index">body mass index</a> (BMI): <span class="math inline">\(\text{BMI} = \frac{\text{mass}_\text{lb}}{\text{height}_\text{in}^2} \times 703\)</span></p></li>
 </ul>
 <div class="cell" data-layout-align="center">
 <details class="code-fold">
@@ -812,18 +809,18 @@ Residual Deviance: 1750     AIC: 1754</code></pre>
 <div class="cell-output cell-output-stdout">
 <pre><code>13 x 1 sparse Matrix of class "dgCMatrix"
                        s1
-(Intercept)  -6.793996643
-age           0.026985742
+(Intercept)  -6.422751453
+age           0.023727945
 height        .          
 weight        .          
-sdp           0.011042397
+sdp           0.010178343
 dbp           .          
-chol          0.006658276
+chol          0.006294894
 behaveA1      .          
-behaveA2      0.101528310
-behaveB3     -0.062327909
+behaveA2      0.080743895
+behaveB3     -0.035959601
 behaveB4      .          
-cigs          0.007890454
+cigs          0.006614438
 arcuspresent  .          </code></pre>
 </div>
 </div>
