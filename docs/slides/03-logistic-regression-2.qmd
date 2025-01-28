@@ -543,9 +543,9 @@ plot(res)
 ## Probability calibration
 
 * A probability $p$ is *well calibrated* if a fraction of about *p* of the events we predict with probability $p$ actually occur
-* Calibration curves, also referred to as reliability diagrams [(Wilks, 1995)](https://journals.ametsoc.org/waf/article/5/4/640/40179), compare how well the predicted probabilities are calibrated
+* [Calibration curves](https://scikit-learn.org/1.5/modules/calibration.html) are the :1st_place_medal: gold standard :1st_place_medal:
 * Compared to general machine learning models, logistic regression tends to return well calibrated probabilities
-* Calibrating probabilities consists of fitting a second regression model (called a calibrator) that maps the output of the original model's predictions to a calibrated probability in $\left[0, 1\right]$
+* For details, see [Niculescu-Mizil & Caruana (2005)](https://www.cs.cornell.edu/~alexn/papers/calibration.icml05.crc.rev3.pdf) and [Kull et al. (2017)](https://projecteuclid.org/journals/electronic-journal-of-statistics/volume-11/issue-2/Beyond-sigmoids--How-to-obtain-well-calibrated-probabilities-from/10.1214/17-EJS1338SI.full) and 
 
 
 ## Probability calibration
