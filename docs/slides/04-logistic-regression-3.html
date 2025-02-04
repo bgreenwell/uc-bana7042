@@ -238,7 +238,7 @@ P\left(Y = 1 | \boldsymbol{x}\right) = \Phi\left(\beta_0 + \beta_1x_1 + \cdots\r
 \text{probit}\left(p\right) = \Phi^{-1}\left(p\right) = \boldsymbol{x}^\top\boldsymbol{\beta}
 \]</span></p></li>
 <li><p>The term probit is short for <span style="color: green;"><strong>prob</strong></span>ability un<span style="color: green;"><strong>it</strong></span></p></li>
-<li><p>Proposed in <a href="https://www.science.org/doi/10.1126/science.79.2037.38">Bliss (1934)</a> for analyzing data such as the percentage of a pest killed by a pesticide</p></li>
+<li><p>Proposed in <a href="https://www.science.org/doi/10.1126/science.79.2037.38">Bliss (1934)</a> and still common for modeling dose-response relationships</p></li>
 </ul>
 </section>
 <section id="dobsons-beetle-data" class="slide level2">
@@ -586,26 +586,17 @@ Number of Fisher Scoring iterations: 6</code></pre>
 <section id="overdispersion-1" class="slide level2">
 <h2>Overdispersion</h2>
 <ul>
-<li><p>Recall that for a Bernoulli random variable <span class="math inline">\(Y\)</span> the mean and variance are given by <span class="math inline">\(E\left(Y\right) = p\)</span> and <span class="math inline">\(V\left(Y\right) = p\left(1 - p\right)\)</span></p></li>
-<li><p>In other words, once the mean is specified by the logistic regression, the variance is determined at the same time!</p></li>
-<li><p>This is different from the case of linear regression models</p></li>
-<li><p>Sometimes the data suggest that the variance is consistently greater than <span class="math inline">\(p\left(1 - p\right)\)</span></p></li>
-<li><p>Including a dispersion parameter can make the model more flexible: <span class="math inline">\(V\left(Y\right) = \sigma^2 p\left(1 - p\right)\)</span></p></li>
+<li><p>For a Bernoulli random variable <span class="math inline">\(Y\)</span>, <span class="math inline">\(E(Y) = p\)</span> and <span class="math inline">\(V(Y) = p(1 - p)\)</span>.</p></li>
+<li><p>Sometimes the data exhibit variance greater than expected. Adding a dispersion parameter makes the model more flexible: <span class="math inline">\(V(Y) = \sigma^2 p(1 - p)\)</span>.</p></li>
+<li><p>Overdispersion occurs when variability exceeds expectations under the response distribution. Underdispersion is less common.</p></li>
 </ul>
 </section>
 <section id="overdispersion-2" class="slide level2">
 <h2>Overdispersion</h2>
 <ul>
-<li><p>Over-dispersion is said to exist when there is more variability than expected under the response distribution; similar for underdispersion.</p></li>
-<li><p>For a correctly specified model, the Pearson chi-square statistic and the deviance, divided by their degrees of freedom, should be approximately equal to one. When their values are much larger than one, the assumption of binomial variability might not be valid and the data are said to exhibit overdispersion. Underdispersion, which results in the ratios being less than one, occurs less often in practice.</p></li>
-</ul>
-</section>
-<section id="overdispersion-3" class="slide level2">
-<h2>Overdispersion</h2>
-<ul>
-<li><p>Overall performance of the fitted model can be measured by several different goodness-of-fit tests. Two tests that require replicated data (multiple observations with the same values for all the predictors) are the Pearson chi-square goodness-of-fit test and the deviance goodness-of-fit test (analagous to the multiple linear regression lack-of-fit F-test).</p></li>
-<li><p>When fitting a model, there are several problems that can cause the goodness-of-fit statistics to exceed their degrees of freedom. Among these are such problems as outliers in the data, using the wrong link function, omitting important terms from the model, and needing to transform some predictors. These problems should be eliminated before proceeding to use the following methods to correct for overdispersion.</p></li>
-<li><p>A large difference between the Pearson statistic and the deviance provides some evidence that the data are too sparse to use either statistic.</p></li>
+<li><p>For a correctly specified model, the Pearson chi-square statistic and deviance, divided by their degrees of freedom, should be about one. Values much larger indicate overdispersion.</p></li>
+<li><p>Such goodness-of-fit statistics require replicated data. Problems like outliers, wrong link function, omitted terms, or untransformed predictors can inflate goodness-of-fit statistics.</p></li>
+<li><p>A large difference between the Pearson statistic and deviance suggests data sparsity.</p></li>
 </ul>
 </section>
 <section id="o-rings-example-7" class="slide level2">
@@ -625,7 +616,7 @@ Number of Fisher Scoring iterations: 6</code></pre>
 </div>
 </div>
 </section>
-<section id="overdispersion-4" class="slide level2 scrollable">
+<section id="overdispersion-3" class="slide level2 scrollable">
 <h2>Overdispersion</h2>
 <p>Two common (but equivalent) ways to handle overdispersion in R:</p>
 <ol type="1">
@@ -633,7 +624,7 @@ Number of Fisher Scoring iterations: 6</code></pre>
 <li><p>Use the <code>quasibinomial()</code> family</p></li>
 </ol>
 </section>
-<section id="overdispersion-5" class="slide level2">
+<section id="overdispersion-4" class="slide level2">
 <h2>Overdispersion</h2>
 <p>Estimate the dispersion parameter <span class="math inline">\(\sigma^2\)</span>; analagous to MSE in linear regression</p>
 <div class="cell" data-layout-align="center">
@@ -676,7 +667,7 @@ Number of Fisher Scoring iterations: 6</code></pre>
 </div>
 </div>
 </section>
-<section id="overdispersion-6" class="slide level2">
+<section id="overdispersion-5" class="slide level2">
 <h2>Overdispersion</h2>
 <p>Can use <code>quasibinomial()</code> family to account for over-dispersion automatically (notice the estimated coeficients don’t change)</p>
 <div class="cell" data-layout-align="center">
