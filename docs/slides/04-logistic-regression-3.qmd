@@ -5,6 +5,7 @@ institute: "University of Cincinnati"
 from: markdown+emoji
 format: 
     revealjs:
+        margin: 0.05
         df-print: paged
         code-fold: true
         code-summary: "Show R code"
