@@ -1,5 +1,5 @@
 ---
-title: "BANA 7042: Assignment 4 (20 points)"
+title: "BANA 7042: Assignment 4 (25 points)"
 subtitle: "Multinomial and Ordinal Outcomes"
 format: pdf
 ---
