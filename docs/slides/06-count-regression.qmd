@@ -1,0 +1,391 @@
+---
+title: "Regression for Multinomial and Ordinal Outcomes"
+author: "Brandon M. Greenwell, PhD"
+institute: "University of Cincinnati"
+from: markdown+emoji
+format: 
+    revealjs:
+        margin: 0.05
+        df-print: paged
+        code-fold: true
+        code-summary: "Show R code"
+        code-copy: true
+        logo: images/uc.png
+        chalkboard: true
+        slide-number: true
+        scrollable: true
+        embed-resources: false
+        footer: "BANA 7042: Statistical Modeling"
+---
+
+```{r, include=FALSE}
+palette("Okabe-Ito")
+
+library(knitr)
+
+opts_chunk$set(
+  echo = TRUE,
+  dpi = 300,     
+  #fig.retina = 3,  
+  fig.align = "center",
+  fig.width = 6,
+  fig.asp = 0.618,
+  out.width = "100%",
+ # size = "small",
+  message = TRUE,
+  warning = FALSE,
+  error = FALSE
+)
+
+knit_hooks$set(
+  par = function(before, options, envir) {
+    if (before && options$fig.show != "none") {
+      par(
+        mar = c(4, 4, 2, 0.1), 
+        cex.lab = 0.95, 
+        cex.axis = 0.8,  # was 0.9
+        mgp = c(2, 0.7, 0), 
+        tcl = -0.3, 
+        las = 1
+      )
+      if (is.list(options$par)) {
+        do.call(par, options$par)
+      }
+    }
+  }
+)
+```
+
+
+## Count data
+
+* A type of data in which the observations take on non-negative integer
+values $\left\{0, 1, 2, \dots\right\}$
+
+* Examples include:
+
+  - The number of patients who come to the ER of Children’s Hospital between 9PM and 1AM.
+  - The number of shoppers in Kenwood Towne Centre on a calendar day.
+  - The number of Google searches (in a week) for flights to Shanghai right
+before Lunar New Year.
+
+
+## The Poisson distribution
+
+* The simplest distribution for modeling counts is the [Poisson distribution](https://en.wikipedia.org/wiki/Poisson_distribution):
+
+  - $Y \sim \mathrm{Poi}\left(\mu\right)$
+  - $f\left(y\right) = \mathrm{P}\left(Y = y\right) = \frac{\exp\left(-\mu\right)\mu^y}{y!}$, for $y = 0, 1, 2, \dots$
+  - $\mathrm{E}\left(Y\right) = \mathrm{Var}\left(Y\right) = \mu$, where $\mu \in \left(0, \infty\right)$
+  - Fact: $\sum_i Y_i \sim \mathrm{Poi}\left(\sum_i \mu_i\right)$ (aggregated data)
+
+* An interesting characteristic of the Poisson is that the mean and variance are equal to each other 
+
+
+## The Poisson distribution
+
+```{r}
+#| par: true
+# Install required package(s)
+pkgs <- c("faraway", "investr", "mgcv", "performance", "pscl")
+lib <- installed.packages()[, "Package"]
+install.packages(setdiff(pkgs, lib))
+
+# Y ~ Poisson(lambda = 0.5)
+set.seed(2004)  # for reproducibility
+par(mfrow = c(2, 2))
+for (lambda in c(0.5, 2, 5, 15)) {
+  y <- dpois(0:35, lambda = lambda)
+  barplot(y, xlab = "y", ylab = "P(Y = y)", names = 0:35, main = paste("E(Y) =", lambda), 
+          col = "dodgerblue2", border = "dodgerblue2", las = 1)
+}
+```
+
+
+## The Poisson distribution
+
+```{r}
+#| par: true
+y <- rpois(10000, lambda = 200)
+hist(y, br = 50)
+```
+
+
+## The Poisson distribution
+
+* If the count is some number out of some possible total, then the response would be more appropriately modeled as a binomial r.v.
+
+* However, for small $p$ and large $n$, the Poisson distribution provides a reasonable approximation to the binomial; For example, in modeling the incidence of rare forms of cancer, the number of people affected is a small proportion of the population in a given geographical area
+
+```{r}
+c("Binomial" = pbinom(5, size = 8, p = 0.7),
+  "Poisson" = ppois(5, lambda = 8 * 0.7))
+c("Binomial" = pbinom(5, size = 100, p = 0.05),
+  "Poisson" = ppois(5, lambda = 100 * 0.05))
+```
+
+
+## Galápagos islands data
+
+There are 30 Galapagos islands and 7 variables in the data set. The relationship between the number of plant species ($Y$) and several geographic variables is of interest. The original data set contained several missing values which have been filled for convenience. See the `faraway::galamiss` data set for the original version.
+
+
+## Galápagos islands data
+
+![](images/galapagos.jpg)
+
+
+## Galápagos islands data
+
+We'll remove `Endemics` since we won't be using it!
+```{r}
+# Load the Galapagos Islands data
+data(gala, package = "faraway")
+gala$Endemics <- NULL
+
+# Print structure of data frame
+str(gala)
+```
+
+
+## Galápagos islands data
+
+Summary of data frame
+```{r}
+summary(gala)
+```
+
+
+## Galápagos islands data
+
+```{r}
+#| par: true
+pairs(gala)
+```
+
+
+## Galápagos islands data
+
+```{r}
+#| par: true
+pairs(~ log(Species) + log(Area) + log(Elevation) + 
+  log(Nearest) + log(Scruz + 0.1) + log(Adjacent), data = gala)
+```
+
+
+## Galápagos islands data
+
+Let's start with a linear model
+
+```{r}
+gala.ols <- lm(log(Species) ~ log(Area) + log(Elevation) + log(Nearest) + I(log(Scruz + 0.1)) + log(Adjacent), data = gala)
+summary(gala.ols)
+```
+
+
+## Galápagos islands data
+
+Residual analysis
+```{r}
+#| par: true
+par(mfrow = c(2, 2))
+plot(gala.ols, which = 1:4)
+```
+
+
+## Poisson regression
+
+* Need a way to *link* the mean response $\mathrm{E}\left(Y\right) = \mu \in \left(0, \infty\right)$ to the linear predictor $\eta = \boldsymbol{x}^\top\boldsymbol{p}$
+
+* In Poisson we regression, we default to
+$$
+\log\left(\mu\right) = \boldsymbol{x}^\top\boldsymbol{p}
+$$
+
+* Maximum likelihood estimation provides a convenient estimate of $\boldsymbol{\beta}$
+
+
+## Galápagos islands data
+
+Try a Poisson regression
+```{r}
+summary(gala.poi <- glm(Species ~ ., data = gala, family = poisson))
+```
+
+
+## Galápagos islands data
+
+Check mean-variance relationship
+```{r}
+#| par: true
+mu <- fitted(gala.poi)  # fitted fitted.values
+y <- gala.poi$y  # observed response values
+plot(log(mu), log((y - mu)^2), xlab = expression(hat(mu)),
+     ylab = expression((y-hat(mu))^2))
+abline(0, 1)
+```
+
+
+## Galápagos islands data
+
+Crude check for overdispersion
+```{r}
+performance::check_overdispersion(gala.poi)
+```
+
+
+## Galápagos islands data
+
+Similar to before, can use `quasipoisson()` family to correct fo overdispersion:
+```{r}
+gala.quasipoi <- glm(Species ~ ., family = quasipoisson(link = "log"),  data = gala)
+summary(gala.quasipoi)
+```
+
+
+## Rates and offsets
+
+* The number of observed events may depend on a size variable that determines the
+number of opportunities for the events to occur
+
+  - For example, the number of burglaries reported in different cities 
+
+* In other cases, the size variable may be time
+
+  - For example, the number of customers served by a sales worker (must take account of the differing amounts of time worked)
+
+
+## Rates and offsets
+
+An experiment was conducted to determine the effect of gamma radiation on the numbers of chromosomal abnormalities (`ca`) observed. The number (`cells`), in hundreds of cells exposed in each run, differs. The dose amount (`doseamt`) and the rate (`doserate`) at which the dose is applied are the predictors of interest. The hypothesized model is as follows: 
+
+$$
+\begin{align}
+\log\left(\mathtt{ca}/\mathtt{cells}\right) &= \boldsymbol{x}^\top\boldsymbol{\beta} \\
+\implies \log\left(\mathtt{ca}\right) &= \log\left(\mathtt{cells}\right) + \boldsymbol{x}^\top\boldsymbol{\beta}
+\end{align}
+$$
+
+
+## Rates and offsets
+
+```{r}
+dicentric <- faraway::dicentric
+dicentric$dosef <- factor(dicentric$doseamt)
+fit <- glm(ca ~ offset(log(cells)) + log(doserate)*dosef, family = poisson, 
+           data = dicentric)
+summary(fit)
+```
+
+
+## zero-inflated outcomes
+
+The state wildlife biologists want to model how many fish are being caught by fishermen at a state park. Visitors are asked how long they stayed, how many people were in the group, were there children in the group, and how many fish were caught. Some visitors do not fish, but there is no data on whether a person fished or not. Some visitors who did fish did not catch any fish so there are excess zeros in the data because of the people that did not fish.
+
+
+## Zero-inflated outcomes
+
+Our sample consists of We have data on N=250 groups that went to a park. Each group was questioned about how many fish they caught (count), how many children were in the group (child), how many people were in the group (persons), and whether or not they brought a camper to the park (camper).
+
+The data can be read in as follows:
+```{r}
+#| code-fold: false
+fish <- read.csv("https://stats.idre.ucla.edu/stat/data/fish.csv")
+```
+
+
+## Zero-inflated outcomes
+
+```{r}
+#| code-fold: false
+# Retain only variables of interest and print summary
+fish <- fish[, c("count", "child", "persons", "camper")]
+summary(fish)
+```
+
+
+## Zero-inflated outcomes
+
+```{r}
+#| par: true
+pairs(log(count + 0.1) ~ ., data = fish)
+```
+
+
+## Zero-inflated outcomes
+
+Too many zeros?
+```{r}
+#| par: true
+barplot(table(fish$count))
+```
+
+
+## Zero-inflated outcomes
+
+```{r}
+#| code-fold: false
+fish.poi <- glm(count ~ ., data = fish, family = poisson)
+summary(fish.poi)
+performance::check_zeroinflation(fish.poi)
+```
+
+
+## The hurdle model
+
+In addition to predicting the number of fish caught, there is interest in predicting the existence of excess zeros (i.e., the zeroes that were not simply a result of bad luck or lack of fishing skill). In particular, we'd like to estimate the effect of party size on catching zero fish.
+
+We can accomplish this in several ways, but popular choices include:
+
+1) The zero-inflated Poisson (or negative binomial) model
+2) The hurdle model
+
+
+## The hurdle model
+
+In this example, we'll use a simple hurdle model, which essentially fits two separate models:
+ 
+1) $\mathrm{P}\left(Y = 0\right)$ via a logistic regression
+2) $\mathrm{P}\left(Y = j\right)$, $j = 1, 2, \dots$ via a [truncated Poisson](https://en.wikipedia.org/wiki/Zero-truncated_Poisson_distribution) regression
+
+
+## The hurdle model
+
+You can fit hurdle models using the `hurdle()` function from package [pscl](https://cran.r-project.org/package=pscl):
+```{r}
+suppressMessages(library(pscl))
+
+summary(fish.hur <- hurdle(count ~ child + camper | persons, data = fish))
+```
+
+
+## The hurdle model
+
+Check the logit part directly:
+```{r}
+#| code-fold: false
+z <- fish
+z$count <- ifelse(z$count == 0, 0, 1)
+glm(count ~ persons, data = z, family = binomial)
+```
+
+
+## The hurdle model
+
+Interpretation of the previous model
+
+* The expected log number of the fish caught reduces by 0.759 for every additional chile (all else held constant)
+
+* Being a camper increases the expected log number of fish caught by 0.752 (all else held constant)
+
+* The log odds of catching at least one fish increases by 0.199 for every additional person
+
+
+## The hurdle model
+
+Predicting new observations
+```{r}
+#| code-fold: false
+newobs <- data.frame("child" = 0, "persons" = 3, "camper" = 1)
+head(predict(fish.hur, newdata = newobs, type = "prob"))
+```
