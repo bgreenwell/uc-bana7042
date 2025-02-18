@@ -1,5 +1,5 @@
 ---
-title: "Regression for Multinomial and Ordinal Outcomes"
+title: "Regression for Counts and Rates"
 author: "Brandon M. Greenwell, PhD"
 institute: "University of Cincinnati"
 from: markdown+emoji
