@@ -14,9 +14,37 @@ website:
         text: Slides
       - href: assignments/index.qmd
         text: Assignments
+    right:
+      - icon: github
+        href: https://github.com/bgreenwell/uc-bana7042
+        aria-label: GitHub
+
+  sidebar:
+    - id: slides
+      title: "Lecture Slides"
+      contents:
+        - slides/index.qmd
+        - slides/01-linear-regression.qmd
+        - slides/02-logistic-regression-1.qmd
+        - slides/03-logistic-regression-2.qmd
+        - slides/04-logistic-regression-3.qmd
+        - slides/05-multinomial-ordinal-regression.qmd
+        - slides/06-count-regression.qmd
+    - id: assignments
+      title: "Assignments"
+      contents:
+        - assignments/index.qmd
+        - assignments/assignment-01.qmd
+        - assignments/assignment-02.qmd
+        - assignments/assignment-03.qmd
+        - assignments/assignment-04.qmd
+        - assignments/assignment-05.qmd
+        - assignments/assignment-06.qmd
+        - assignments/final-exam.qmd
 
 format:
   html:
     theme: cosmo
     css: styles.css
     toc: true
+    code-copy: true
