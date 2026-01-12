@@ -57,6 +57,7 @@ jobs:
             any::pROC
             any::performance
             any::randomForest
+            any::DHARMa
             bgreenwell/treemisc
 
       - name: Set up Quarto
