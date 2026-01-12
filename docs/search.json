@@ -1431,7 +1431,7 @@
     "href": "index.html#quick-links",
     "title": "BANA 7042: Statistical Modeling",
     "section": "Quick Links",
-    "text": "Quick Links\n\nSyllabus\nSlides\nAssignments"
+    "text": "Quick Links\n\nSyllabus"
   },
   {
     "objectID": "index.html#instructor",
@@ -1452,7 +1452,7 @@
     "href": "assignments/index.html",
     "title": "Assignments",
     "section": "",
-    "text": "Assignments and exams.\n\n\n\n\n\n\n   \n    \n    \n      Order By\n      Default\n      \n        Title\n      \n    \n  \n    \n      \n      \n    \n\n\n\n\n\n\nTitle\n\n\n\nSubtitle\n\n\n\n\n\n\n\n\nAssignment 4\n\n\nLogistic Regression III\n\n\n\n\n\n\nAssignment 5\n\n\nMultinomial & Ordinal Regression\n\n\n\n\n\n\nBANA 7042: Assignment 1\n\n\nLinear Regression\n\n\n\n\n\n\nBANA 7042: Assignment 2\n\n\nLogistic regression (part I)\n\n\n\n\n\n\nBANA 7042: Assignment 3 (20 points)\n\n\nLogistic regression (part II)\n\n\n\n\n\n\nBANA 7042: Assignment 6\n\n\nCount Regression\n\n\n\n\n\n\nBANA 7042: Final Exam\n\n\n \n\n\n\n\n\n\nNo matching items",
+    "text": "Assignments and exams.\n\n\n\n\n\n\n   \n    \n    \n      Order By\n      Default\n      \n        Title\n      \n    \n  \n    \n      \n      \n    \n\n\n\n\n\n\nTitle\n\n\n\nSubtitle\n\n\n\n\n\n\n\n\nBANA 7042: Assignment 1\n\n\nLinear Regression\n\n\n\n\n\n\nBANA 7042: Assignment 2\n\n\nLogistic regression (part I)\n\n\n\n\n\n\nBANA 7042: Assignment 3 (20 points)\n\n\nLogistic regression (part II)\n\n\n\n\n\n\nBANA 7042: Assignment 4\n\n\nLogistic Regression III\n\n\n\n\n\n\nBANA 7042: Assignment 5\n\n\nMultinomial & Ordinal Regression\n\n\n\n\n\n\nBANA 7042: Assignment 6\n\n\nCount Regression\n\n\n\n\n\n\nBANA 7042: Final Exam\n\n\n \n\n\n\n\n\n\nNo matching items",
     "crumbs": [
       "Final Exam",
       "Assignments"
@@ -1530,45 +1530,45 @@
   {
     "objectID": "assignments/assignment-05.html",
     "href": "assignments/assignment-05.html",
-    "title": "Assignment 5",
+    "title": "BANA 7042: Assignment 5",
     "section": "",
     "text": "This assignment covers multinomial and ordinal regression models.\nComing Soon",
     "crumbs": [
       "Final Exam",
-      "Assignment 5"
+      "BANA 7042: Assignment 5"
     ]
   },
   {
     "objectID": "assignments/assignment-05.html#overview",
     "href": "assignments/assignment-05.html#overview",
-    "title": "Assignment 5",
+    "title": "BANA 7042: Assignment 5",
     "section": "",
     "text": "This assignment covers multinomial and ordinal regression models.\nComing Soon",
     "crumbs": [
       "Final Exam",
-      "Assignment 5"
+      "BANA 7042: Assignment 5"
     ]
   },
   {
     "objectID": "assignments/assignment-04.html",
     "href": "assignments/assignment-04.html",
-    "title": "Assignment 4",
+    "title": "BANA 7042: Assignment 4",
     "section": "",
     "text": "This assignment covers advanced topics in logistic regression.\nComing Soon",
     "crumbs": [
       "Final Exam",
-      "Assignment 4"
+      "BANA 7042: Assignment 4"
     ]
   },
   {
     "objectID": "assignments/assignment-04.html#overview",
     "href": "assignments/assignment-04.html#overview",
-    "title": "Assignment 4",
+    "title": "BANA 7042: Assignment 4",
     "section": "",
     "text": "This assignment covers advanced topics in logistic regression.\nComing Soon",
     "crumbs": [
       "Final Exam",
-      "Assignment 4"
+      "BANA 7042: Assignment 4"
     ]
   },
   {
@@ -2418,7 +2418,7 @@
     "href": "slides/03-logistic-regression-2.html#redundancy-analysis",
     "title": "Logistic Regression (Part II)",
     "section": "Redundancy analysis",
-    "text": "Redundancy analysis\nRedunancy analysis is a powerful tool available in the Hmisc package:\n\n\nShow R code\n# Notice we're ignoring the response here!\nHmisc::redun(~ . - chd, nk = 0, data = wcgs)\n\n\n\nRedundancy Analysis\n\n~age + height + weight + sdp + dbp + chol + behave + cigs + dibep + \n    arcus\n&lt;environment: 0x12c1565f8&gt;\n\nn: 3140     p: 10   nk: 0 \n\nNumber of NAs:   0 \n\nTransformation of target variables forced to be linear\n\nR-squared cutoff: 0.9   Type: ordinary \n\nR^2 with which each variable can be predicted from all other variables:\n\n   age height weight    sdp    dbp   chol behave   cigs  dibep  arcus \n 0.083  0.323  0.379  0.606  0.617  0.054  1.000  0.050  1.000  0.055 \n\nRendundant variables:\n\ndibep\n\n\nPredicted from variables:\n\nage height weight sdp dbp chol behave cigs arcus\n\n  Variable Deleted R^2 R^2 after later deletions\n1            dibep   1",
+    "text": "Redundancy analysis\nRedunancy analysis is a powerful tool available in the Hmisc package:\n\n\nShow R code\n# Notice we're ignoring the response here!\nHmisc::redun(~ . - chd, nk = 0, data = wcgs)\n\n\n\nRedundancy Analysis\n\n~age + height + weight + sdp + dbp + chol + behave + cigs + dibep + \n    arcus\n&lt;environment: 0x11fc138d8&gt;\n\nn: 3140     p: 10   nk: 0 \n\nNumber of NAs:   0 \n\nTransformation of target variables forced to be linear\n\nR-squared cutoff: 0.9   Type: ordinary \n\nR^2 with which each variable can be predicted from all other variables:\n\n   age height weight    sdp    dbp   chol behave   cigs  dibep  arcus \n 0.083  0.323  0.379  0.606  0.617  0.054  1.000  0.050  1.000  0.055 \n\nRendundant variables:\n\ndibep\n\n\nPredicted from variables:\n\nage height weight sdp dbp chol behave cigs arcus\n\n  Variable Deleted R^2 R^2 after later deletions\n1            dibep   1",
     "crumbs": [
       "Logistic Regression (Part II)"
     ]
@@ -2538,7 +2538,7 @@
     "href": "slides/03-logistic-regression-2.html#enet-fit-to-wcgs-data-2",
     "title": "Logistic Regression (Part II)",
     "section": "ENet fit to wcgs data",
-    "text": "ENet fit to wcgs data\n\n\nShow R code\ncoef(lr.enet)\n\n\n13 x 1 sparse Matrix of class \"dgCMatrix\"\n               lambda.1se\n(Intercept)  -6.422751453\nage           0.023727945\nheight        .          \nweight        .          \nsdp           0.010178343\ndbp           .          \nchol          0.006294894\nbehaveA1      .          \nbehaveA2      0.080743895\nbehaveB3     -0.035959601\nbehaveB4      .          \ncigs          0.006614438\narcuspresent  .",
+    "text": "ENet fit to wcgs data\n\n\nShow R code\ncoef(lr.enet)\n\n\n13 x 1 sparse Matrix of class \"dgCMatrix\"\n               lambda.1se\n(Intercept)  -5.557386134\nage           0.016230481\nheight        .          \nweight        .          \nsdp           0.008155035\ndbp           .          \nchol          0.005476254\nbehaveA1      .          \nbehaveA2      0.017441706\nbehaveB3      .          \nbehaveB4      .          \ncigs          0.003618991\narcuspresent  .",
     "crumbs": [
       "Logistic Regression (Part II)"
     ]
