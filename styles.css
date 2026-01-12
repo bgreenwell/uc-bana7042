@@ -1,0 +1,13 @@
+/* css styles */
+
+.navbar-title {
+  font-weight: bold;
+}
+
+.sidebar-title {
+  font-weight: 600;
+}
+
+body {
+  font-family: system-ui, -apple-system, sans-serif;
+}
