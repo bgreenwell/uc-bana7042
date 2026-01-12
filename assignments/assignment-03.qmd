@@ -1,7 +1,9 @@
 ---
 title: "BANA 7042: Assignment 3 (20 points)"
 subtitle: "Logistic regression (part II)"
-format: html
+format:
+  html: default
+  pdf: default
 ---
 
 ```{r setup, include=FALSE}

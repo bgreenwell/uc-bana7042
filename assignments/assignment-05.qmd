@@ -1,7 +1,9 @@
 ---
-title: "Assignment 5"
+title: "BANA 7042: Assignment 5"
 subtitle: "Multinomial & Ordinal Regression"
-format: html
+format:
+  html: default
+  pdf: default
 ---
 
 ## Overview

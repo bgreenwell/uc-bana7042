@@ -1,7 +1,9 @@
 ---
-title: "Assignment 4"
+title: "BANA 7042: Assignment 4"
 subtitle: "Logistic Regression III"
-format: html
+format:
+  html: default
+  pdf: default
 ---
 
 ## Overview
