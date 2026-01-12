@@ -1,7 +1,7 @@
 ---
 title: "BANA 7042: Final Exam"
 subtitle: ""
-format: pdf
+format: html
 ---
 
 **Note:** Please be sure to properly label all figures and include a caption for each!

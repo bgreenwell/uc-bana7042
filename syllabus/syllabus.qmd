@@ -135,7 +135,7 @@ Late submissions will be penalized 10% per calendar day unless prior arrangement
 
 #### Week 4: Logistic Regression (Part III)
 *   **Topic:** Advanced Topics
-*   **Content:** Variable selection, regularization (Lasso, Ridge), and dealing with imbalanced data.
+*   **Content:** Variable selection, regularization (Lasso, Ridge), and "dealing" with imbalanced data.
 *   **Deliverable:** Assignment 04
 
 #### Week 5: Regression for Multiclass Data
