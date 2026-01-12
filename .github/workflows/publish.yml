@@ -21,9 +21,10 @@ jobs:
         with:
           r-version: 'release'
 
-      - name: Install Quarto required packages
+      - name: Install R dependencies
         run: |
-          install.packages(c("rmarkdown", "knitr", "jsonlite", "treemisc", "rms"))
+          install.packages(c("remotes", "rmarkdown", "knitr", "jsonlite", "rms", "dplyr", "ggplot2"))
+          remotes::install_github("bgreenwell/treemisc")
         shell: Rscript {0}
 
       - name: Set up Quarto
