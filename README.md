@@ -23,7 +23,6 @@ This repository contains the course materials for BANA 7042: Statistical Modelin
 *   [Assignment 04](https://bgreenwell.github.io/uc-bana7042/assignments/assignment-04.html)
 *   [Assignment 05](https://bgreenwell.github.io/uc-bana7042/assignments/assignment-05.html)
 *   [Assignment 06](https://bgreenwell.github.io/uc-bana7042/assignments/assignment-06.html)
-*   [Quiz 1](https://bgreenwell.github.io/uc-bana7042/assignments/quiz-1.html)
 *   [Final Exam](https://bgreenwell.github.io/uc-bana7042/assignments/final-exam.html)
 
 ---

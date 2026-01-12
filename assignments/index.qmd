@@ -4,7 +4,6 @@ listing:
   contents: 
     - "assignment-*.qmd"
     - "final-exam.qmd"
-    - "quiz-*.qmd"
   type: table
   fields: [title, subtitle]
   sort: "title"
