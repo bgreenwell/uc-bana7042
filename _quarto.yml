@@ -1,7 +1,6 @@
 project:
   type: website
   output-dir: docs
-  freeze: auto
 
 website:
   title: "BANA 7042"
