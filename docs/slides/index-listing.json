@@ -1,0 +1,11 @@
+{
+  "listing": "/slides/index.html",
+  "items": [
+    "/slides/01-linear-regression.html",
+    "/slides/02-logistic-regression-1.html",
+    "/slides/03-logistic-regression-2.html",
+    "/slides/04-logistic-regression-3.html",
+    "/slides/06-count-regression.html",
+    "/slides/05-multinomial-ordinal-regression.html"
+  ]
+}
