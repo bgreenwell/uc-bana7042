@@ -1,9 +1,6 @@
 ---
 title: "Quiz 1: Linear Regression"
-format:
-  pdf:
-    documentclass: article
-    geometry: margin=1in
+format: html
 ---
 
 **Name:** \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
@@ -23,16 +20,12 @@ b. $\beta_0$
 c. $\beta_1$
 d. $\varepsilon_i$
 
-\vspace{0.5cm}
-
 **Question 2:** What is the possible range of Pearson's correlation coefficient $r$?
 
 a. $0 \leq r \leq 1$
 b. $-1 \leq r \leq 1$
 c. $-\infty < r < \infty$
 d. $0 < r < \infty$
-
-\vspace{0.5cm}
 
 **Question 3:** A high correlation between variables $X$ and $Y$ indicates that:
 
@@ -41,16 +34,12 @@ b. $Y$ causes $X$
 c. There is a strong linear association between $X$ and $Y$
 d. There is no relationship between $X$ and $Y$
 
-\vspace{0.5cm}
-
 **Question 4:** The residual for observation $i$ in a regression model is defined as:
 
 a. $\hat{Y}_i - Y_i$
 b. $Y_i - \hat{Y}_i$
 c. $Y_i - \bar{Y}$
 d. $\hat{Y}_i - \bar{Y}$
-
-\vspace{0.5cm}
 
 **Question 5:** In the simple linear regression model, which of the following is assumed to be normally distributed?
 
@@ -59,16 +48,12 @@ b. The response variable $Y$
 c. The error terms $\varepsilon_i$
 d. The regression coefficients $\beta_0$ and $\beta_1$
 
-\vspace{0.5cm}
-
 **Question 6:** Log transformations are commonly used in regression to address:
 
 a. Missing data
 b. Multicollinearity between predictors
 c. Non-constant variance (heteroscedasticity) and/or nonlinearity
 d. Small sample sizes
-
-\vspace{0.5cm}
 
 **Question 7:** Homoscedasticity in regression means:
 
@@ -77,8 +62,6 @@ b. The errors have constant variance across all levels of $X$
 c. The predictors are uncorrelated
 d. The response variable is normally distributed
 
-\vspace{0.5cm}
-
 **Question 8:** The primary purpose of $k$-fold cross-validation is to:
 
 a. Estimate the regression coefficients
@@ -86,22 +69,12 @@ b. Test for multicollinearity
 c. Assess the model's predictive performance on unseen data
 d. Transform non-normal variables
 
-\vspace{1cm}
-
 # Part II: Short Answer (2 points each)
 
 **Question 9:** In one sentence, explain what it means if a regression model has $R^2 = 0.75$.
 
-\vspace{3cm}
-
 **Question 10:** What does a funnel-shaped pattern in a residual vs. fitted values plot suggest about the regression model?
-
-\vspace{3cm}
 
 **Question 11:** Give one example of a situation when linear regression would NOT be appropriate for modeling a relationship.
 
-\vspace{3cm}
-
 **Question 12:** Why should we generally avoid fitting very high-order polynomial regression models (e.g., degree 10 or higher)?
-
-\vspace{3cm}
