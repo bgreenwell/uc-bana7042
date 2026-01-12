@@ -1,7 +1,9 @@
 ---
 title: "BANA 7042: Assignment 1"
 subtitle: "Linear Regression"
-format: html
+format:
+  html: default
+  pdf: default
 ---
 
 ```{r setup, include=FALSE}

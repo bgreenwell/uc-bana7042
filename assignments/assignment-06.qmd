@@ -1,5 +1,5 @@
 ---
-title: "Assignment 6"
+title: "BANA 7042: Assignment 6"
 subtitle: "Count Regression"
 format: html
 ---
