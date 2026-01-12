@@ -1,4 +1,39 @@
-# Ignore final exam files
-assignments/final.*
-_site/
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# R environment
+.Rproj.user
+.Rhistory
+.RData
+.Ruserdata
+*.Rproj
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.ipynb_checkpoints/
+venv/
+env/
+.env
+
+# Quarto / Site generation
+/_site/
+/docs/
 .quarto/
+!/docs/.nojekyll
+
+# VS Code
+.vscode/
+
+# Assignments
+assignments/final.*
+!assignments/final-exam.qmd
