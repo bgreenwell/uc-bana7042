@@ -27,9 +27,7 @@ env/
 
 # Quarto / Site generation
 /_site/
-/docs/
 .quarto/
-!/docs/.nojekyll
 
 # VS Code
 .vscode/
