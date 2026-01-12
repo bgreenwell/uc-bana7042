@@ -1,4 +1,5 @@
 ---
+title: "Syllabus"
 format: html
 ---
 ![Lindner College of Business logo](images/lindner_logo.jpg)
