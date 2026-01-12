@@ -245,27 +245,16 @@ Brandon M. Greenwell, PhD
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a></a><span class="co"># Install required package(s)</span></span>
 <span id="cb1-2"><a></a>pkgs <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"faraway"</span>, <span class="st">"investr"</span>, <span class="st">"mgcv"</span>, <span class="st">"performance"</span>, <span class="st">"pscl"</span>)</span>
 <span id="cb1-3"><a></a>lib <span class="ot">&lt;-</span> <span class="fu">installed.packages</span>()[, <span class="st">"Package"</span>]</span>
-<span id="cb1-4"><a></a><span class="fu">install.packages</span>(<span class="fu">setdiff</span>(pkgs, lib))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
-<div class="cell-output cell-output-stderr">
-<pre><code>Installing package into '/Users/greenwbm/Library/R/arm64/4.5/library'
-(as 'lib' is unspecified)</code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-The downloaded binary packages are in
-    /var/folders/zv/pwf48t9n4rsd8wm68r_wt9zm0000gq/T//RtmplkVNTd/downloaded_packages</code></pre>
-</div>
-<details class="code-fold">
-<summary>Show R code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a></a><span class="co"># Y ~ Poisson(lambda = 0.5)</span></span>
-<span id="cb4-2"><a></a><span class="fu">set.seed</span>(<span class="dv">2004</span>)  <span class="co"># for reproducibility</span></span>
-<span id="cb4-3"><a></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
-<span id="cb4-4"><a></a><span class="cf">for</span> (lambda <span class="cf">in</span> <span class="fu">c</span>(<span class="fl">0.5</span>, <span class="dv">2</span>, <span class="dv">5</span>, <span class="dv">15</span>)) {</span>
-<span id="cb4-5"><a></a>  y <span class="ot">&lt;-</span> <span class="fu">dpois</span>(<span class="dv">0</span><span class="sc">:</span><span class="dv">35</span>, <span class="at">lambda =</span> lambda)</span>
-<span id="cb4-6"><a></a>  <span class="fu">barplot</span>(y, <span class="at">xlab =</span> <span class="st">"y"</span>, <span class="at">ylab =</span> <span class="st">"P(Y = y)"</span>, <span class="at">names =</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">35</span>, <span class="at">main =</span> <span class="fu">paste</span>(<span class="st">"E(Y) ="</span>, lambda), </span>
-<span id="cb4-7"><a></a>          <span class="at">col =</span> <span class="st">"dodgerblue2"</span>, <span class="at">border =</span> <span class="st">"dodgerblue2"</span>, <span class="at">las =</span> <span class="dv">1</span>)</span>
-<span id="cb4-8"><a></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb1-4"><a></a><span class="fu">install.packages</span>(<span class="fu">setdiff</span>(pkgs, lib))</span>
+<span id="cb1-5"><a></a></span>
+<span id="cb1-6"><a></a><span class="co"># Y ~ Poisson(lambda = 0.5)</span></span>
+<span id="cb1-7"><a></a><span class="fu">set.seed</span>(<span class="dv">2004</span>)  <span class="co"># for reproducibility</span></span>
+<span id="cb1-8"><a></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
+<span id="cb1-9"><a></a><span class="cf">for</span> (lambda <span class="cf">in</span> <span class="fu">c</span>(<span class="fl">0.5</span>, <span class="dv">2</span>, <span class="dv">5</span>, <span class="dv">15</span>)) {</span>
+<span id="cb1-10"><a></a>  y <span class="ot">&lt;-</span> <span class="fu">dpois</span>(<span class="dv">0</span><span class="sc">:</span><span class="dv">35</span>, <span class="at">lambda =</span> lambda)</span>
+<span id="cb1-11"><a></a>  <span class="fu">barplot</span>(y, <span class="at">xlab =</span> <span class="st">"y"</span>, <span class="at">ylab =</span> <span class="st">"P(Y = y)"</span>, <span class="at">names =</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">35</span>, <span class="at">main =</span> <span class="fu">paste</span>(<span class="st">"E(Y) ="</span>, lambda), </span>
+<span id="cb1-12"><a></a>          <span class="at">col =</span> <span class="st">"dodgerblue2"</span>, <span class="at">border =</span> <span class="st">"dodgerblue2"</span>, <span class="at">las =</span> <span class="dv">1</span>)</span>
+<span id="cb1-13"><a></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 
 </div>
@@ -275,8 +264,8 @@ The downloaded binary packages are in
 <div class="cell" data-layout-align="center" data-par="true">
 <details class="code-fold">
 <summary>Show R code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a></a>y <span class="ot">&lt;-</span> <span class="fu">rpois</span>(<span class="dv">10000</span>, <span class="at">lambda =</span> <span class="dv">200</span>)</span>
-<span id="cb5-2"><a></a><span class="fu">hist</span>(y, <span class="at">br =</span> <span class="dv">50</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a></a>y <span class="ot">&lt;-</span> <span class="fu">rpois</span>(<span class="dv">10000</span>, <span class="at">lambda =</span> <span class="dv">200</span>)</span>
+<span id="cb2-2"><a></a><span class="fu">hist</span>(y, <span class="at">br =</span> <span class="dv">50</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 
 </div>
@@ -290,8 +279,8 @@ The downloaded binary packages are in
 <div class="cell" data-layout-align="center">
 <details class="code-fold">
 <summary>Show R code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a></a><span class="fu">c</span>(<span class="st">"Binomial"</span> <span class="ot">=</span> <span class="fu">pbinom</span>(<span class="dv">5</span>, <span class="at">size =</span> <span class="dv">8</span>, <span class="at">p =</span> <span class="fl">0.7</span>),</span>
-<span id="cb6-2"><a></a>  <span class="st">"Poisson"</span> <span class="ot">=</span> <span class="fu">ppois</span>(<span class="dv">5</span>, <span class="at">lambda =</span> <span class="dv">8</span> <span class="sc">*</span> <span class="fl">0.7</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a></a><span class="fu">c</span>(<span class="st">"Binomial"</span> <span class="ot">=</span> <span class="fu">pbinom</span>(<span class="dv">5</span>, <span class="at">size =</span> <span class="dv">8</span>, <span class="at">p =</span> <span class="fl">0.7</span>),</span>
+<span id="cb3-2"><a></a>  <span class="st">"Poisson"</span> <span class="ot">=</span> <span class="fu">ppois</span>(<span class="dv">5</span>, <span class="at">lambda =</span> <span class="dv">8</span> <span class="sc">*</span> <span class="fl">0.7</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code> Binomial   Poisson 
@@ -299,8 +288,8 @@ The downloaded binary packages are in
 </div>
 <details class="code-fold">
 <summary>Show R code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a></a><span class="fu">c</span>(<span class="st">"Binomial"</span> <span class="ot">=</span> <span class="fu">pbinom</span>(<span class="dv">5</span>, <span class="at">size =</span> <span class="dv">100</span>, <span class="at">p =</span> <span class="fl">0.05</span>),</span>
-<span id="cb8-2"><a></a>  <span class="st">"Poisson"</span> <span class="ot">=</span> <span class="fu">ppois</span>(<span class="dv">5</span>, <span class="at">lambda =</span> <span class="dv">100</span> <span class="sc">*</span> <span class="fl">0.05</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a></a><span class="fu">c</span>(<span class="st">"Binomial"</span> <span class="ot">=</span> <span class="fu">pbinom</span>(<span class="dv">5</span>, <span class="at">size =</span> <span class="dv">100</span>, <span class="at">p =</span> <span class="fl">0.05</span>),</span>
+<span id="cb5-2"><a></a>  <span class="st">"Poisson"</span> <span class="ot">=</span> <span class="fu">ppois</span>(<span class="dv">5</span>, <span class="at">lambda =</span> <span class="dv">100</span> <span class="sc">*</span> <span class="fl">0.05</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code> Binomial   Poisson 
@@ -322,12 +311,12 @@ The downloaded binary packages are in
 <div class="cell" data-layout-align="center">
 <details class="code-fold">
 <summary>Show R code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a></a><span class="co"># Load the Galapagos Islands data</span></span>
-<span id="cb10-2"><a></a><span class="fu">data</span>(gala, <span class="at">package =</span> <span class="st">"faraway"</span>)</span>
-<span id="cb10-3"><a></a>gala<span class="sc">$</span>Endemics <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
-<span id="cb10-4"><a></a></span>
-<span id="cb10-5"><a></a><span class="co"># Print structure of data frame</span></span>
-<span id="cb10-6"><a></a><span class="fu">str</span>(gala)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a></a><span class="co"># Load the Galapagos Islands data</span></span>
+<span id="cb7-2"><a></a><span class="fu">data</span>(gala, <span class="at">package =</span> <span class="st">"faraway"</span>)</span>
+<span id="cb7-3"><a></a>gala<span class="sc">$</span>Endemics <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
+<span id="cb7-4"><a></a></span>
+<span id="cb7-5"><a></a><span class="co"># Print structure of data frame</span></span>
+<span id="cb7-6"><a></a><span class="fu">str</span>(gala)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>'data.frame':   30 obs. of  6 variables:
@@ -346,7 +335,7 @@ The downloaded binary packages are in
 <div class="cell" data-layout-align="center">
 <details class="code-fold">
 <summary>Show R code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a></a><span class="fu">summary</span>(gala)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a></a><span class="fu">summary</span>(gala)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>    Species            Area             Elevation          Nearest     
@@ -371,7 +360,7 @@ The downloaded binary packages are in
 <div class="cell" data-layout-align="center" data-par="true">
 <details class="code-fold">
 <summary>Show R code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a></a><span class="fu">pairs</span>(gala)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a></a><span class="fu">pairs</span>(gala)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 
 </div>
@@ -381,8 +370,8 @@ The downloaded binary packages are in
 <div class="cell" data-layout-align="center" data-par="true">
 <details class="code-fold">
 <summary>Show R code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a></a><span class="fu">pairs</span>(<span class="sc">~</span> <span class="fu">log</span>(Species) <span class="sc">+</span> <span class="fu">log</span>(Area) <span class="sc">+</span> <span class="fu">log</span>(Elevation) <span class="sc">+</span> </span>
-<span id="cb15-2"><a></a>  <span class="fu">log</span>(Nearest) <span class="sc">+</span> <span class="fu">log</span>(Scruz <span class="sc">+</span> <span class="fl">0.1</span>) <span class="sc">+</span> <span class="fu">log</span>(Adjacent), <span class="at">data =</span> gala)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a></a><span class="fu">pairs</span>(<span class="sc">~</span> <span class="fu">log</span>(Species) <span class="sc">+</span> <span class="fu">log</span>(Area) <span class="sc">+</span> <span class="fu">log</span>(Elevation) <span class="sc">+</span> </span>
+<span id="cb12-2"><a></a>  <span class="fu">log</span>(Nearest) <span class="sc">+</span> <span class="fu">log</span>(Scruz <span class="sc">+</span> <span class="fl">0.1</span>) <span class="sc">+</span> <span class="fu">log</span>(Adjacent), <span class="at">data =</span> gala)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 
 </div>
@@ -393,8 +382,8 @@ The downloaded binary packages are in
 <div class="cell" data-layout-align="center">
 <details class="code-fold">
 <summary>Show R code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a></a>gala.ols <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="fu">log</span>(Species) <span class="sc">~</span> <span class="fu">log</span>(Area) <span class="sc">+</span> <span class="fu">log</span>(Elevation) <span class="sc">+</span> <span class="fu">log</span>(Nearest) <span class="sc">+</span> <span class="fu">I</span>(<span class="fu">log</span>(Scruz <span class="sc">+</span> <span class="fl">0.1</span>)) <span class="sc">+</span> <span class="fu">log</span>(Adjacent), <span class="at">data =</span> gala)</span>
-<span id="cb16-2"><a></a><span class="fu">summary</span>(gala.ols)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a></a>gala.ols <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="fu">log</span>(Species) <span class="sc">~</span> <span class="fu">log</span>(Area) <span class="sc">+</span> <span class="fu">log</span>(Elevation) <span class="sc">+</span> <span class="fu">log</span>(Nearest) <span class="sc">+</span> <span class="fu">I</span>(<span class="fu">log</span>(Scruz <span class="sc">+</span> <span class="fl">0.1</span>)) <span class="sc">+</span> <span class="fu">log</span>(Adjacent), <span class="at">data =</span> gala)</span>
+<span id="cb13-2"><a></a><span class="fu">summary</span>(gala.ols)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>
@@ -429,8 +418,8 @@ F-statistic: 18.05 on 5 and 24 DF,  p-value: 1.941e-07</code></pre>
 <div class="cell" data-layout-align="center" data-par="true">
 <details class="code-fold">
 <summary>Show R code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
-<span id="cb18-2"><a></a><span class="fu">plot</span>(gala.ols, <span class="at">which =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
+<span id="cb15-2"><a></a><span class="fu">plot</span>(gala.ols, <span class="at">which =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 
 </div>
@@ -451,7 +440,7 @@ F-statistic: 18.05 on 5 and 24 DF,  p-value: 1.941e-07</code></pre>
 <div class="cell" data-layout-align="center">
 <details class="code-fold">
 <summary>Show R code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a></a><span class="fu">summary</span>(gala.poi <span class="ot">&lt;-</span> <span class="fu">glm</span>(Species <span class="sc">~</span> ., <span class="at">data =</span> gala, <span class="at">family =</span> poisson))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a></a><span class="fu">summary</span>(gala.poi <span class="ot">&lt;-</span> <span class="fu">glm</span>(Species <span class="sc">~</span> ., <span class="at">data =</span> gala, <span class="at">family =</span> poisson))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>
@@ -485,11 +474,11 @@ Number of Fisher Scoring iterations: 5</code></pre>
 <div class="cell" data-layout-align="center" data-par="true">
 <details class="code-fold">
 <summary>Show R code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a></a>mu <span class="ot">&lt;-</span> <span class="fu">fitted</span>(gala.poi)  <span class="co"># fitted fitted.values</span></span>
-<span id="cb21-2"><a></a>y <span class="ot">&lt;-</span> gala.poi<span class="sc">$</span>y  <span class="co"># observed response values</span></span>
-<span id="cb21-3"><a></a><span class="fu">plot</span>(<span class="fu">log</span>(mu), <span class="fu">log</span>((y <span class="sc">-</span> mu)<span class="sc">^</span><span class="dv">2</span>), <span class="at">xlab =</span> <span class="fu">expression</span>(<span class="fu">hat</span>(mu)),</span>
-<span id="cb21-4"><a></a>     <span class="at">ylab =</span> <span class="fu">expression</span>((y<span class="sc">-</span><span class="fu">hat</span>(mu))<span class="sc">^</span><span class="dv">2</span>))</span>
-<span id="cb21-5"><a></a><span class="fu">abline</span>(<span class="dv">0</span>, <span class="dv">1</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a></a>mu <span class="ot">&lt;-</span> <span class="fu">fitted</span>(gala.poi)  <span class="co"># fitted fitted.values</span></span>
+<span id="cb18-2"><a></a>y <span class="ot">&lt;-</span> gala.poi<span class="sc">$</span>y  <span class="co"># observed response values</span></span>
+<span id="cb18-3"><a></a><span class="fu">plot</span>(<span class="fu">log</span>(mu), <span class="fu">log</span>((y <span class="sc">-</span> mu)<span class="sc">^</span><span class="dv">2</span>), <span class="at">xlab =</span> <span class="fu">expression</span>(<span class="fu">hat</span>(mu)),</span>
+<span id="cb18-4"><a></a>     <span class="at">ylab =</span> <span class="fu">expression</span>((y<span class="sc">-</span><span class="fu">hat</span>(mu))<span class="sc">^</span><span class="dv">2</span>))</span>
+<span id="cb18-5"><a></a><span class="fu">abline</span>(<span class="dv">0</span>, <span class="dv">1</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 
 </div>
@@ -500,7 +489,7 @@ Number of Fisher Scoring iterations: 5</code></pre>
 <div class="cell" data-layout-align="center">
 <details class="code-fold">
 <summary>Show R code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a></a>performance<span class="sc">::</span><span class="fu">check_overdispersion</span>(gala.poi)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a></a>performance<span class="sc">::</span><span class="fu">check_overdispersion</span>(gala.poi)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code># Overdispersion test
@@ -520,8 +509,8 @@ Number of Fisher Scoring iterations: 5</code></pre>
 <div class="cell" data-layout-align="center">
 <details class="code-fold">
 <summary>Show R code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a></a>gala.quasipoi <span class="ot">&lt;-</span> <span class="fu">glm</span>(Species <span class="sc">~</span> ., <span class="at">family =</span> <span class="fu">quasipoisson</span>(<span class="at">link =</span> <span class="st">"log"</span>),  <span class="at">data =</span> gala)</span>
-<span id="cb25-2"><a></a><span class="fu">summary</span>(gala.quasipoi)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a></a>gala.quasipoi <span class="ot">&lt;-</span> <span class="fu">glm</span>(Species <span class="sc">~</span> ., <span class="at">family =</span> <span class="fu">quasipoisson</span>(<span class="at">link =</span> <span class="st">"log"</span>),  <span class="at">data =</span> gala)</span>
+<span id="cb22-2"><a></a><span class="fu">summary</span>(gala.quasipoi)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>
@@ -578,11 +567,11 @@ Number of Fisher Scoring iterations: 5</code></pre>
 <div class="cell" data-layout-align="center">
 <details class="code-fold">
 <summary>Show R code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a></a>dicentric <span class="ot">&lt;-</span> faraway<span class="sc">::</span>dicentric</span>
-<span id="cb27-2"><a></a>dicentric<span class="sc">$</span>dosef <span class="ot">&lt;-</span> <span class="fu">factor</span>(dicentric<span class="sc">$</span>doseamt)</span>
-<span id="cb27-3"><a></a>fit <span class="ot">&lt;-</span> <span class="fu">glm</span>(ca <span class="sc">~</span> <span class="fu">offset</span>(<span class="fu">log</span>(cells)) <span class="sc">+</span> <span class="fu">log</span>(doserate)<span class="sc">*</span>dosef, <span class="at">family =</span> poisson, </span>
-<span id="cb27-4"><a></a>           <span class="at">data =</span> dicentric)</span>
-<span id="cb27-5"><a></a><span class="fu">summary</span>(fit)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a></a>dicentric <span class="ot">&lt;-</span> faraway<span class="sc">::</span>dicentric</span>
+<span id="cb24-2"><a></a>dicentric<span class="sc">$</span>dosef <span class="ot">&lt;-</span> <span class="fu">factor</span>(dicentric<span class="sc">$</span>doseamt)</span>
+<span id="cb24-3"><a></a>fit <span class="ot">&lt;-</span> <span class="fu">glm</span>(ca <span class="sc">~</span> <span class="fu">offset</span>(<span class="fu">log</span>(cells)) <span class="sc">+</span> <span class="fu">log</span>(doserate)<span class="sc">*</span>dosef, <span class="at">family =</span> poisson, </span>
+<span id="cb24-4"><a></a>           <span class="at">data =</span> dicentric)</span>
+<span id="cb24-5"><a></a><span class="fu">summary</span>(fit)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>
@@ -620,15 +609,15 @@ Number of Fisher Scoring iterations: 4</code></pre>
 <p>Our sample consists of We have data on N=250 groups that went to a park. Each group was questioned about how many fish they caught (count), how many children were in the group (child), how many people were in the group (persons), and whether or not they brought a camper to the park (camper).</p>
 <p>The data can be read in as follows:</p>
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a></a>fish <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"https://stats.idre.ucla.edu/stat/data/fish.csv"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a></a>fish <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"https://stats.idre.ucla.edu/stat/data/fish.csv"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="zero-inflated-outcomes-2" class="slide level2">
 <h2>Zero-inflated outcomes</h2>
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a></a><span class="co"># Retain only variables of interest and print summary</span></span>
-<span id="cb30-2"><a></a>fish <span class="ot">&lt;-</span> fish[, <span class="fu">c</span>(<span class="st">"count"</span>, <span class="st">"child"</span>, <span class="st">"persons"</span>, <span class="st">"camper"</span>)]</span>
-<span id="cb30-3"><a></a><span class="fu">summary</span>(fish)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a></a><span class="co"># Retain only variables of interest and print summary</span></span>
+<span id="cb27-2"><a></a>fish <span class="ot">&lt;-</span> fish[, <span class="fu">c</span>(<span class="st">"count"</span>, <span class="st">"child"</span>, <span class="st">"persons"</span>, <span class="st">"camper"</span>)]</span>
+<span id="cb27-3"><a></a><span class="fu">summary</span>(fish)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>     count             child          persons          camper     
  Min.   :  0.000   Min.   :0.000   Min.   :1.000   Min.   :0.000  
@@ -645,7 +634,7 @@ Number of Fisher Scoring iterations: 4</code></pre>
 <div class="cell" data-layout-align="center" data-par="true">
 <details class="code-fold">
 <summary>Show R code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a></a><span class="fu">pairs</span>(<span class="fu">log</span>(count <span class="sc">+</span> <span class="fl">0.1</span>) <span class="sc">~</span> ., <span class="at">data =</span> fish)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a></a><span class="fu">pairs</span>(<span class="fu">log</span>(count <span class="sc">+</span> <span class="fl">0.1</span>) <span class="sc">~</span> ., <span class="at">data =</span> fish)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 
 </div>
@@ -656,7 +645,7 @@ Number of Fisher Scoring iterations: 4</code></pre>
 <div class="cell" data-layout-align="center" data-par="true">
 <details class="code-fold">
 <summary>Show R code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a></a><span class="fu">barplot</span>(<span class="fu">table</span>(fish<span class="sc">$</span>count))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a></a><span class="fu">barplot</span>(<span class="fu">table</span>(fish<span class="sc">$</span>count))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 
 </div>
@@ -664,8 +653,8 @@ Number of Fisher Scoring iterations: 4</code></pre>
 <section id="zero-inflated-outcomes-5" class="slide level2">
 <h2>Zero-inflated outcomes</h2>
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a></a>fish.poi <span class="ot">&lt;-</span> <span class="fu">glm</span>(count <span class="sc">~</span> ., <span class="at">data =</span> fish, <span class="at">family =</span> poisson)</span>
-<span id="cb34-2"><a></a><span class="fu">summary</span>(fish.poi)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a></a>fish.poi <span class="ot">&lt;-</span> <span class="fu">glm</span>(count <span class="sc">~</span> ., <span class="at">data =</span> fish, <span class="at">family =</span> poisson)</span>
+<span id="cb31-2"><a></a><span class="fu">summary</span>(fish.poi)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -688,7 +677,7 @@ AIC: 1682.1
 
 Number of Fisher Scoring iterations: 6</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a></a>performance<span class="sc">::</span><span class="fu">check_zeroinflation</span>(fish.poi)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a></a>performance<span class="sc">::</span><span class="fu">check_zeroinflation</span>(fish.poi)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># Check for zero-inflation
 
@@ -724,9 +713,9 @@ Number of Fisher Scoring iterations: 6</code></pre>
 <div class="cell" data-layout-align="center">
 <details class="code-fold">
 <summary>Show R code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb39"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a></a><span class="fu">suppressMessages</span>(<span class="fu">library</span>(pscl))</span>
-<span id="cb39-2"><a></a></span>
-<span id="cb39-3"><a></a><span class="fu">summary</span>(fish.hur <span class="ot">&lt;-</span> <span class="fu">hurdle</span>(count <span class="sc">~</span> child <span class="sc">+</span> camper <span class="sc">|</span> persons, <span class="at">data =</span> fish))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a></a><span class="fu">suppressMessages</span>(<span class="fu">library</span>(pscl))</span>
+<span id="cb36-2"><a></a></span>
+<span id="cb36-3"><a></a><span class="fu">summary</span>(fish.hur <span class="ot">&lt;-</span> <span class="fu">hurdle</span>(count <span class="sc">~</span> child <span class="sc">+</span> camper <span class="sc">|</span> persons, <span class="at">data =</span> fish))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>
@@ -758,9 +747,9 @@ Log-likelihood: -1047 on 5 Df</code></pre>
 <h2>The hurdle model</h2>
 <p>Check the logit part directly:</p>
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb41"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a></a>z <span class="ot">&lt;-</span> fish</span>
-<span id="cb41-2"><a></a>z<span class="sc">$</span>count <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(z<span class="sc">$</span>count <span class="sc">==</span> <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>)</span>
-<span id="cb41-3"><a></a><span class="fu">glm</span>(count <span class="sc">~</span> persons, <span class="at">data =</span> z, <span class="at">family =</span> binomial)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a></a>z <span class="ot">&lt;-</span> fish</span>
+<span id="cb38-2"><a></a>z<span class="sc">$</span>count <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(z<span class="sc">$</span>count <span class="sc">==</span> <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>)</span>
+<span id="cb38-3"><a></a><span class="fu">glm</span>(count <span class="sc">~</span> persons, <span class="at">data =</span> z, <span class="at">family =</span> binomial)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:  glm(formula = count ~ persons, family = binomial, data = z)
@@ -788,8 +777,8 @@ Residual Deviance: 339  AIC: 343</code></pre>
 <h2>The hurdle model</h2>
 <p>Predicting new observations</p>
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb43"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a></a>newobs <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="st">"child"</span> <span class="ot">=</span> <span class="dv">0</span>, <span class="st">"persons"</span> <span class="ot">=</span> <span class="dv">3</span>, <span class="st">"camper"</span> <span class="ot">=</span> <span class="dv">1</span>)</span>
-<span id="cb43-2"><a></a><span class="fu">head</span>(<span class="fu">predict</span>(fish.hur, <span class="at">newdata =</span> newobs, <span class="at">type =</span> <span class="st">"prob"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb40"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a></a>newobs <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="st">"child"</span> <span class="ot">=</span> <span class="dv">0</span>, <span class="st">"persons"</span> <span class="ot">=</span> <span class="dv">3</span>, <span class="st">"camper"</span> <span class="ot">=</span> <span class="dv">1</span>)</span>
+<span id="cb40-2"><a></a><span class="fu">head</span>(<span class="fu">predict</span>(fish.hur, <span class="at">newdata =</span> newobs, <span class="at">type =</span> <span class="st">"prob"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>          0            1           2           3           4          5
 1 0.5456108 8.310743e-05 0.000457296 0.001677504 0.004615207 0.01015801

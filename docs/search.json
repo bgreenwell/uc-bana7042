@@ -1587,7 +1587,7 @@
     "href": "assignments/index.html",
     "title": "Assignments",
     "section": "",
-    "text": "Assignments and exams.\n\n\n\n\n\n\n   \n    \n    \n      Order By\n      Default\n      \n        Title\n      \n    \n  \n    \n      \n      \n    \n\n\n\n\n\n\nTitle\n\n\n\nSubtitle\n\n\n\n\n\n\n\n\nAssignment 4\n\n\nLogistic Regression III\n\n\n\n\n\n\nAssignment 5\n\n\nMultinomial & Ordinal Regression\n\n\n\n\n\n\nAssignment 6\n\n\nCount Regression\n\n\n\n\n\n\nBANA 7042: Assignment 1\n\n\nLinear Regression\n\n\n\n\n\n\nBANA 7042: Assignment 2\n\n\nLogistic regression (part I)\n\n\n\n\n\n\nBANA 7042: Assignment 3 (20 points)\n\n\nLogistic regression (part II)\n\n\n\n\n\n\nBANA 7042: Final Exam\n\n\n \n\n\n\n\n\n\nNo matching items",
+    "text": "Assignments and exams.\n\n\n\n\n\n\n   \n    \n    \n      Order By\n      Default\n      \n        Title\n      \n    \n  \n    \n      \n      \n    \n\n\n\n\n\n\nTitle\n\n\n\nSubtitle\n\n\n\n\n\n\n\n\nAssignment 4\n\n\nLogistic Regression III\n\n\n\n\n\n\nAssignment 5\n\n\nMultinomial & Ordinal Regression\n\n\n\n\n\n\nBANA 7042: Assignment 1\n\n\nLinear Regression\n\n\n\n\n\n\nBANA 7042: Assignment 2\n\n\nLogistic regression (part I)\n\n\n\n\n\n\nBANA 7042: Assignment 3 (20 points)\n\n\nLogistic regression (part II)\n\n\n\n\n\n\nBANA 7042: Assignment 6\n\n\nCount Regression\n\n\n\n\n\n\nBANA 7042: Final Exam\n\n\n \n\n\n\n\n\n\nNo matching items",
     "crumbs": [
       "Assignments"
     ]
@@ -1642,23 +1642,23 @@
   {
     "objectID": "assignments/assignment-06.html",
     "href": "assignments/assignment-06.html",
-    "title": "Assignment 6",
+    "title": "BANA 7042: Assignment 6",
     "section": "",
     "text": "This assignment covers count regression models (Poisson, Negative Binomial).\nComing Soon",
     "crumbs": [
       "Assignments",
-      "Assignment 6"
+      "BANA 7042: Assignment 6"
     ]
   },
   {
     "objectID": "assignments/assignment-06.html#overview",
     "href": "assignments/assignment-06.html#overview",
-    "title": "Assignment 6",
+    "title": "BANA 7042: Assignment 6",
     "section": "",
     "text": "This assignment covers count regression models (Poisson, Negative Binomial).\nComing Soon",
     "crumbs": [
       "Assignments",
-      "Assignment 6"
+      "BANA 7042: Assignment 6"
     ]
   },
   {
@@ -2157,7 +2157,7 @@
     "href": "slides/06-count-regression.html#the-poisson-distribution-1",
     "title": "Regression for Counts and Rates",
     "section": "The Poisson distribution",
-    "text": "The Poisson distribution\n\n\nShow R code\n# Install required package(s)\npkgs &lt;- c(\"faraway\", \"investr\", \"mgcv\", \"performance\", \"pscl\")\nlib &lt;- installed.packages()[, \"Package\"]\ninstall.packages(setdiff(pkgs, lib))\n\n\nInstalling package into '/Users/greenwbm/Library/R/arm64/4.5/library'\n(as 'lib' is unspecified)\n\n\n\nThe downloaded binary packages are in\n    /var/folders/zv/pwf48t9n4rsd8wm68r_wt9zm0000gq/T//RtmplkVNTd/downloaded_packages\n\n\nShow R code\n# Y ~ Poisson(lambda = 0.5)\nset.seed(2004)  # for reproducibility\npar(mfrow = c(2, 2))\nfor (lambda in c(0.5, 2, 5, 15)) {\n  y &lt;- dpois(0:35, lambda = lambda)\n  barplot(y, xlab = \"y\", ylab = \"P(Y = y)\", names = 0:35, main = paste(\"E(Y) =\", lambda), \n          col = \"dodgerblue2\", border = \"dodgerblue2\", las = 1)\n}",
+    "text": "The Poisson distribution\n\n\nShow R code\n# Install required package(s)\npkgs &lt;- c(\"faraway\", \"investr\", \"mgcv\", \"performance\", \"pscl\")\nlib &lt;- installed.packages()[, \"Package\"]\ninstall.packages(setdiff(pkgs, lib))\n\n# Y ~ Poisson(lambda = 0.5)\nset.seed(2004)  # for reproducibility\npar(mfrow = c(2, 2))\nfor (lambda in c(0.5, 2, 5, 15)) {\n  y &lt;- dpois(0:35, lambda = lambda)\n  barplot(y, xlab = \"y\", ylab = \"P(Y = y)\", names = 0:35, main = paste(\"E(Y) =\", lambda), \n          col = \"dodgerblue2\", border = \"dodgerblue2\", las = 1)\n}",
     "crumbs": [
       "Slides",
       "Regression for Counts and Rates"
@@ -2630,7 +2630,7 @@
     "href": "slides/03-logistic-regression-2.html#redundancy-analysis",
     "title": "Logistic Regression (Part II)",
     "section": "Redundancy analysis",
-    "text": "Redundancy analysis\nRedunancy analysis is a powerful tool available in the Hmisc package:\n\n\nShow R code\n# Notice we're ignoring the response here!\nHmisc::redun(~ . - chd, nk = 0, data = wcgs)\n\n\n\nRedundancy Analysis\n\n~age + height + weight + sdp + dbp + chol + behave + cigs + dibep + \n    arcus\n&lt;environment: 0x1494ee0e0&gt;\n\nn: 3140     p: 10   nk: 0 \n\nNumber of NAs:   0 \n\nTransformation of target variables forced to be linear\n\nR-squared cutoff: 0.9   Type: ordinary \n\nR^2 with which each variable can be predicted from all other variables:\n\n   age height weight    sdp    dbp   chol behave   cigs  dibep  arcus \n 0.083  0.323  0.379  0.606  0.617  0.054  1.000  0.050  1.000  0.055 \n\nRendundant variables:\n\ndibep\n\n\nPredicted from variables:\n\nage height weight sdp dbp chol behave cigs arcus\n\n  Variable Deleted R^2 R^2 after later deletions\n1            dibep   1",
+    "text": "Redundancy analysis\nRedunancy analysis is a powerful tool available in the Hmisc package:\n\n\nShow R code\n# Notice we're ignoring the response here!\nHmisc::redun(~ . - chd, nk = 0, data = wcgs)\n\n\n\nRedundancy Analysis\n\n~age + height + weight + sdp + dbp + chol + behave + cigs + dibep + \n    arcus\n&lt;environment: 0x12e5c62a8&gt;\n\nn: 3140     p: 10   nk: 0 \n\nNumber of NAs:   0 \n\nTransformation of target variables forced to be linear\n\nR-squared cutoff: 0.9   Type: ordinary \n\nR^2 with which each variable can be predicted from all other variables:\n\n   age height weight    sdp    dbp   chol behave   cigs  dibep  arcus \n 0.083  0.323  0.379  0.606  0.617  0.054  1.000  0.050  1.000  0.055 \n\nRendundant variables:\n\ndibep\n\n\nPredicted from variables:\n\nage height weight sdp dbp chol behave cigs arcus\n\n  Variable Deleted R^2 R^2 after later deletions\n1            dibep   1",
     "crumbs": [
       "Slides",
       "Logistic Regression (Part II)"
@@ -2762,7 +2762,7 @@
     "href": "slides/03-logistic-regression-2.html#enet-fit-to-wcgs-data-2",
     "title": "Logistic Regression (Part II)",
     "section": "ENet fit to wcgs data",
-    "text": "ENet fit to wcgs data\n\n\nShow R code\ncoef(lr.enet)\n\n\n13 x 1 sparse Matrix of class \"dgCMatrix\"\n               lambda.1se\n(Intercept)  -7.870670119\nage           0.035560410\nheight        .          \nweight        0.000934140\nsdp           0.012874490\ndbp           .          \nchol          0.007591756\nbehaveA1      .          \nbehaveA2      0.152010162\nbehaveB3     -0.131427841\nbehaveB4      .          \ncigs          0.011147898\narcuspresent  .",
+    "text": "ENet fit to wcgs data\n\n\nShow R code\ncoef(lr.enet)\n\n\n13 x 1 sparse Matrix of class \"dgCMatrix\"\n               lambda.1se\n(Intercept)  -6.793996643\nage           0.026985742\nheight        .          \nweight        .          \nsdp           0.011042397\ndbp           .          \nchol          0.006658276\nbehaveA1      .          \nbehaveA2      0.101528310\nbehaveB3     -0.062327909\nbehaveB4      .          \ncigs          0.007890454\narcuspresent  .",
     "crumbs": [
       "Slides",
       "Logistic Regression (Part II)"
