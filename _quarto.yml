@@ -10,10 +10,40 @@ website:
         text: Home
       - href: syllabus/syllabus.qmd
         text: Syllabus
-      - href: slides/index.qmd
-        text: Slides
-      - href: assignments/index.qmd
-        text: Assignments
+      - text: Slides
+        menu:
+          - href: slides/index.qmd
+            text: "All Slides"
+          - href: slides/01-linear-regression.qmd
+            text: "01: Linear Regression"
+          - href: slides/02-logistic-regression-1.qmd
+            text: "02: Logistic Regression I"
+          - href: slides/03-logistic-regression-2.qmd
+            text: "03: Logistic Regression II"
+          - href: slides/04-logistic-regression-3.qmd
+            text: "04: Logistic Regression III"
+          - href: slides/05-multinomial-ordinal-regression.qmd
+            text: "05: Multinomial/Ordinal"
+          - href: slides/06-count-regression.qmd
+            text: "06: Count Regression"
+      - text: Assignments
+        menu:
+          - href: assignments/index.qmd
+            text: "All Assignments"
+          - href: assignments/assignment-01.qmd
+            text: "Assignment 01"
+          - href: assignments/assignment-02.qmd
+            text: "Assignment 02"
+          - href: assignments/assignment-03.qmd
+            text: "Assignment 03"
+          - href: assignments/assignment-04.qmd
+            text: "Assignment 04"
+          - href: assignments/assignment-05.qmd
+            text: "Assignment 05"
+          - href: assignments/assignment-06.qmd
+            text: "Assignment 06"
+      - href: assignments/final-exam.qmd
+        text: Final Exam
     right:
       - icon: github
         href: https://github.com/bgreenwell/uc-bana7042
