@@ -1355,7 +1355,7 @@
     "href": "slides/03-logistic-regression-2.html#redundancy-analysis",
     "title": "Logistic Regression (Part II)",
     "section": "Redundancy analysis",
-    "text": "Redundancy analysis\nRedunancy analysis is a powerful tool available in the Hmisc package:\n\n\nShow R code\n# Notice we're ignoring the response here!\nHmisc::redun(~ . - chd, nk = 0, data = wcgs)\n\n\n\nRedundancy Analysis\n\n~age + height + weight + sdp + dbp + chol + behave + cigs + dibep + \n    arcus\n&lt;environment: 0x5563766eeda0&gt;\n\nn: 3140     p: 10   nk: 0 \n\nNumber of NAs:   0 \n\nTransformation of target variables forced to be linear\n\nR-squared cutoff: 0.9   Type: ordinary \n\nR^2 with which each variable can be predicted from all other variables:\n\n   age height weight    sdp    dbp   chol behave   cigs  dibep  arcus \n 0.083  0.323  0.379  0.606  0.617  0.054  1.000  0.050  1.000  0.055 \n\nRendundant variables:\n\ndibep\n\n\nPredicted from variables:\n\nage height weight sdp dbp chol behave cigs arcus\n\n  Variable Deleted R^2 R^2 after later deletions\n1            dibep   1"
+    "text": "Redundancy analysis\nRedunancy analysis is a powerful tool available in the Hmisc package:\n\n\nShow R code\n# Notice we're ignoring the response here!\nHmisc::redun(~ . - chd, nk = 0, data = wcgs)\n\n\n\nRedundancy Analysis\n\n~age + height + weight + sdp + dbp + chol + behave + cigs + dibep + \n    arcus\n&lt;environment: 0x5645afcb8130&gt;\n\nn: 3140     p: 10   nk: 0 \n\nNumber of NAs:   0 \n\nTransformation of target variables forced to be linear\n\nR-squared cutoff: 0.9   Type: ordinary \n\nR^2 with which each variable can be predicted from all other variables:\n\n   age height weight    sdp    dbp   chol behave   cigs  dibep  arcus \n 0.083  0.323  0.379  0.606  0.617  0.054  1.000  0.050  1.000  0.055 \n\nRendundant variables:\n\ndibep\n\n\nPredicted from variables:\n\nage height weight sdp dbp chol behave cigs arcus\n\n  Variable Deleted R^2 R^2 after later deletions\n1            dibep   1"
   },
   {
     "objectID": "slides/03-logistic-regression-2.html#battery-target",
@@ -1439,7 +1439,7 @@
     "href": "slides/03-logistic-regression-2.html#enet-fit-to-wcgs-data-2",
     "title": "Logistic Regression (Part II)",
     "section": "ENet fit to wcgs data",
-    "text": "ENet fit to wcgs data\n\n\nShow R code\ncoef(lr.enet)\n\n\n13 x 1 sparse Matrix of class \"dgCMatrix\"\n               lambda.1se\n(Intercept)  -6.017711388\nage           0.020174108\nheight        .          \nweight        .          \nsdp           0.009219985\ndbp           .          \nchol          0.005902595\nbehaveA1      .          \nbehaveA2      0.057565942\nbehaveB3     -0.007999029\nbehaveB4      .          \ncigs          0.005201689\narcuspresent  ."
+    "text": "ENet fit to wcgs data\n\n\nShow R code\ncoef(lr.enet)\n\n\n13 x 1 sparse Matrix of class \"dgCMatrix\"\n               lambda.1se\n(Intercept)  -5.557386134\nage           0.016230481\nheight        .          \nweight        .          \nsdp           0.008155035\ndbp           .          \nchol          0.005476254\nbehaveA1      .          \nbehaveA2      0.017441706\nbehaveB3      .          \nbehaveB4      .          \ncigs          0.003618991\narcuspresent  ."
   },
   {
     "objectID": "slides/03-logistic-regression-2.html#prediction-accuracy",
