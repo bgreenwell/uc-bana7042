@@ -445,7 +445,7 @@
     "href": "slides/03-logistic-regression-2.html#redundancy-analysis",
     "title": "Logistic Regression (Part II)",
     "section": "Redundancy analysis",
-    "text": "Redundancy analysis\nRedunancy analysis is a powerful tool available in the Hmisc package:\n\n\nShow R code\n# Notice we're ignoring the response here!\nHmisc::redun(~ . - chd, nk = 0, data = wcgs)\n\n\n\nRedundancy Analysis\n\n~age + height + weight + sdp + dbp + chol + behave + cigs + dibep + \n    arcus\n&lt;environment: 0x55768db32340&gt;\n\nn: 3140     p: 10   nk: 0 \n\nNumber of NAs:   0 \n\nTransformation of target variables forced to be linear\n\nR-squared cutoff: 0.9   Type: ordinary \n\nR^2 with which each variable can be predicted from all other variables:\n\n   age height weight    sdp    dbp   chol behave   cigs  dibep  arcus \n 0.083  0.323  0.379  0.606  0.617  0.054  1.000  0.050  1.000  0.055 \n\nRendundant variables:\n\ndibep\n\n\nPredicted from variables:\n\nage height weight sdp dbp chol behave cigs arcus\n\n  Variable Deleted R^2 R^2 after later deletions\n1            dibep   1"
+    "text": "Redundancy analysis\nRedunancy analysis is a powerful tool available in the Hmisc package:\n\n\nShow R code\n# Notice we're ignoring the response here!\nHmisc::redun(~ . - chd, nk = 0, data = wcgs)\n\n\n\nRedundancy Analysis\n\n~age + height + weight + sdp + dbp + chol + behave + cigs + dibep + \n    arcus\n&lt;environment: 0x563bea526d50&gt;\n\nn: 3140     p: 10   nk: 0 \n\nNumber of NAs:   0 \n\nTransformation of target variables forced to be linear\n\nR-squared cutoff: 0.9   Type: ordinary \n\nR^2 with which each variable can be predicted from all other variables:\n\n   age height weight    sdp    dbp   chol behave   cigs  dibep  arcus \n 0.083  0.323  0.379  0.606  0.617  0.054  1.000  0.050  1.000  0.055 \n\nRendundant variables:\n\ndibep\n\n\nPredicted from variables:\n\nage height weight sdp dbp chol behave cigs arcus\n\n  Variable Deleted R^2 R^2 after later deletions\n1            dibep   1"
   },
   {
     "objectID": "slides/03-logistic-regression-2.html#battery-target",
@@ -529,7 +529,7 @@
     "href": "slides/03-logistic-regression-2.html#enet-fit-to-wcgs-data-2",
     "title": "Logistic Regression (Part II)",
     "section": "ENet fit to wcgs data",
-    "text": "ENet fit to wcgs data\n\n\nShow R code\ncoef(lr.enet)\n\n\n13 x 1 sparse Matrix of class \"dgCMatrix\"\n               lambda.1se\n(Intercept)  -7.132444345\nage           0.029956209\nheight        .          \nweight        .          \nsdp           0.011818180\ndbp           .          \nchol          0.006991663\nbehaveA1      .          \nbehaveA2      0.120495798\nbehaveB3     -0.086854752\nbehaveB4      .          \ncigs          0.009041142\narcuspresent  ."
+    "text": "ENet fit to wcgs data\n\n\nShow R code\ncoef(lr.enet)\n\n\n13 x 1 sparse Matrix of class \"dgCMatrix\"\n               lambda.1se\n(Intercept)  -6.793996643\nage           0.026985742\nheight        .          \nweight        .          \nsdp           0.011042397\ndbp           .          \nchol          0.006658276\nbehaveA1      .          \nbehaveA2      0.101528310\nbehaveB3     -0.062327909\nbehaveB4      .          \ncigs          0.007890454\narcuspresent  ."
   },
   {
     "objectID": "slides/03-logistic-regression-2.html#prediction-accuracy",
@@ -828,70 +828,70 @@
   {
     "objectID": "syllabus/syllabus.html",
     "href": "syllabus/syllabus.html",
-    "title": "I. Course Information:",
+    "title": "Syllabus",
     "section": "",
     "text": "Lindner College of Business logo"
   },
   {
     "objectID": "syllabus/syllabus.html#required-tools",
     "href": "syllabus/syllabus.html#required-tools",
-    "title": "I. Course Information:",
+    "title": "Syllabus",
     "section": "Required Tools",
     "text": "Required Tools\n\nR and RStudio\nGit & a GitHub account"
   },
   {
     "objectID": "syllabus/syllabus.html#course-materials-repository",
     "href": "syllabus/syllabus.html#course-materials-repository",
-    "title": "I. Course Information:",
+    "title": "Syllabus",
     "section": "Course Materials & Repository",
     "text": "Course Materials & Repository\n\nCourse Website: https://bgreenwell.github.io/uc-bana7042/ - Contains all syllabus, slides, and assignments.\nTextbook: No required textbook. Readings will be provided from open-source materials."
   },
   {
     "objectID": "syllabus/syllabus.html#p-professionalism",
     "href": "syllabus/syllabus.html#p-professionalism",
-    "title": "I. Course Information:",
+    "title": "Syllabus",
     "section": "P – Professionalism",
     "text": "P – Professionalism\n\nEnhance oral & written communication through technical documentation and project presentations.\nPractice professional habits of punctuality, preparation, respect and participation in modern software development environments."
   },
   {
     "objectID": "syllabus/syllabus.html#a-academics",
     "href": "syllabus/syllabus.html#a-academics",
-    "title": "I. Course Information:",
+    "title": "Syllabus",
     "section": "A – Academics",
     "text": "A – Academics\n\nDevelop foundational knowledge of statistical modeling concepts and their applications in real-world business problems.\nApply rigorous analytical techniques to critically analyze and solve technical problems using data."
   },
   {
     "objectID": "syllabus/syllabus.html#c-character",
     "href": "syllabus/syllabus.html#c-character",
-    "title": "I. Course Information:",
+    "title": "Syllabus",
     "section": "C – Character",
     "text": "C – Character\n\nUnderstand importance of ethics and social responsibility in statistical modeling and data analysis."
   },
   {
     "objectID": "syllabus/syllabus.html#e-engagement",
     "href": "syllabus/syllabus.html#e-engagement",
-    "title": "I. Course Information:",
+    "title": "Syllabus",
     "section": "E – Engagement",
     "text": "E – Engagement\n\nDevelop awareness and appreciation of involvement in the data science community."
   },
   {
     "objectID": "syllabus/syllabus.html#course-structure",
     "href": "syllabus/syllabus.html#course-structure",
-    "title": "I. Course Information:",
+    "title": "Syllabus",
     "section": "Course Structure:",
     "text": "Course Structure:\nChanges to the syllabus, due dates, course requirements or grading requirements will be made as far in advance as possible. Due dates will be clearly marked in Canvas."
   },
   {
     "objectID": "syllabus/syllabus.html#missed-andor-late-examinations-quizzes-and-graded-exercises",
     "href": "syllabus/syllabus.html#missed-andor-late-examinations-quizzes-and-graded-exercises",
-    "title": "I. Course Information:",
+    "title": "Syllabus",
     "section": "Missed and/or late examinations, quizzes, and graded exercises:",
     "text": "Missed and/or late examinations, quizzes, and graded exercises:\nLate submissions will be penalized 10% per calendar day unless prior arrangements have been made with the instructor."
   },
   {
     "objectID": "syllabus/syllabus.html#grading-scale",
     "href": "syllabus/syllabus.html#grading-scale",
-    "title": "I. Course Information:",
+    "title": "Syllabus",
     "section": "Grading Scale",
     "text": "Grading Scale\n94% and above = A\n90% = A- 87% = B+ 84% = B\n80% = B- 77% = C+ 74% = C\n70% = C- 60% = D Below 60% = F"
   },
