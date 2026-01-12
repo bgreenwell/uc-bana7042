@@ -1,0 +1,1349 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-html/tabby.min.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/light-border.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-b758ccaa5987ceb1b75504551e579abf.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.8.26">
+
+  <meta name="author" content="Brandon M. Greenwell, PhD">
+  <title>BANA 7042 – Regression for Multinomial and Ordinal Outcomes</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/reveal.css">
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+      vertical-align: middle;
+    }
+    /* CSS for syntax highlighting */
+    html { -webkit-text-size-adjust: 100%; }
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+      }
+    pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+    div.sourceCode
+      { color: #f8f8f2;  }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span { color: #f8f8f2; } /* Normal */
+    code span.al { color: #f07178; } /* Alert */
+    code span.an { color: #d4d0ab; } /* Annotation */
+    code span.at { color: #00e0e0; } /* Attribute */
+    code span.bn { color: #d4d0ab; } /* BaseN */
+    code span.bu { color: #abe338; } /* BuiltIn */
+    code span.cf { color: #ffa07a; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #abe338; } /* Char */
+    code span.cn { color: #ffd700; } /* Constant */
+    code span.co { color: #f8f8f2; font-style: italic; } /* Comment */
+    code span.cv { color: #ffd700; } /* CommentVar */
+    code span.do { color: #f8f8f2; } /* Documentation */
+    code span.dt { color: #ffa07a; } /* DataType */
+    code span.dv { color: #d4d0ab; } /* DecVal */
+    code span.er { color: #f07178; text-decoration: underline; } /* Error */
+    code span.ex { color: #00e0e0; font-weight: bold; } /* Extension */
+    code span.fl { color: #d4d0ab; } /* Float */
+    code span.fu { color: #ffa07a; } /* Function */
+    code span.im { color: #abe338; } /* Import */
+    code span.in { color: #d4d0ab; } /* Information */
+    code span.kw { color: #ffa07a; font-weight: bold; } /* Keyword */
+    code span.op { color: #ffa07a; } /* Operator */
+    code span.ot { color: #00e0e0; } /* Other */
+    code span.pp { color: #dcc6e0; } /* Preprocessor */
+    code span.re { color: #00e0e0; background-color: #f8f8f2; } /* RegionMarker */
+    code span.sc { color: #abe338; } /* SpecialChar */
+    code span.ss { color: #abe338; } /* SpecialString */
+    code span.st { color: #abe338; } /* String */
+    code span.va { color: #00e0e0; } /* Variable */
+    code span.vs { color: #abe338; } /* VerbatimString */
+    code span.wa { color: #dcc6e0; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto-61c09bd4e055c4e147bbfcd77f3179b7.css">
+  <link href="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-chalkboard/font-awesome/css/all.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-chalkboard/style.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <style type="text/css">
+    .reveal div.sourceCode {
+      margin: 0;
+      overflow: auto;
+    }
+    .reveal div.hanging-indent {
+      margin-left: 1em;
+      text-indent: -1em;
+    }
+    .reveal .slide:not(.center) {
+      height: 100%;
+      overflow-y: auto;
+    }
+    .reveal .slide.scrollable {
+      overflow-y: auto;
+    }
+    .reveal .footnotes {
+      height: 100%;
+      overflow-y: auto;
+    }
+    .reveal .slide .absolute {
+      position: absolute;
+      display: block;
+    }
+    .reveal .footnotes ol {
+      counter-reset: ol;
+      list-style-type: none; 
+      margin-left: 0;
+    }
+    .reveal .footnotes ol li:before {
+      counter-increment: ol;
+      content: counter(ol) ". "; 
+    }
+    .reveal .footnotes ol li > p:first-child {
+      display: inline-block;
+    }
+    .reveal .slide ul,
+    .reveal .slide ol {
+      margin-bottom: 0.5em;
+    }
+    .reveal .slide ul li,
+    .reveal .slide ol li {
+      margin-top: 0.4em;
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide ul[role="tablist"] li {
+      margin-bottom: 0;
+    }
+    .reveal .slide ul li > *:first-child,
+    .reveal .slide ol li > *:first-child {
+      margin-block-start: 0;
+    }
+    .reveal .slide ul li > *:last-child,
+    .reveal .slide ol li > *:last-child {
+      margin-block-end: 0;
+    }
+    .reveal .slide .columns:nth-child(3) {
+      margin-block-start: 0.8em;
+    }
+    .reveal blockquote {
+      box-shadow: none;
+    }
+    .reveal .tippy-content>* {
+      margin-top: 0.2em;
+      margin-bottom: 0.7em;
+    }
+    .reveal .tippy-content>*:last-child {
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide > img.stretch.quarto-figure-center,
+    .reveal .slide > img.r-stretch.quarto-figure-center {
+      display: block;
+      margin-left: auto;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-left,
+    .reveal .slide > img.r-stretch.quarto-figure-left  {
+      display: block;
+      margin-left: 0;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-right,
+    .reveal .slide > img.r-stretch.quarto-figure-right  {
+      display: block;
+      margin-left: auto;
+      margin-right: 0; 
+    }
+  </style>
+  <link href="../site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet">
+  <script src="../site_libs/pagedtable-1.1/js/pagedtable.js"></script>
+</head>
+<body class="quarto-dark">
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide" class="quarto-title-block center">
+  <h1 class="title">Regression for Multinomial and Ordinal Outcomes</h1>
+
+<div class="quarto-title-authors">
+<div class="quarto-title-author">
+<div class="quarto-title-author-name">
+Brandon M. Greenwell, PhD 
+</div>
+        <p class="quarto-title-affiliation">
+            University of Cincinnati
+          </p>
+    </div>
+</div>
+
+</section>
+<section>
+<section id="regression-for-multinomial-outcomes" class="title-slide slide level1 center">
+<h1>Regression for Multinomial Outcomes</h1>
+
+</section>
+<section id="multinomial-data" class="slide level2">
+<h2>Multinomial data</h2>
+<ul>
+<li><p>The <a href="https://en.wikipedia.org/wiki/Multinomial_distribution">multinomial distribution</a> is an extension of the binomial where the outcome can take on more than two values</p></li>
+<li><p>The categories can be nominal (e.g., have no natural ordering) or ordinal in nature (e.g., low &lt; medium &lt; high)</p></li>
+<li><p>We’ll start with the case of a nominal outcome having more than two categories</p></li>
+<li><p>Let <span class="math inline">\(Y\)</span> be a discrete r.v. that can take on one of <span class="math inline">\(J\)</span> categories with <span class="math inline">\(\left\{\mathrm{P}\left(Y = j\right) = p_j\right\}_{j=1}^J\)</span>, where <span class="math inline">\(\sum_{j=1}^Jp_j=1\)</span></p></li>
+</ul>
+</section>
+<section id="multinomial-logit-model" class="slide level2">
+<h2>Multinomial logit model</h2>
+<ul>
+<li><p>Similar to binary regression, we need a way to <em>link</em> the probabilities <span class="math inline">\(p_j\)</span> to the predictors <span class="math inline">\(\boldsymbol{x} = \left(x_1, x_2, \dots, x_p\right)^\top\)</span></p></li>
+<li><p>Need to ensure each <span class="math inline">\(0 \le p_j \le 1\)</span> and that <span class="math inline">\(\sum_{j=1}^Jp_j = 1\)</span></p></li>
+<li><p>Idea is similar to fitting several logistic regressions using one of the categories as the reference or baseline (say, <span class="math inline">\(j = 1\)</span>)</p></li>
+<li><p>To that end, we define the <span class="math inline">\(J-1\)</span> logits <span class="math inline">\(\eta_j = \boldsymbol{x}^\top\boldsymbol{\beta}_j = \log\left(p_j / p_1\right)\)</span>, where <span class="math inline">\(j \ne 1\)</span></p></li>
+<li><p>Notice we have a set of coefficients for each comparison!</p></li>
+</ul>
+</section>
+<section id="multinomial-logit-model-1" class="slide level2">
+<h2>Multinomial logit model</h2>
+<ul>
+<li><p>To ensure <span class="math inline">\(\sum_{j=1}^Jp_j = 1\)</span>, we have <span class="math display">\[
+p_i = \frac{\exp\left(\eta_i\right)}{1 + \sum_{j=2}^J\exp\left(\eta_j\right)}
+\]</span></p></li>
+<li><p>This implies that <span class="math inline">\(p_1 = 1 - \sum_{j=2}^Jp_j\)</span></p></li>
+</ul>
+</section>
+<section id="national-election-study" class="slide level2">
+<h2>1996 National Election Study</h2>
+
+<img data-src="images/nes96.png" class="quarto-figure quarto-figure-center r-stretch"></section>
+<section id="national-election-study-1" class="slide level2">
+<h2>1996 National Election Study</h2>
+<ul>
+<li><p>We’ll consider a sample taken from a subset of the 1996 American National Election Study</p></li>
+<li><p>Contained in the <code>nes96</code> data frame in the <a href="https://cran.r-project.org/package=faraway">faraway</a> <span class="emoji" data-emoji="package">📦</span></p></li>
+</ul>
+<div class="cell" data-layout-align="center">
+<details class="code-fold">
+<summary>Show R code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a></a><span class="fu">str</span>(nes96 <span class="ot">&lt;-</span> faraway<span class="sc">::</span>nes96)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>'data.frame':   944 obs. of  10 variables:
+ $ popul : int  0 190 31 83 640 110 100 31 180 2800 ...
+ $ TVnews: int  7 1 7 4 7 3 7 1 7 0 ...
+ $ selfLR: Ord.factor w/ 7 levels "extLib"&lt;"Lib"&lt;..: 7 3 2 3 5 3 5 5 4 3 ...
+ $ ClinLR: Ord.factor w/ 7 levels "extLib"&lt;"Lib"&lt;..: 1 3 2 4 6 4 6 4 6 3 ...
+ $ DoleLR: Ord.factor w/ 7 levels "extLib"&lt;"Lib"&lt;..: 6 5 6 5 4 6 4 5 3 7 ...
+ $ PID   : Ord.factor w/ 7 levels "strDem"&lt;"weakDem"&lt;..: 7 2 2 2 1 2 2 5 4 1 ...
+ $ age   : int  36 20 24 28 68 21 77 21 31 39 ...
+ $ educ  : Ord.factor w/ 7 levels "MS"&lt;"HSdrop"&lt;..: 3 4 6 6 6 4 4 4 4 3 ...
+ $ income: Ord.factor w/ 24 levels "$3Kminus"&lt;"$3K-$5K"&lt;..: 1 1 1 1 1 1 1 1 1 1 ...
+ $ vote  : Factor w/ 2 levels "Clinton","Dole": 2 1 1 1 1 1 1 1 1 1 ...</code></pre>
+</div>
+</div>
+</section>
+<section id="national-election-study-2" class="slide level2">
+<h2>1996 National Election Study</h2>
+<ul>
+<li><p>For simplicity, we’ll consider three variables: age, education level, and income groups of each respondent</p></li>
+<li><p>Some of the factors are “ordered” by default; E.g., <code>income</code> (respondent’s education level):</p></li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a></a><span class="fu">levels</span>(nes96<span class="sc">$</span>income)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] "$3Kminus"   "$3K-$5K"    "$5K-$7K"    "$7K-$9K"    "$9K-$10K"  
+ [6] "$10K-$11K"  "$11K-$12K"  "$12K-$13K"  "$13K-$14K"  "$14K-$15K" 
+[11] "$15K-$17K"  "$17K-$20K"  "$20K-$22K"  "$22K-$25K"  "$25K-$30K" 
+[16] "$30K-$35K"  "$35K-$40K"  "$40K-$45K"  "$45K-$50K"  "$50K-$60K" 
+[21] "$60K-$75K"  "$75K-$90K"  "$90K-$105K" "$105Kplus" </code></pre>
+</div>
+</div>
+<ul>
+<li>Same goes for <code>PID</code> and <code>educ</code> (respondent’s party identification and education, respectively)</li>
+</ul>
+</section>
+<section id="national-election-study-3" class="slide level2">
+<h2>1996 National Election Study</h2>
+<p>Here’s a cleaned up version of the data we’ll work with:</p>
+<div class="cell" data-layout-align="center">
+<details class="code-fold">
+<summary>Show R code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a></a><span class="co"># Condense party identification (PID) column into three categories</span></span>
+<span id="cb5-2"><a></a>party <span class="ot">&lt;-</span> nes96<span class="sc">$</span>PID</span>
+<span id="cb5-3"><a></a><span class="fu">levels</span>(party) <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb5-4"><a></a>  <span class="st">"Democrat"</span>, <span class="st">"Democrat"</span>,</span>
+<span id="cb5-5"><a></a>  <span class="st">"Independent"</span>, <span class="st">"Independent"</span>, <span class="st">"Independent"</span>, </span>
+<span id="cb5-6"><a></a>  <span class="st">"Republican"</span>, <span class="st">"Republican"</span></span>
+<span id="cb5-7"><a></a>)</span>
+<span id="cb5-8"><a></a></span>
+<span id="cb5-9"><a></a><span class="co"># Convert income to numeric</span></span>
+<span id="cb5-10"><a></a>inca <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">1.5</span>, <span class="dv">4</span>, <span class="dv">6</span>, <span class="dv">8</span>, <span class="fl">9.5</span>, <span class="fl">10.5</span>, <span class="fl">11.5</span>, <span class="fl">12.5</span>, <span class="fl">13.5</span>, <span class="fl">14.5</span>, <span class="dv">16</span>, <span class="fl">18.5</span>, <span class="dv">21</span>, <span class="fl">23.5</span>,</span>
+<span id="cb5-11"><a></a>          <span class="fl">27.5</span>, <span class="fl">32.5</span>, <span class="fl">37.5</span>, <span class="fl">42.5</span>, <span class="fl">47.5</span>, <span class="dv">55</span>, <span class="fl">67.5</span>, <span class="fl">82.5</span>, <span class="fl">97.5</span>, <span class="dv">115</span>)</span>
+<span id="cb5-12"><a></a>income <span class="ot">&lt;-</span> inca[<span class="fu">unclass</span>(nes96<span class="sc">$</span>income)]</span>
+<span id="cb5-13"><a></a></span>
+<span id="cb5-14"><a></a><span class="co"># Construct new data set for analysis</span></span>
+<span id="cb5-15"><a></a>rnes96 <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb5-16"><a></a>  <span class="st">"party"</span> <span class="ot">=</span> party, </span>
+<span id="cb5-17"><a></a>  <span class="st">"income"</span> <span class="ot">=</span> income, </span>
+<span id="cb5-18"><a></a>  <span class="st">"education"</span> <span class="ot">=</span> nes96<span class="sc">$</span>educ, </span>
+<span id="cb5-19"><a></a>  <span class="st">"age"</span> <span class="ot">=</span> nes96<span class="sc">$</span>age</span>
+<span id="cb5-20"><a></a>)</span>
+<span id="cb5-21"><a></a></span>
+<span id="cb5-22"><a></a><span class="co"># Print summary of data set</span></span>
+<span id="cb5-23"><a></a><span class="fu">summary</span>(rnes96)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>         party         income        education        age       
+ Democrat   :380   Min.   :  1.50   MS    : 13   Min.   :19.00  
+ Independent:239   1st Qu.: 23.50   HSdrop: 52   1st Qu.:34.00  
+ Republican :325   Median : 37.50   HS    :248   Median :44.00  
+                   Mean   : 46.58   Coll  :187   Mean   :47.04  
+                   3rd Qu.: 67.50   CCdeg : 90   3rd Qu.:58.00  
+                   Max.   :115.00   BAdeg :227   Max.   :91.00  
+                                    MAdeg :127                  </code></pre>
+</div>
+</div>
+</section>
+<section id="national-election-study-4" class="slide level2">
+<h2>1996 National Election Study</h2>
+<p>Let’s continue with some visual exploration:</p>
+<div class="cell" data-layout-align="center" data-par="true">
+<details class="code-fold">
+<summary>Show R code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb7-2"><a></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb7-3"><a></a></span>
+<span id="cb7-4"><a></a><span class="fu">theme_set</span>(<span class="fu">theme_bw</span>())</span>
+<span id="cb7-5"><a></a></span>
+<span id="cb7-6"><a></a><span class="co"># Aggregate data; what's happening here?</span></span>
+<span id="cb7-7"><a></a>egp <span class="ot">&lt;-</span> <span class="fu">group_by</span>(rnes96, education, party) <span class="sc">%&gt;%</span> </span>
+<span id="cb7-8"><a></a>  <span class="fu">summarise</span>(<span class="at">count =</span> <span class="fu">n</span>()) <span class="sc">%&gt;%</span></span>
+<span id="cb7-9"><a></a>  <span class="fu">group_by</span>(education) <span class="sc">%&gt;%</span> </span>
+<span id="cb7-10"><a></a>  <span class="fu">mutate</span>(<span class="at">etotal =</span> <span class="fu">sum</span>(count), <span class="at">proportion =</span> count<span class="sc">/</span>etotal)</span>
+<span id="cb7-11"><a></a></span>
+<span id="cb7-12"><a></a><span class="co"># Plot results</span></span>
+<span id="cb7-13"><a></a><span class="fu">ggplot</span>(egp, <span class="fu">aes</span>(<span class="at">x =</span> education, <span class="at">y =</span> proportion, <span class="at">group =</span> party, </span>
+<span id="cb7-14"><a></a>                <span class="at">linetype =</span> party, <span class="at">color =</span> party)) <span class="sc">+</span> </span>
+<span id="cb7-15"><a></a>  <span class="fu">geom_line</span>(<span class="at">size =</span> <span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+
+</div>
+<img data-src="05-multinomial-ordinal-regression_files/figure-revealjs/unnamed-chunk-5-1.png" class="quarto-figure quarto-figure-center r-stretch" style="width:100.0%"></section>
+<section id="national-election-study-5" class="slide level2">
+<h2>1996 National Election Study</h2>
+<p>Let’s continue with some visual exploration:</p>
+<div class="cell" data-layout-align="center" data-par="true">
+<details class="code-fold">
+<summary>Show R code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a></a><span class="co"># Aggregate data; what's happening here?</span></span>
+<span id="cb8-2"><a></a>igp <span class="ot">&lt;-</span> <span class="fu">mutate</span>(rnes96, <span class="at">income_group =</span> <span class="fu">cut_number</span>(income, <span class="dv">7</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb8-3"><a></a>  <span class="fu">group_by</span>(income_group, party) <span class="sc">%&gt;%</span> </span>
+<span id="cb8-4"><a></a>  <span class="fu">summarise</span>(<span class="at">count =</span> <span class="fu">n</span>()) <span class="sc">%&gt;%</span> </span>
+<span id="cb8-5"><a></a>  <span class="fu">group_by</span>(income_group) <span class="sc">%&gt;%</span> </span>
+<span id="cb8-6"><a></a>  <span class="fu">mutate</span>(<span class="at">etotal =</span> <span class="fu">sum</span>(count), <span class="at">proportion =</span> count <span class="sc">/</span> etotal)</span>
+<span id="cb8-7"><a></a></span>
+<span id="cb8-8"><a></a><span class="co"># Plot results</span></span>
+<span id="cb8-9"><a></a><span class="fu">ggplot</span>(igp, <span class="fu">aes</span>(<span class="at">x =</span> income_group, <span class="at">y =</span> proportion, <span class="at">group =</span> party, </span>
+<span id="cb8-10"><a></a>                <span class="at">linetype =</span> party, <span class="at">color =</span> party)) <span class="sc">+</span></span>
+<span id="cb8-11"><a></a>  <span class="fu">scale_x_discrete</span>(<span class="at">guide =</span> <span class="fu">guide_axis</span>(<span class="at">angle =</span> <span class="dv">45</span>)) <span class="sc">+</span></span>
+<span id="cb8-12"><a></a>  <span class="fu">geom_line</span>(<span class="at">size =</span> <span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+
+</div>
+<img data-src="05-multinomial-ordinal-regression_files/figure-revealjs/unnamed-chunk-6-1.png" class="quarto-figure quarto-figure-center r-stretch" style="width:100.0%"></section>
+<section id="national-election-study-6" class="slide level2">
+<h2>1996 National Election Study</h2>
+<p>Let’s continue with some visual exploration:</p>
+<div class="cell" data-layout-align="center" data-plot="true">
+<details class="code-fold">
+<summary>Show R code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a></a><span class="co"># Aggregate data; what's happening here?</span></span>
+<span id="cb9-2"><a></a>agp <span class="ot">&lt;-</span> rnes96 <span class="sc">%&gt;%</span> </span>
+<span id="cb9-3"><a></a>  <span class="fu">group_by</span>(age, party) <span class="sc">%&gt;%</span> </span>
+<span id="cb9-4"><a></a>  <span class="fu">summarise</span>(<span class="at">count =</span> <span class="fu">n</span>()) <span class="sc">%&gt;%</span> </span>
+<span id="cb9-5"><a></a>  <span class="fu">group_by</span>(age) <span class="sc">%&gt;%</span> </span>
+<span id="cb9-6"><a></a>  <span class="fu">mutate</span>(<span class="at">etotal =</span> <span class="fu">sum</span>(count), <span class="at">proportion =</span> count <span class="sc">/</span> etotal)</span>
+<span id="cb9-7"><a></a></span>
+<span id="cb9-8"><a></a><span class="co"># Plot results</span></span>
+<span id="cb9-9"><a></a><span class="fu">ggplot</span>(agp, <span class="fu">aes</span>(<span class="at">x =</span> age, <span class="at">y =</span> proportion, <span class="at">group =</span> party, </span>
+<span id="cb9-10"><a></a>                <span class="at">linetype =</span> party, <span class="at">color =</span> party)) <span class="sc">+</span></span>
+<span id="cb9-11"><a></a>  <span class="fu">geom_line</span>(<span class="at">size =</span> <span class="dv">1</span>, <span class="at">alpha =</span> <span class="fl">0.5</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+
+</div>
+<img data-src="05-multinomial-ordinal-regression_files/figure-revealjs/unnamed-chunk-7-1.png" class="quarto-figure quarto-figure-center r-stretch" style="width:100.0%"></section>
+<section id="national-election-study-7" class="slide level2">
+<h2>1996 National Election Study</h2>
+<p>Define the following probabilities:</p>
+<ul>
+<li><span class="math inline">\(p_{d} = P\left(\text{voting democrat}\right)\)</span>;</li>
+<li><span class="math inline">\(p_{i} = P\left(\text{voting independent}\right)\)</span>;</li>
+<li><span class="math inline">\(p_{r} = P\left(\text{voting republican}\right)\)</span>,</li>
+</ul>
+<p>where <span class="math inline">\(p_d + p_i + p_r = 1\)</span>. Assume for now that <code>income</code> is the only independent variable of interest.</p>
+</section>
+<section id="national-election-study-8" class="slide level2">
+<h2>1996 National Election Study</h2>
+<p>The multinomial logit model effectively fits several logits (one for every class except the baseline, which is arbitrary; here, it’s democrat):</p>
+<ul>
+<li><span class="math inline">\(\log\left(p_{i} / p_{d}\right) = \beta_0 + \beta_1 \mathtt{income}\quad\)</span> (log odds of voting independent vs.&nbsp;democrat);</li>
+<li><span class="math inline">\(\log\left(p_{r} / p_{d}\right) = \alpha_0 + \alpha_1 \mathtt{income}\quad\)</span> (log odds of voting republican vs.&nbsp;democrat).</li>
+</ul>
+<p>Here we use <span class="math inline">\(\beta_i\)</span> and <span class="math inline">\(\alpha_i\)</span> to remind us that the estimated coefficients between the two logits will be different.</p>
+</section>
+<section id="national-election-study-9" class="slide level2">
+<h2>1996 National Election Study</h2>
+<p>Multinomial logit model using all three predictors:</p>
+<div class="cell" data-layout-align="center">
+<details class="code-fold">
+<summary>Show R code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a></a><span class="fu">library</span>(nnet)  <span class="co"># install.packages("nnet")</span></span>
+<span id="cb10-2"><a></a></span>
+<span id="cb10-3"><a></a>(mfit <span class="ot">&lt;-</span> <span class="fu">multinom</span>(party <span class="sc">~</span> age <span class="sc">+</span> education <span class="sc">+</span> income, <span class="at">data =</span> rnes96, <span class="at">trace =</span> <span class="cn">FALSE</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Call:
+multinom(formula = party ~ age + education + income, data = rnes96, 
+    trace = FALSE)
+
+Coefficients:
+            (Intercept)          age education.L education.Q education.C
+Independent   -1.197260 0.0001534525  0.06351451  -0.1217038   0.1119542
+Republican    -1.642656 0.0081943691  1.19413345  -1.2292869   0.1544575
+            education^4 education^5 education^6     income
+Independent -0.07657336   0.1360851  0.15427826 0.01623911
+Republican  -0.02827297  -0.1221176 -0.03741389 0.01724679
+
+Residual Deviance: 1968.333 
+AIC: 2004.333 </code></pre>
+</div>
+</div>
+</section>
+<section id="brief-digression" class="slide level2">
+<h2>Brief digression…</h2>
+<ul>
+<li><p>By default, R encodes ordered factors using <em>orthogonal polynomials</em></p></li>
+<li><p>Ames Housing example:</p></li>
+</ul>
+<div class="cell" data-layout-align="center" data-plot="true">
+<details class="code-fold">
+<summary>Show R code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a></a>ames <span class="ot">&lt;-</span> AmesHousing<span class="sc">::</span><span class="fu">make_ames</span>()</span>
+<span id="cb12-2"><a></a><span class="fu">ggplot</span>(ames, <span class="fu">aes</span>(<span class="at">x =</span> Overall_Qual, <span class="at">y =</span> Sale_Price)) <span class="sc">+</span><span class="co">#log(Sale_Price))) +</span></span>
+<span id="cb12-3"><a></a>  <span class="fu">geom_boxplot</span>(<span class="fu">aes</span>(<span class="at">color =</span> Overall_Qual)) <span class="sc">+</span></span>
+<span id="cb12-4"><a></a>  <span class="fu">scale_x_discrete</span>(<span class="at">guide =</span> <span class="fu">guide_axis</span>(<span class="at">angle =</span> <span class="dv">45</span>)) </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+
+</div>
+<img data-src="05-multinomial-ordinal-regression_files/figure-revealjs/unnamed-chunk-9-1.png" class="quarto-figure quarto-figure-center r-stretch" style="width:100.0%"></section>
+<section id="national-election-study-10" class="slide level2">
+<h2>1996 National Election Study</h2>
+<p>No <span class="math inline">\(p\)</span>-values here!</p>
+<div class="cell" data-layout-align="center">
+<details class="code-fold">
+<summary>Show R code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a></a><span class="fu">summary</span>(mfit)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Call:
+multinom(formula = party ~ age + education + income, data = rnes96, 
+    trace = FALSE)
+
+Coefficients:
+            (Intercept)          age education.L education.Q education.C
+Independent   -1.197260 0.0001534525  0.06351451  -0.1217038   0.1119542
+Republican    -1.642656 0.0081943691  1.19413345  -1.2292869   0.1544575
+            education^4 education^5 education^6     income
+Independent -0.07657336   0.1360851  0.15427826 0.01623911
+Republican  -0.02827297  -0.1221176 -0.03741389 0.01724679
+
+Std. Errors:
+            (Intercept)         age education.L education.Q education.C
+Independent   0.3265951 0.005374592   0.4571884   0.4142859   0.3498491
+Republican    0.3312877 0.004902668   0.6502670   0.6041924   0.4866432
+            education^4 education^5 education^6      income
+Independent   0.2883031   0.2494706   0.2171578 0.003108585
+Republican    0.3605620   0.2696036   0.2031859 0.002881745
+
+Residual Deviance: 1968.333 
+AIC: 2004.333 </code></pre>
+</div>
+</div>
+</section>
+<section id="national-election-study-11" class="slide level2">
+<h2>1996 National Election Study</h2>
+<ul>
+<li><p>How do we interpret the coefficients? How about for <code>income</code>?</p></li>
+<li><p>All else held constant, for every <span class="emoji" data-emoji="warning">⚠️</span>one-unit increase in income<span class="emoji" data-emoji="warning">⚠️</span>, the multinomial log odds of voting republican, relative to democrat increase by 0.017.</p></li>
+<li><p>Gross… <span class="emoji" data-emoji="nauseated_face">🤢</span></p></li>
+<li><p>Effect plots to the rescue!</p></li>
+</ul>
+</section>
+<section id="national-election-study-12" class="slide level2">
+<h2>1996 National Election Study</h2>
+<p>Look at predicted probabilities:</p>
+<div class="cell" data-layout-align="center">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a></a><span class="fu">head</span>(probs <span class="ot">&lt;-</span> <span class="fu">predict</span>(mfit, <span class="at">type =</span> <span class="st">"probs"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   Democrat Independent Republican
+1 0.5923052   0.1975326  0.2101622
+2 0.5919378   0.1687055  0.2393567
+3 0.5970789   0.1732058  0.2297154
+4 0.5924809   0.1719775  0.2355417
+5 0.5423563   0.1583973  0.2992464
+6 0.5907590   0.1683954  0.2408456</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a></a><span class="co"># Sanity check</span></span>
+<span id="cb17-2"><a></a><span class="fu">head</span>(<span class="fu">rowSums</span>(probs))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>1 2 3 4 5 6 
+1 1 1 1 1 1 </code></pre>
+</div>
+</div>
+</section>
+<section id="national-election-study-13" class="slide level2">
+<h2>1996 National Election Study</h2>
+<div class="cell" data-layout-align="center">
+<details class="code-fold">
+<summary>Show R code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a></a><span class="fu">library</span>(pdp)  <span class="co"># for partial dependence (PD) plots</span></span>
+<span id="cb19-2"><a></a></span>
+<span id="cb19-3"><a></a><span class="co"># Compute partial dependence of party identification on income</span></span>
+<span id="cb19-4"><a></a>pfun <span class="ot">&lt;-</span> <span class="cf">function</span>(object, newdata) {</span>
+<span id="cb19-5"><a></a>  probs <span class="ot">&lt;-</span> <span class="fu">predict</span>(object, <span class="at">newdata =</span> newdata, <span class="at">type =</span> <span class="st">"probs"</span>)</span>
+<span id="cb19-6"><a></a>  <span class="fu">colMeans</span>(probs)  <span class="co"># return average probability for each class</span></span>
+<span id="cb19-7"><a></a>}</span>
+<span id="cb19-8"><a></a>pd.inc <span class="ot">&lt;-</span> <span class="fu">partial</span>(mfit, <span class="at">pred.var =</span> <span class="st">"income"</span>, <span class="at">pred.fun =</span> pfun)</span>
+<span id="cb19-9"><a></a><span class="fu">ggplot</span>(pd.inc, <span class="fu">aes</span>(<span class="at">x =</span> income, <span class="at">y =</span> yhat, <span class="at">linetype =</span> yhat.id, <span class="at">color =</span> yhat.id)) <span class="sc">+</span></span>
+<span id="cb19-10"><a></a>  <span class="fu">geom_line</span>(<span class="at">size =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb19-11"><a></a>  <span class="fu">xlab</span>(<span class="st">"Income group midpoint (in thousands)"</span>) <span class="sc">+</span></span>
+<span id="cb19-12"><a></a>  <span class="fu">ylab</span>(<span class="st">"Partial dependence"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+
+</div>
+<img data-src="05-multinomial-ordinal-regression_files/figure-revealjs/unnamed-chunk-12-1.png" class="quarto-figure quarto-figure-center r-stretch" style="width:100.0%"></section>
+<section id="national-election-study-14" class="slide level2">
+<h2>1996 National Election Study</h2>
+<p>Can perform classification, if desired…<span class="emoji" data-emoji="roll_eyes">🙄</span></p>
+<div class="cell" data-layout-align="center">
+<details class="code-fold">
+<summary>Show R code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a></a><span class="fu">table</span>(<span class="st">"Predicted"</span> <span class="ot">=</span> <span class="fu">predict</span>(mfit), <span class="st">"Actual"</span> <span class="ot">=</span> rnes96<span class="sc">$</span>party)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>             Actual
+Predicted     Democrat Independent Republican
+  Democrat         277         130        169
+  Independent        4           7          5
+  Republican        99         102        151</code></pre>
+</div>
+</div>
+<div class="fragment">
+<p>Ummm…majority of actual Republicans are classified as Democrats?!</p>
+</div>
+</section>
+<section id="national-election-study-15" class="slide level2">
+<h2>1996 National Election Study</h2>
+<p>For kicks, try stepwise selection; since the model is based on a (multinomial) likelihood, the AIC/BIC are well-defined and the usual stepwise procedures are still valid:</p>
+<div class="cell" data-layout-align="center">
+<details class="code-fold">
+<summary>Show R code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a></a>(mfit2 <span class="ot">&lt;-</span> MASS<span class="sc">::</span><span class="fu">stepAIC</span>(mfit, <span class="at">direction =</span> <span class="st">"both"</span>, <span class="at">scope =</span> <span class="fu">list</span>(<span class="st">"upper"</span> <span class="ot">=</span> <span class="er">~</span>.<span class="sc">^</span><span class="dv">2</span>)))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Start:  AIC=2004.33
+party ~ age + education + income
+
+                   Df    AIC
+- education        12 1996.5
+- age               2 2003.6
+&lt;none&gt;                2004.3
++ age:income        2 2006.7
++ age:education    12 2009.3
++ education:income 12 2013.2
+- income            2 2045.9
+
+Step:  AIC=1996.54
+party ~ age + income
+
+             Df    AIC
+- age         2 1993.4
+&lt;none&gt;          1996.5
++ age:income  2 1998.8
++ education  12 2004.3
+- income      2 2048.8
+
+Step:  AIC=1993.42
+party ~ income
+
+            Df    AIC
+&lt;none&gt;         1993.4
++ age        2 1996.5
++ education 12 2003.6
+- income     2 2045.3</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Call:
+multinom(formula = party ~ income, data = rnes96, trace = FALSE)
+
+Coefficients:
+            (Intercept)     income
+Independent  -1.1749331 0.01608683
+Republican   -0.9503591 0.01766457
+
+Residual Deviance: 1985.424 
+AIC: 1993.424 </code></pre>
+</div>
+</div>
+</section>
+<section id="national-election-study-16" class="slide level2">
+<h2>1996 National Election Study</h2>
+<p>For comparison, fit a (default) random forest:</p>
+<div class="cell" data-layout-align="center">
+<details class="code-fold">
+<summary>Show R code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a></a><span class="fu">set.seed</span>(<span class="dv">2008</span>)  <span class="co"># for reproducibility</span></span>
+<span id="cb25-2"><a></a>(rfo <span class="ot">&lt;-</span> randomForest<span class="sc">::</span><span class="fu">randomForest</span>(party <span class="sc">~</span> ., <span class="at">data =</span> rnes96, <span class="at">ntree =</span> <span class="dv">1000</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+ randomForest(formula = party ~ ., data = rnes96, ntree = 1000) 
+               Type of random forest: classification
+                     Number of trees: 1000
+No. of variables tried at each split: 1
+
+        OOB estimate of  error rate: 55.72%
+Confusion matrix:
+            Democrat Independent Republican class.error
+Democrat         248          41         91   0.3473684
+Independent      129          27         83   0.8870293
+Republican       156          26        143   0.5600000</code></pre>
+</div>
+</div>
+</section>
+<section id="national-election-study-17" class="slide level2">
+<h2>1996 National Election Study</h2>
+<p>Random forest results for comparison:</p>
+<div class="cell" data-layout-align="center" data-par="true">
+<details class="code-fold">
+<summary>Show R code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a></a><span class="co"># Construct the same PD plot as before, but using the RF model</span></span>
+<span id="cb27-2"><a></a>pd <span class="ot">&lt;-</span> <span class="fu">partial</span>(rfo, <span class="at">pred.var =</span> <span class="st">"income"</span>, <span class="at">pred.fun =</span> <span class="cf">function</span>(object, newdata) {</span>
+<span id="cb27-3"><a></a>  <span class="fu">colMeans</span>(<span class="fu">predict</span>(object, <span class="at">newdata =</span> newdata, <span class="at">type =</span> <span class="st">"prob"</span>))</span>
+<span id="cb27-4"><a></a>})</span>
+<span id="cb27-5"><a></a><span class="fu">ggplot</span>(pd, <span class="fu">aes</span>(<span class="at">x =</span> income, <span class="at">y =</span> yhat, <span class="at">linetype =</span> yhat.id, <span class="at">color =</span> yhat.id)) <span class="sc">+</span></span>
+<span id="cb27-6"><a></a>  <span class="fu">geom_line</span>(<span class="at">size =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb27-7"><a></a>  <span class="fu">xlab</span>(<span class="st">"Income (midpoint in thousands)"</span>) <span class="sc">+</span></span>
+<span id="cb27-8"><a></a>  <span class="fu">ylab</span>(<span class="st">"Partial dependence"</span>) <span class="sc">+</span></span>
+<span id="cb27-9"><a></a>  <span class="fu">geom_rug</span>(<span class="at">data =</span> <span class="fu">data.frame</span>(<span class="st">"income"</span> <span class="ot">=</span> <span class="fu">quantile</span>(rnes96<span class="sc">$</span>income, <span class="at">prob =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">9</span><span class="sc">/</span><span class="dv">10</span>)), <span class="fu">aes</span>(<span class="at">x =</span> income), <span class="at">inherit.aes =</span> <span class="cn">FALSE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+
+</div>
+<img data-src="05-multinomial-ordinal-regression_files/figure-revealjs/unnamed-chunk-16-1.png" class="quarto-figure quarto-figure-center r-stretch" style="width:100.0%"></section></section>
+<section id="regression-for-ordinal-outcomes" class="title-slide slide level1 center">
+<h1>Regression for Ordinal Outcomes</h1>
+
+</section>
+
+<section>
+<section id="ordinal-outcomes" class="title-slide slide level1 center">
+<h1>Ordinal outcomes</h1>
+<ul>
+<li><p>Technically, party identification (<code>party</code>) is ordinal variable: <code>Democrat</code> &lt; <code>Independent</code> &lt; <code>Republican</code></p></li>
+<li><p>With an ordered response (e.g., Likert scale), it’s often easier to work with the <a href="https://en.wikipedia.org/wiki/Cumulative_distribution_function"><em>cumulative probabilities</em></a> <span class="math inline">\(p_j^\le = \mathrm{P}\left(Y \le j\right)\)</span></p></li>
+<li><p>Note that if the <span class="math inline">\(J\)</span> response categories have order <span class="math inline">\(1 &lt; 2 &lt; \cdots &lt; J\)</span>, then <span class="math inline">\(p_J^\le = \mathrm{P}\left(Y \le J\right) = 1\)</span></p></li>
+<li><p>Suppose <span class="math inline">\(Z\)</span> is some unobserved (i.e., <a href="https://en.wikipedia.org/wiki/Latent_and_observable_variables">latent</a>) response but we only observe a discretized version of the form <span class="math inline">\(Y = j\)</span> if <span class="math inline">\(\alpha_{j-1} &lt; Z &lt; \alpha_j\)</span></p></li>
+</ul>
+</section>
+<section id="ordinal-outcomes-1" class="slide level2">
+<h2>Ordinal outcomes</h2>
+<ul>
+<li><p>If <span class="math inline">\(Z - \boldsymbol{x}^\top\boldsymbol{\beta}\)</span> has distribution <span class="math inline">\(F\)</span>, then <span class="math display">\[
+\mathrm{P}\left(Y \le j\right) = \mathrm{P}\left(Z \le \alpha_j\right) = F\left(\alpha_j - \boldsymbol{x}^\top\boldsymbol{\beta}\right)
+\]</span></p></li>
+<li><p>If, for example, <span class="math inline">\(F\)</span> is a standard logistic distribution, then <span class="math display">\[
+p_j^\le = \frac{\exp\left(\alpha_j - \boldsymbol{x}^\top\boldsymbol{\beta}\right)}{1 + \exp\left(\alpha_j - \boldsymbol{x}^\top\boldsymbol{\beta}\right)}
+\]</span> which is a logit model for the cumulative probabilities!</p></li>
+<li><p>Choosing a standard normal distribution for <span class="math inline">\(F\)</span> would lead to a probit model for the cumulative probabilities, and so on…</p></li>
+</ul>
+</section>
+<section id="proportional-odds-po-model" class="slide level2">
+<h2>Proportional odds (PO) model</h2>
+<ul>
+<li><p>Let <span class="math inline">\(p_j^\top = \mathrm{P}\left(Y \le j|\boldsymbol{x}\right)\)</span></p></li>
+<li><p>The standard PO model, which uses a logit link, is <span class="math display">\[
+\log\left(\frac{p_j^\le}{1-p_j^\le}\right) = \alpha_j - \boldsymbol{x}^\top\boldsymbol{\beta}, \quad j = 1, 2, \dots, J-1
+\]</span></p></li>
+</ul>
+</section>
+<section id="proportional-odds-po-model-1" class="slide level2">
+<h2>Proportional odds (PO) model</h2>
+<ul>
+<li>PO assumption, etc…</li>
+</ul>
+</section>
+<section id="national-election-study-18" class="slide level2">
+<h2>1996 National Election Study</h2>
+<p>The simplest implementation is <code>polr()</code> from <a href="https://cran.r-project.org/package=MASS">MASS</a></p>
+<div class="cell" data-layout-align="center">
+<details class="code-fold">
+<summary>Show R code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a></a><span class="fu">library</span>(MASS)</span>
+<span id="cb28-2"><a></a></span>
+<span id="cb28-3"><a></a>(pofit <span class="ot">&lt;-</span> <span class="fu">polr</span>(party <span class="sc">~</span> age <span class="sc">+</span> education <span class="sc">+</span> income, <span class="at">data =</span> rnes96))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Call:
+polr(formula = party ~ age + education + income, data = rnes96)
+
+Coefficients:
+         age  education.L  education.Q  education.C  education^4  education^5 
+ 0.005774902  0.724086814 -0.781360508  0.040168238 -0.019925492 -0.079412657 
+ education^6       income 
+-0.061103738  0.012738693 
+
+Intercepts:
+  Democrat|Independent Independent|Republican 
+             0.6448794              1.7373541 
+
+Residual Deviance: 1984.211 
+AIC: 2004.211 </code></pre>
+</div>
+</div>
+</section>
+<section id="national-election-study-19" class="slide level2">
+<h2>1996 National Election Study</h2>
+<p>Similar to before, we can use AIC-based stepwise procedures:</p>
+<div class="cell" data-layout-align="center">
+<details class="code-fold">
+<summary>Show R code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a></a>(pofit2 <span class="ot">&lt;-</span> <span class="fu">stepAIC</span>(pofit, <span class="at">direction =</span> <span class="st">"both"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Start:  AIC=2004.21
+party ~ age + education + income
+
+            Df    AIC
+- education  6 2002.8
+&lt;none&gt;         2004.2
+- age        1 2004.4
+- income     1 2038.6
+
+Step:  AIC=2002.83
+party ~ age + income
+
+            Df    AIC
+- age        1 2001.4
+&lt;none&gt;         2002.8
++ education  6 2004.2
+- income     1 2047.2
+
+Step:  AIC=2001.36
+party ~ income
+
+            Df    AIC
+&lt;none&gt;         2001.4
++ age        1 2002.8
++ education  6 2004.4
+- income     1 2045.3</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Call:
+polr(formula = party ~ income, data = rnes96)
+
+Coefficients:
+    income 
+0.01311984 
+
+Intercepts:
+  Democrat|Independent Independent|Republican 
+             0.2091045              1.2915566 
+
+Residual Deviance: 1995.363 
+AIC: 2001.363 </code></pre>
+</div>
+</div>
+</section>
+<section id="national-election-study-20" class="slide level2">
+<h2>1996 National Election Study</h2>
+<div class="cell" data-layout-align="center">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a></a><span class="fu">cbind</span>(</span>
+<span id="cb33-2"><a></a>  <span class="st">"deviance"</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="st">"PO"</span> <span class="ot">=</span> <span class="fu">deviance</span>(pofit2), <span class="st">"Multi"</span> <span class="ot">=</span> <span class="fu">deviance</span>(mfit2)),</span>
+<span id="cb33-3"><a></a>  <span class="st">"nparam"</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="st">"PO"</span> <span class="ot">=</span> pofit2<span class="sc">$</span>edf, <span class="st">"Multi"</span> <span class="ot">=</span> mfit2<span class="sc">$</span>edf)</span>
+<span id="cb33-4"><a></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      deviance nparam
+PO    1995.363      3
+Multi 1985.424      4</code></pre>
+</div>
+</div>
+</section>
+<section id="national-election-study-21" class="slide level2">
+<h2>1996 National Election Study</h2>
+<p>Compare full and reduced model using LR test</p>
+<div class="cell" data-layout-align="center">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a></a><span class="fu">anova</span>(pofit2, pofit, <span class="at">test =</span> <span class="st">"Chisq"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["Model"],"name":[1],"type":["chr"],"align":["left"]},{"label":["Resid. df"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["Resid. Dev"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["Test"],"name":[4],"type":["chr"],"align":["left"]},{"label":["   Df"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["LR stat."],"name":[6],"type":["dbl"],"align":["right"]},{"label":["Pr(Chi)"],"name":[7],"type":["dbl"],"align":["right"]}],"data":[{"1":"income","2":"941","3":"1995.363","4":"","5":"NA","6":"NA","7":"NA"},{"1":"age + education + income","2":"934","3":"1984.211","4":"1 vs 2","5":"7","6":"11.15136","7":"0.1321517"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+</div>
+</section>
+<section id="national-election-study-22" class="slide level2">
+<h2>1996 National Election Study</h2>
+<p>Interpreting the coefficients:</p>
+<div class="cell" data-layout-align="center">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a></a><span class="fu">summary</span>(pofit2)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Call:
+polr(formula = party ~ income, data = rnes96)
+
+Coefficients:
+         Value Std. Error t value
+income 0.01312   0.001971   6.657
+
+Intercepts:
+                       Value   Std. Error t value
+Democrat|Independent    0.2091  0.1123     1.8627
+Independent|Republican  1.2916  0.1201    10.7526
+
+Residual Deviance: 1995.363 
+AIC: 2001.363 </code></pre>
+</div>
+</div>
+<p>We can say that the odds of moving from Democrat to Independent/Republican (or from Democrat/Independent to Republican) increase by a factor of <span class="math inline">\(\exp\left(0.013120\right) = 1.0132\)</span> per unit increase in income.</p>
+</section>
+<section id="non-proportional-odds-npo-model" class="slide level2">
+<h2>Non-proportional odds (NPO) model</h2>
+<ul>
+<li><p>We can generalize the PO model by allowing the coefficients to vary between categories (similar to the mulinomial logit model form earlier): <span class="math display">\[
+\log\left(\frac{p_j^\le}{1-p_j^\le}\right) = \alpha_j - \boldsymbol{x}^\top\boldsymbol{\beta}_j, \quad j = 1, 2, \dots, J-1
+\]</span></p></li>
+<li><p>This relaxes the PO assumptions but requires more complicated software (e.g., the <a href="https://cran.r-project.org/package=VGAM">VGAM</a> package)</p></li>
+<li><p>Careful, different packages use different default parameterizations; E.g., <a href="https://journal.r-project.org/archive/2018/RJ-2018-004/RJ-2018-004.pdf">see Table 2 here</a></p></li>
+</ul>
+</section>
+<section id="national-election-study-23" class="slide level2">
+<h2>1996 National Election Study</h2>
+<p>PO and NPO fits to election data using <a href="https://cran.r-project.org/package=VGAM">VGAM</a>:</p>
+<div class="cell" data-layout-align="center">
+<details class="code-fold">
+<summary>Show R code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a></a><span class="fu">library</span>(VGAM)</span>
+<span id="cb38-2"><a></a></span>
+<span id="cb38-3"><a></a>(pofit <span class="ot">&lt;-</span> <span class="fu">vglm</span>(party <span class="sc">~</span> income, <span class="at">data =</span> rnes96,</span>
+<span id="cb38-4"><a></a>               <span class="at">family =</span> <span class="fu">cumulative</span>(<span class="at">parallel =</span> <span class="cn">TRUE</span>, <span class="at">reverse =</span> <span class="cn">TRUE</span>)))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+vglm(formula = party ~ income, family = cumulative(parallel = TRUE, 
+    reverse = TRUE), data = rnes96)
+
+
+Coefficients:
+(Intercept):1 (Intercept):2        income 
+  -0.20910243   -1.29155469    0.01311978 
+
+Degrees of Freedom: 1888 Total; 1885 Residual
+Residual deviance: 1995.363 
+Log-likelihood: -997.6813 </code></pre>
+</div>
+<details class="code-fold">
+<summary>Show R code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb40"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a></a>(npofit <span class="ot">&lt;-</span> <span class="fu">vglm</span>(party <span class="sc">~</span> income, <span class="at">data =</span> rnes96,</span>
+<span id="cb40-2"><a></a>                <span class="at">family =</span> <span class="fu">cumulative</span>(<span class="at">parallel =</span> <span class="cn">FALSE</span>, <span class="at">reverse =</span> <span class="cn">TRUE</span>)))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+vglm(formula = party ~ income, family = cumulative(parallel = FALSE, 
+    reverse = TRUE), data = rnes96)
+
+
+Coefficients:
+(Intercept):1 (Intercept):2      income:1      income:2 
+  -0.32886794   -1.14826963    0.01618611    0.01048588 
+
+Degrees of Freedom: 1888 Total; 1884 Residual
+Residual deviance: 1987.539 
+Log-likelihood: -993.7693 </code></pre>
+</div>
+</div>
+</section>
+<section id="assigning-scores" class="slide level2">
+<h2>Assigning scores</h2>
+<ul>
+<li><p>When the ordinal response has a larger number of categories, it may be reasonable to assign scores (i.e., integers) to each level and then model these scores using a standard linear model</p></li>
+<li><p>Rule of thumb from my old advisor was 10 or more categories</p></li>
+</ul>
+</section></section>
+<section id="questions" class="title-slide slide level1 center">
+<h1>Questions?</h1>
+
+
+</section>
+    </div>
+  <div class="quarto-auto-generated-content" style="display: none;">
+<p><img src="images/uc.png" class="slide-logo"></p>
+<div class="footer footer-default">
+<p>BANA 7042: Statistical Modeling</p>
+</div>
+</div></div>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script>
+  <script src="../site_libs/revealjs/dist/reveal.js"></script>
+  <!-- reveal.js plugins -->
+  <script src="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="../site_libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="../site_libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="../site_libs/revealjs/plugin/reveal-chalkboard/plugin.js"></script>
+  <script src="../site_libs/revealjs/plugin/quarto-support/support.js"></script>
+  
+
+  <script src="../site_libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="../site_libs/revealjs/plugin/search/search.js"></script>
+  <script src="../site_libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script src="../site_libs/revealjs/plugin/math/math.js"></script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://revealjs.com/config/
+      Reveal.initialize({
+'controlsAuto': true,
+'previewLinksAuto': false,
+'pdfSeparateFragments': false,
+'autoAnimateEasing': "ease",
+'autoAnimateDuration': 1,
+'autoAnimateUnmatched': true,
+'jumpToSlide': true,
+'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleScrollView(event)\"><kbd>r</kbd> Scroll View Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleChalkboard(event)\"><kbd>b</kbd> Toggle Chalkboard</a></li>\n<li class=\"slide-tool-item\" data-item=\"6\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleNotesCanvas(event)\"><kbd>c</kbd> Toggle Notes Canvas</a></li>\n<li class=\"slide-tool-item\" data-item=\"7\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.downloadDrawings(event)\"><kbd>d</kbd> Download Drawings</a></li>\n<li class=\"slide-tool-item\" data-item=\"8\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
+'chalkboard': {"buttons":true},
+'smaller': false,
+ 
+        // Display controls in the bottom right corner
+        controls: false,
+
+        // Help the user learn the controls by providing hints, for example by
+        // bouncing the down arrow when they first encounter a vertical slide
+        controlsTutorial: false,
+
+        // Determines where controls appear, "edges" or "bottom-right"
+        controlsLayout: 'edges',
+
+        // Visibility rule for backwards navigation arrows; "faded", "hidden"
+        // or "visible"
+        controlsBackArrows: 'faded',
+
+        // Display a presentation progress bar
+        progress: true,
+
+        // Display the page number of the current slide
+        slideNumber: 'c/t',
+
+        // 'all', 'print', or 'speaker'
+        showSlideNumber: 'all',
+
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: true,
+
+        // Start with 1 for the hash rather than 0
+        hashOneBasedIndex: false,
+
+        // Flags if we should monitor the hash and change slides accordingly
+        respondToHashChanges: true,
+
+        // Push each slide change to the browser history
+        history: true,
+
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+
+        // Enable the slide overview mode
+        overview: true,
+
+        // Disables the default reveal.js slide layout (scaling and centering)
+        // so that you can use custom CSS layout
+        disableLayout: false,
+
+        // Vertical centering of slides
+        center: false,
+
+        // Enables touch navigation on devices with touch input
+        touch: true,
+
+        // Loop the presentation
+        loop: false,
+
+        // Change the presentation direction to be RTL
+        rtl: false,
+
+        // see https://revealjs.com/vertical-slides/#navigation-mode
+        navigationMode: 'linear',
+
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // Flags whether to include the current fragment in the URL,
+        // so that reloading brings you to the same fragment position
+        fragmentInURL: false,
+
+        // Flags if the presentation is running in an embedded mode,
+        // i.e. contained within a limited portion of the screen
+        embedded: false,
+
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+
+        // Flags if it should be possible to pause the presentation (blackout)
+        pause: true,
+
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+
+        // Global override for autoplaying embedded media (null/true/false)
+        autoPlayMedia: null,
+
+        // Global override for preloading lazy-loaded iframes (null/true/false)
+        preloadIframes: null,
+
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+
+        // Use this method for navigation when auto-sliding
+        autoSlideMethod: null,
+
+        // Specify the average time in seconds that you think you will spend
+        // presenting each slide. This is used to show a pacing timer in the
+        // speaker view
+        defaultTiming: null,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: false,
+
+        // The display mode that will be used to show slides
+        display: 'block',
+
+        // Hide cursor if inactive
+        hideInactiveCursor: true,
+
+        // Time before the cursor is hidden (in ms)
+        hideCursorTime: 5000,
+
+        // Opens links in an iframe preview overlay
+        previewLinks: false,
+
+        // Transition style (none/fade/slide/convex/concave/zoom)
+        transition: 'none',
+
+        // Transition speed (default/fast/slow)
+        transitionSpeed: 'default',
+
+        // Transition style for full page slide backgrounds
+        // (none/fade/slide/convex/concave/zoom)
+        backgroundTransition: 'none',
+
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+        // Number of slides away from the current that are visible on mobile
+        // devices. It is advisable to set this to a lower number than
+        // viewDistance in order to save resources.
+        mobileViewDistance: 2,
+
+        // The "normal" size of the presentation, aspect ratio will be preserved
+        // when the presentation is scaled to fit different resolutions. Can be
+        // specified using percentage units.
+        width: 1050,
+
+        height: 700,
+
+        // Factor of the display size that should remain empty around the content
+        margin: 5.0e-2,
+
+        math: {
+          mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@2.7.9/MathJax.js',
+          config: 'TeX-AMS_HTML-full',
+          tex2jax: {
+            inlineMath: [['\\(','\\)']],
+            displayMath: [['\\[','\\]']],
+            balanceBraces: true,
+            processEscapes: false,
+            processRefs: true,
+            processEnvironments: true,
+            preview: 'TeX',
+            skipTags: ['script','noscript','style','textarea','pre','code'],
+            ignoreClass: 'tex2jax_ignore',
+            processClass: 'tex2jax_process'
+          },
+        },
+
+        // reveal.js plugins
+        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, RevealChalkboard, QuartoSupport,
+
+          RevealMath,
+          RevealNotes,
+          RevealSearch,
+          RevealZoom
+        ]
+      });
+    </script>
+    
+    <script>
+      // htmlwidgets need to know to resize themselves when slides are shown/hidden.
+      // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
+      // slide changes (different for each slide format).
+      (function () {
+        // dispatch for htmlwidgets
+        function fireSlideEnter() {
+          const event = window.document.createEvent("Event");
+          event.initEvent("slideenter", true, true);
+          window.document.dispatchEvent(event);
+        }
+
+        function fireSlideChanged(previousSlide, currentSlide) {
+          fireSlideEnter();
+
+          // dispatch for shiny
+          if (window.jQuery) {
+            if (previousSlide) {
+              window.jQuery(previousSlide).trigger("hidden");
+            }
+            if (currentSlide) {
+              window.jQuery(currentSlide).trigger("shown");
+            }
+          }
+        }
+
+        // hookup for slidy
+        if (window.w3c_slidy) {
+          window.w3c_slidy.add_observer(function (slide_num) {
+            // slide_num starts at position 1
+            fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
+          });
+        }
+
+      })();
+    </script>
+
+    <script id="quarto-html-after-body" type="application/javascript">
+      window.document.addEventListener("DOMContentLoaded", function (event) {
+        const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
+        tabsets.forEach(function(tabset) {
+          const tabby = new Tabby('#' + tabset.id);
+        });
+        const isCodeAnnotation = (el) => {
+          for (const clz of el.classList) {
+            if (clz.startsWith('code-annotation-')) {                     
+              return true;
+            }
+          }
+          return false;
+        }
+        const onCopySuccess = function(e) {
+          // button target
+          const button = e.trigger;
+          // don't keep focus
+          button.blur();
+          // flash "checked"
+          button.classList.add('code-copy-button-checked');
+          var currentTitle = button.getAttribute("title");
+          button.setAttribute("title", "Copied!");
+          let tooltip;
+          if (window.bootstrap) {
+            button.setAttribute("data-bs-toggle", "tooltip");
+            button.setAttribute("data-bs-placement", "left");
+            button.setAttribute("data-bs-title", "Copied!");
+            tooltip = new bootstrap.Tooltip(button, 
+              { trigger: "manual", 
+                customClass: "code-copy-button-tooltip",
+                offset: [0, -8]});
+            tooltip.show();    
+          }
+          setTimeout(function() {
+            if (tooltip) {
+              tooltip.hide();
+              button.removeAttribute("data-bs-title");
+              button.removeAttribute("data-bs-toggle");
+              button.removeAttribute("data-bs-placement");
+            }
+            button.setAttribute("title", currentTitle);
+            button.classList.remove('code-copy-button-checked');
+          }, 1000);
+          // clear code selection
+          e.clearSelection();
+        }
+        const getTextToCopy = function(trigger) {
+          const outerScaffold = trigger.parentElement.cloneNode(true);
+          const codeEl = outerScaffold.querySelector('code');
+          for (const childEl of codeEl.children) {
+            if (isCodeAnnotation(childEl)) {
+              childEl.remove();
+            }
+          }
+          return codeEl.innerText;
+        }
+        const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+          text: getTextToCopy
+        });
+        clipboard.on('success', onCopySuccess);
+        if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+          const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+            text: getTextToCopy,
+            container: window.document.getElementById('quarto-embedded-source-code-modal')
+          });
+          clipboardModal.on('success', onCopySuccess);
+        }
+          var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+          var mailtoRegex = new RegExp(/^mailto:/);
+            var filterRegex = new RegExp("https:\/\/bgreenwell\.github\.io\/uc-bana7042\/");
+          var isInternal = (href) => {
+              return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+          }
+          // Inspect non-navigation links and adorn them if external
+         var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+          for (var i=0; i<links.length; i++) {
+            const link = links[i];
+            if (!isInternal(link.href)) {
+              // undo the damage that might have been done by quarto-nav.js in the case of
+              // links that we want to consider external
+              if (link.dataset.originalHref !== undefined) {
+                link.href = link.dataset.originalHref;
+              }
+            }
+          }
+        function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+          const config = {
+            allowHTML: true,
+            maxWidth: 500,
+            delay: 100,
+            arrow: false,
+            appendTo: function(el) {
+                return el.closest('section.slide') || el.parentElement;
+            },
+            interactive: true,
+            interactiveBorder: 10,
+            theme: 'light-border',
+            placement: 'bottom-start',
+          };
+          if (contentFn) {
+            config.content = contentFn;
+          }
+          if (onTriggerFn) {
+            config.onTrigger = onTriggerFn;
+          }
+          if (onUntriggerFn) {
+            config.onUntrigger = onUntriggerFn;
+          }
+            config['offset'] = [0,0];
+            config['maxWidth'] = 700;
+          window.tippy(el, config); 
+        }
+        const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+        for (var i=0; i<noterefs.length; i++) {
+          const ref = noterefs[i];
+          tippyHover(ref, function() {
+            // use id or data attribute instead here
+            let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+            try { href = new URL(href).hash; } catch {}
+            const id = href.replace(/^#\/?/, "");
+            const note = window.document.getElementById(id);
+            if (note) {
+              return note.innerHTML;
+            } else {
+              return "";
+            }
+          });
+        }
+        const findCites = (el) => {
+          const parentEl = el.parentElement;
+          if (parentEl) {
+            const cites = parentEl.dataset.cites;
+            if (cites) {
+              return {
+                el,
+                cites: cites.split(' ')
+              };
+            } else {
+              return findCites(el.parentElement)
+            }
+          } else {
+            return undefined;
+          }
+        };
+        var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+        for (var i=0; i<bibliorefs.length; i++) {
+          const ref = bibliorefs[i];
+          const citeInfo = findCites(ref);
+          if (citeInfo) {
+            tippyHover(citeInfo.el, function() {
+              var popup = window.document.createElement('div');
+              citeInfo.cites.forEach(function(cite) {
+                var citeDiv = window.document.createElement('div');
+                citeDiv.classList.add('hanging-indent');
+                citeDiv.classList.add('csl-entry');
+                var biblioDiv = window.document.getElementById('ref-' + cite);
+                if (biblioDiv) {
+                  citeDiv.innerHTML = biblioDiv.innerHTML;
+                }
+                popup.appendChild(citeDiv);
+              });
+              return popup.innerHTML;
+            });
+          }
+        }
+      });
+      </script>
+    
+
+</body></html>

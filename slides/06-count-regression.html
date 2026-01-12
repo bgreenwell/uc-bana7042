@@ -1,0 +1,1266 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-html/tabby.min.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/light-border.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-b758ccaa5987ceb1b75504551e579abf.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.8.26">
+
+  <meta name="author" content="Brandon M. Greenwell, PhD">
+  <title>BANA 7042 – Regression for Counts and Rates</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/reveal.css">
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+      vertical-align: middle;
+    }
+    /* CSS for syntax highlighting */
+    html { -webkit-text-size-adjust: 100%; }
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+      }
+    pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+    div.sourceCode
+      { color: #f8f8f2;  }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span { color: #f8f8f2; } /* Normal */
+    code span.al { color: #f07178; } /* Alert */
+    code span.an { color: #d4d0ab; } /* Annotation */
+    code span.at { color: #00e0e0; } /* Attribute */
+    code span.bn { color: #d4d0ab; } /* BaseN */
+    code span.bu { color: #abe338; } /* BuiltIn */
+    code span.cf { color: #ffa07a; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #abe338; } /* Char */
+    code span.cn { color: #ffd700; } /* Constant */
+    code span.co { color: #f8f8f2; font-style: italic; } /* Comment */
+    code span.cv { color: #ffd700; } /* CommentVar */
+    code span.do { color: #f8f8f2; } /* Documentation */
+    code span.dt { color: #ffa07a; } /* DataType */
+    code span.dv { color: #d4d0ab; } /* DecVal */
+    code span.er { color: #f07178; text-decoration: underline; } /* Error */
+    code span.ex { color: #00e0e0; font-weight: bold; } /* Extension */
+    code span.fl { color: #d4d0ab; } /* Float */
+    code span.fu { color: #ffa07a; } /* Function */
+    code span.im { color: #abe338; } /* Import */
+    code span.in { color: #d4d0ab; } /* Information */
+    code span.kw { color: #ffa07a; font-weight: bold; } /* Keyword */
+    code span.op { color: #ffa07a; } /* Operator */
+    code span.ot { color: #00e0e0; } /* Other */
+    code span.pp { color: #dcc6e0; } /* Preprocessor */
+    code span.re { color: #00e0e0; background-color: #f8f8f2; } /* RegionMarker */
+    code span.sc { color: #abe338; } /* SpecialChar */
+    code span.ss { color: #abe338; } /* SpecialString */
+    code span.st { color: #abe338; } /* String */
+    code span.va { color: #00e0e0; } /* Variable */
+    code span.vs { color: #abe338; } /* VerbatimString */
+    code span.wa { color: #dcc6e0; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto-61c09bd4e055c4e147bbfcd77f3179b7.css">
+  <link href="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-chalkboard/font-awesome/css/all.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-chalkboard/style.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <style type="text/css">
+    .reveal div.sourceCode {
+      margin: 0;
+      overflow: auto;
+    }
+    .reveal div.hanging-indent {
+      margin-left: 1em;
+      text-indent: -1em;
+    }
+    .reveal .slide:not(.center) {
+      height: 100%;
+      overflow-y: auto;
+    }
+    .reveal .slide.scrollable {
+      overflow-y: auto;
+    }
+    .reveal .footnotes {
+      height: 100%;
+      overflow-y: auto;
+    }
+    .reveal .slide .absolute {
+      position: absolute;
+      display: block;
+    }
+    .reveal .footnotes ol {
+      counter-reset: ol;
+      list-style-type: none; 
+      margin-left: 0;
+    }
+    .reveal .footnotes ol li:before {
+      counter-increment: ol;
+      content: counter(ol) ". "; 
+    }
+    .reveal .footnotes ol li > p:first-child {
+      display: inline-block;
+    }
+    .reveal .slide ul,
+    .reveal .slide ol {
+      margin-bottom: 0.5em;
+    }
+    .reveal .slide ul li,
+    .reveal .slide ol li {
+      margin-top: 0.4em;
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide ul[role="tablist"] li {
+      margin-bottom: 0;
+    }
+    .reveal .slide ul li > *:first-child,
+    .reveal .slide ol li > *:first-child {
+      margin-block-start: 0;
+    }
+    .reveal .slide ul li > *:last-child,
+    .reveal .slide ol li > *:last-child {
+      margin-block-end: 0;
+    }
+    .reveal .slide .columns:nth-child(3) {
+      margin-block-start: 0.8em;
+    }
+    .reveal blockquote {
+      box-shadow: none;
+    }
+    .reveal .tippy-content>* {
+      margin-top: 0.2em;
+      margin-bottom: 0.7em;
+    }
+    .reveal .tippy-content>*:last-child {
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide > img.stretch.quarto-figure-center,
+    .reveal .slide > img.r-stretch.quarto-figure-center {
+      display: block;
+      margin-left: auto;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-left,
+    .reveal .slide > img.r-stretch.quarto-figure-left  {
+      display: block;
+      margin-left: 0;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-right,
+    .reveal .slide > img.r-stretch.quarto-figure-right  {
+      display: block;
+      margin-left: auto;
+      margin-right: 0; 
+    }
+  </style>
+  <link href="../site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet">
+  <script src="../site_libs/pagedtable-1.1/js/pagedtable.js"></script>
+</head>
+<body class="quarto-dark">
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide" class="quarto-title-block center">
+  <h1 class="title">Regression for Counts and Rates</h1>
+
+<div class="quarto-title-authors">
+<div class="quarto-title-author">
+<div class="quarto-title-author-name">
+Brandon M. Greenwell, PhD 
+</div>
+        <p class="quarto-title-affiliation">
+            University of Cincinnati
+          </p>
+    </div>
+</div>
+
+</section>
+<section id="count-data" class="slide level2">
+<h2>Count data</h2>
+<ul>
+<li><p>A type of data in which the observations take on non-negative integer values <span class="math inline">\(\left\{0, 1, 2, \dots\right\}\)</span></p></li>
+<li><p>Examples include:</p>
+<ul>
+<li>The number of patients who come to the ER of Children’s Hospital between 9PM and 1AM.</li>
+<li>The number of shoppers in Kenwood Towne Centre on a calendar day.</li>
+<li>The number of Google searches (in a week) for flights to Shanghai right before Lunar New Year.</li>
+</ul></li>
+</ul>
+</section>
+<section id="the-poisson-distribution" class="slide level2">
+<h2>The Poisson distribution</h2>
+<ul>
+<li><p>The simplest distribution for modeling counts is the <a href="https://en.wikipedia.org/wiki/Poisson_distribution">Poisson distribution</a>:</p>
+<ul>
+<li><span class="math inline">\(Y \sim \mathrm{Poi}\left(\mu\right)\)</span></li>
+<li><span class="math inline">\(f\left(y\right) = \mathrm{P}\left(Y = y\right) = \frac{\exp\left(-\mu\right)\mu^y}{y!}\)</span>, for <span class="math inline">\(y = 0, 1, 2, \dots\)</span></li>
+<li><span class="math inline">\(\mathrm{E}\left(Y\right) = \mathrm{Var}\left(Y\right) = \mu\)</span>, where <span class="math inline">\(\mu \in \left(0, \infty\right)\)</span></li>
+<li>Fact: <span class="math inline">\(\sum_i Y_i \sim \mathrm{Poi}\left(\sum_i \mu_i\right)\)</span> (aggregated data)</li>
+</ul></li>
+<li><p>An interesting characteristic of the Poisson is that the mean and variance are equal to each other</p></li>
+</ul>
+</section>
+<section id="the-poisson-distribution-1" class="slide level2">
+<h2>The Poisson distribution</h2>
+<div class="cell" data-layout-align="center" data-par="true">
+<details class="code-fold">
+<summary>Show R code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a></a><span class="co"># Install required package(s)</span></span>
+<span id="cb1-2"><a></a>pkgs <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"faraway"</span>, <span class="st">"investr"</span>, <span class="st">"mgcv"</span>, <span class="st">"performance"</span>, <span class="st">"pscl"</span>)</span>
+<span id="cb1-3"><a></a>lib <span class="ot">&lt;-</span> <span class="fu">installed.packages</span>()[, <span class="st">"Package"</span>]</span>
+<span id="cb1-4"><a></a><span class="fu">install.packages</span>(<span class="fu">setdiff</span>(pkgs, lib))</span>
+<span id="cb1-5"><a></a></span>
+<span id="cb1-6"><a></a><span class="co"># Y ~ Poisson(lambda = 0.5)</span></span>
+<span id="cb1-7"><a></a><span class="fu">set.seed</span>(<span class="dv">2004</span>)  <span class="co"># for reproducibility</span></span>
+<span id="cb1-8"><a></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
+<span id="cb1-9"><a></a><span class="cf">for</span> (lambda <span class="cf">in</span> <span class="fu">c</span>(<span class="fl">0.5</span>, <span class="dv">2</span>, <span class="dv">5</span>, <span class="dv">15</span>)) {</span>
+<span id="cb1-10"><a></a>  y <span class="ot">&lt;-</span> <span class="fu">dpois</span>(<span class="dv">0</span><span class="sc">:</span><span class="dv">35</span>, <span class="at">lambda =</span> lambda)</span>
+<span id="cb1-11"><a></a>  <span class="fu">barplot</span>(y, <span class="at">xlab =</span> <span class="st">"y"</span>, <span class="at">ylab =</span> <span class="st">"P(Y = y)"</span>, <span class="at">names =</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">35</span>, <span class="at">main =</span> <span class="fu">paste</span>(<span class="st">"E(Y) ="</span>, lambda), </span>
+<span id="cb1-12"><a></a>          <span class="at">col =</span> <span class="st">"dodgerblue2"</span>, <span class="at">border =</span> <span class="st">"dodgerblue2"</span>, <span class="at">las =</span> <span class="dv">1</span>)</span>
+<span id="cb1-13"><a></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+
+</div>
+<img data-src="06-count-regression_files/figure-revealjs/unnamed-chunk-2-1.png" class="quarto-figure quarto-figure-center r-stretch" style="width:100.0%"></section>
+<section id="the-poisson-distribution-2" class="slide level2">
+<h2>The Poisson distribution</h2>
+<div class="cell" data-layout-align="center" data-par="true">
+<details class="code-fold">
+<summary>Show R code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a></a>y <span class="ot">&lt;-</span> <span class="fu">rpois</span>(<span class="dv">10000</span>, <span class="at">lambda =</span> <span class="dv">200</span>)</span>
+<span id="cb2-2"><a></a><span class="fu">hist</span>(y, <span class="at">br =</span> <span class="dv">50</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+
+</div>
+<img data-src="06-count-regression_files/figure-revealjs/unnamed-chunk-3-1.png" class="quarto-figure quarto-figure-center r-stretch" style="width:100.0%"></section>
+<section id="the-poisson-distribution-3" class="slide level2">
+<h2>The Poisson distribution</h2>
+<ul>
+<li><p>If the count is some number out of some possible total, then the response would be more appropriately modeled as a binomial r.v.</p></li>
+<li><p>However, for small <span class="math inline">\(p\)</span> and large <span class="math inline">\(n\)</span>, the Poisson distribution provides a reasonable approximation to the binomial; For example, in modeling the incidence of rare forms of cancer, the number of people affected is a small proportion of the population in a given geographical area</p></li>
+</ul>
+<div class="cell" data-layout-align="center">
+<details class="code-fold">
+<summary>Show R code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a></a><span class="fu">c</span>(<span class="st">"Binomial"</span> <span class="ot">=</span> <span class="fu">pbinom</span>(<span class="dv">5</span>, <span class="at">size =</span> <span class="dv">8</span>, <span class="at">p =</span> <span class="fl">0.7</span>),</span>
+<span id="cb3-2"><a></a>  <span class="st">"Poisson"</span> <span class="ot">=</span> <span class="fu">ppois</span>(<span class="dv">5</span>, <span class="at">lambda =</span> <span class="dv">8</span> <span class="sc">*</span> <span class="fl">0.7</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code> Binomial   Poisson 
+0.4482262 0.5118609 </code></pre>
+</div>
+<details class="code-fold">
+<summary>Show R code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a></a><span class="fu">c</span>(<span class="st">"Binomial"</span> <span class="ot">=</span> <span class="fu">pbinom</span>(<span class="dv">5</span>, <span class="at">size =</span> <span class="dv">100</span>, <span class="at">p =</span> <span class="fl">0.05</span>),</span>
+<span id="cb5-2"><a></a>  <span class="st">"Poisson"</span> <span class="ot">=</span> <span class="fu">ppois</span>(<span class="dv">5</span>, <span class="at">lambda =</span> <span class="dv">100</span> <span class="sc">*</span> <span class="fl">0.05</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code> Binomial   Poisson 
+0.6159991 0.6159607 </code></pre>
+</div>
+</div>
+</section>
+<section id="galápagos-islands-data" class="slide level2">
+<h2>Galápagos islands data</h2>
+<p>There are 30 Galapagos islands and 7 variables in the data set. The relationship between the number of plant species (<span class="math inline">\(Y\)</span>) and several geographic variables is of interest. The original data set contained several missing values which have been filled for convenience. See the <code>faraway::galamiss</code> data set for the original version.</p>
+</section>
+<section id="galápagos-islands-data-1" class="slide level2">
+<h2>Galápagos islands data</h2>
+
+<img data-src="images/galapagos.jpg" class="r-stretch"></section>
+<section id="galápagos-islands-data-2" class="slide level2">
+<h2>Galápagos islands data</h2>
+<p>We’ll remove <code>Endemics</code> since we won’t be using it!</p>
+<div class="cell" data-layout-align="center">
+<details class="code-fold">
+<summary>Show R code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a></a><span class="co"># Load the Galapagos Islands data</span></span>
+<span id="cb7-2"><a></a><span class="fu">data</span>(gala, <span class="at">package =</span> <span class="st">"faraway"</span>)</span>
+<span id="cb7-3"><a></a>gala<span class="sc">$</span>Endemics <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
+<span id="cb7-4"><a></a></span>
+<span id="cb7-5"><a></a><span class="co"># Print structure of data frame</span></span>
+<span id="cb7-6"><a></a><span class="fu">str</span>(gala)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>'data.frame':   30 obs. of  6 variables:
+ $ Species  : num  58 31 3 25 2 18 24 10 8 2 ...
+ $ Area     : num  25.09 1.24 0.21 0.1 0.05 ...
+ $ Elevation: num  346 109 114 46 77 119 93 168 71 112 ...
+ $ Nearest  : num  0.6 0.6 2.8 1.9 1.9 8 6 34.1 0.4 2.6 ...
+ $ Scruz    : num  0.6 26.3 58.7 47.4 1.9 ...
+ $ Adjacent : num  1.84 572.33 0.78 0.18 903.82 ...</code></pre>
+</div>
+</div>
+</section>
+<section id="galápagos-islands-data-3" class="slide level2">
+<h2>Galápagos islands data</h2>
+<p>Summary of data frame</p>
+<div class="cell" data-layout-align="center">
+<details class="code-fold">
+<summary>Show R code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a></a><span class="fu">summary</span>(gala)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>    Species            Area             Elevation          Nearest     
+ Min.   :  2.00   Min.   :   0.0100   Min.   :  25.00   Min.   : 0.20  
+ 1st Qu.: 13.00   1st Qu.:   0.2575   1st Qu.:  97.75   1st Qu.: 0.80  
+ Median : 42.00   Median :   2.5900   Median : 192.00   Median : 3.05  
+ Mean   : 85.23   Mean   : 261.7087   Mean   : 368.03   Mean   :10.06  
+ 3rd Qu.: 96.00   3rd Qu.:  59.2375   3rd Qu.: 435.25   3rd Qu.:10.03  
+ Max.   :444.00   Max.   :4669.3200   Max.   :1707.00   Max.   :47.40  
+     Scruz           Adjacent      
+ Min.   :  0.00   Min.   :   0.03  
+ 1st Qu.: 11.03   1st Qu.:   0.52  
+ Median : 46.65   Median :   2.59  
+ Mean   : 56.98   Mean   : 261.10  
+ 3rd Qu.: 81.08   3rd Qu.:  59.24  
+ Max.   :290.20   Max.   :4669.32  </code></pre>
+</div>
+</div>
+</section>
+<section id="galápagos-islands-data-4" class="slide level2">
+<h2>Galápagos islands data</h2>
+<div class="cell" data-layout-align="center" data-par="true">
+<details class="code-fold">
+<summary>Show R code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a></a><span class="fu">pairs</span>(gala)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+
+</div>
+<img data-src="06-count-regression_files/figure-revealjs/unnamed-chunk-7-1.png" class="quarto-figure quarto-figure-center r-stretch" style="width:100.0%"></section>
+<section id="galápagos-islands-data-5" class="slide level2">
+<h2>Galápagos islands data</h2>
+<div class="cell" data-layout-align="center" data-par="true">
+<details class="code-fold">
+<summary>Show R code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a></a><span class="fu">pairs</span>(<span class="sc">~</span> <span class="fu">log</span>(Species) <span class="sc">+</span> <span class="fu">log</span>(Area) <span class="sc">+</span> <span class="fu">log</span>(Elevation) <span class="sc">+</span> </span>
+<span id="cb12-2"><a></a>  <span class="fu">log</span>(Nearest) <span class="sc">+</span> <span class="fu">log</span>(Scruz <span class="sc">+</span> <span class="fl">0.1</span>) <span class="sc">+</span> <span class="fu">log</span>(Adjacent), <span class="at">data =</span> gala)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+
+</div>
+<img data-src="06-count-regression_files/figure-revealjs/unnamed-chunk-8-1.png" class="quarto-figure quarto-figure-center r-stretch" style="width:100.0%"></section>
+<section id="galápagos-islands-data-6" class="slide level2">
+<h2>Galápagos islands data</h2>
+<p>Let’s start with a linear model</p>
+<div class="cell" data-layout-align="center">
+<details class="code-fold">
+<summary>Show R code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a></a>gala.ols <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="fu">log</span>(Species) <span class="sc">~</span> <span class="fu">log</span>(Area) <span class="sc">+</span> <span class="fu">log</span>(Elevation) <span class="sc">+</span> <span class="fu">log</span>(Nearest) <span class="sc">+</span> <span class="fu">I</span>(<span class="fu">log</span>(Scruz <span class="sc">+</span> <span class="fl">0.1</span>)) <span class="sc">+</span> <span class="fu">log</span>(Adjacent), <span class="at">data =</span> gala)</span>
+<span id="cb13-2"><a></a><span class="fu">summary</span>(gala.ols)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = log(Species) ~ log(Area) + log(Elevation) + log(Nearest) + 
+    I(log(Scruz + 0.1)) + log(Adjacent), data = gala)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-1.4563 -0.5192 -0.1059  0.4632  1.3351 
+
+Coefficients:
+                    Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)          5.10569    1.64880   3.097  0.00493 ** 
+log(Area)            0.50350    0.09942   5.064 3.53e-05 ***
+log(Elevation)      -0.37384    0.32242  -1.159  0.25767    
+log(Nearest)        -0.06564    0.11475  -0.572  0.57262    
+I(log(Scruz + 0.1)) -0.08255    0.09517  -0.867  0.39433    
+log(Adjacent)       -0.02488    0.04596  -0.541  0.59327    
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.7877 on 24 degrees of freedom
+Multiple R-squared:  0.7899,    Adjusted R-squared:  0.7461 
+F-statistic: 18.05 on 5 and 24 DF,  p-value: 1.941e-07</code></pre>
+</div>
+</div>
+</section>
+<section id="galápagos-islands-data-7" class="slide level2">
+<h2>Galápagos islands data</h2>
+<p>Residual analysis</p>
+<div class="cell" data-layout-align="center" data-par="true">
+<details class="code-fold">
+<summary>Show R code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
+<span id="cb15-2"><a></a><span class="fu">plot</span>(gala.ols, <span class="at">which =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+
+</div>
+<img data-src="06-count-regression_files/figure-revealjs/unnamed-chunk-10-1.png" class="quarto-figure quarto-figure-center r-stretch" style="width:100.0%"></section>
+<section id="poisson-regression" class="slide level2">
+<h2>Poisson regression</h2>
+<ul>
+<li><p>Need a way to <em>link</em> the mean response <span class="math inline">\(\mathrm{E}\left(Y\right) = \mu \in \left(0, \infty\right)\)</span> to the linear predictor <span class="math inline">\(\eta = \boldsymbol{x}^\top\boldsymbol{p}\)</span></p></li>
+<li><p>In Poisson we regression, we default to <span class="math display">\[
+\log\left(\mu\right) = \boldsymbol{x}^\top\boldsymbol{p}
+\]</span></p></li>
+<li><p>Maximum likelihood estimation provides a convenient estimate of <span class="math inline">\(\boldsymbol{\beta}\)</span></p></li>
+</ul>
+</section>
+<section id="galápagos-islands-data-8" class="slide level2">
+<h2>Galápagos islands data</h2>
+<p>Try a Poisson regression</p>
+<div class="cell" data-layout-align="center">
+<details class="code-fold">
+<summary>Show R code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a></a><span class="fu">summary</span>(gala.poi <span class="ot">&lt;-</span> <span class="fu">glm</span>(Species <span class="sc">~</span> ., <span class="at">data =</span> gala, <span class="at">family =</span> poisson))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+glm(formula = Species ~ ., family = poisson, data = gala)
+
+Coefficients:
+              Estimate Std. Error z value Pr(&gt;|z|)    
+(Intercept)  3.155e+00  5.175e-02  60.963  &lt; 2e-16 ***
+Area        -5.799e-04  2.627e-05 -22.074  &lt; 2e-16 ***
+Elevation    3.541e-03  8.741e-05  40.507  &lt; 2e-16 ***
+Nearest      8.826e-03  1.821e-03   4.846 1.26e-06 ***
+Scruz       -5.709e-03  6.256e-04  -9.126  &lt; 2e-16 ***
+Adjacent    -6.630e-04  2.933e-05 -22.608  &lt; 2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+(Dispersion parameter for poisson family taken to be 1)
+
+    Null deviance: 3510.73  on 29  degrees of freedom
+Residual deviance:  716.85  on 24  degrees of freedom
+AIC: 889.68
+
+Number of Fisher Scoring iterations: 5</code></pre>
+</div>
+</div>
+</section>
+<section id="galápagos-islands-data-9" class="slide level2">
+<h2>Galápagos islands data</h2>
+<p>Check mean-variance relationship</p>
+<div class="cell" data-layout-align="center" data-par="true">
+<details class="code-fold">
+<summary>Show R code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a></a>mu <span class="ot">&lt;-</span> <span class="fu">fitted</span>(gala.poi)  <span class="co"># fitted fitted.values</span></span>
+<span id="cb18-2"><a></a>y <span class="ot">&lt;-</span> gala.poi<span class="sc">$</span>y  <span class="co"># observed response values</span></span>
+<span id="cb18-3"><a></a><span class="fu">plot</span>(<span class="fu">log</span>(mu), <span class="fu">log</span>((y <span class="sc">-</span> mu)<span class="sc">^</span><span class="dv">2</span>), <span class="at">xlab =</span> <span class="fu">expression</span>(<span class="fu">hat</span>(mu)),</span>
+<span id="cb18-4"><a></a>     <span class="at">ylab =</span> <span class="fu">expression</span>((y<span class="sc">-</span><span class="fu">hat</span>(mu))<span class="sc">^</span><span class="dv">2</span>))</span>
+<span id="cb18-5"><a></a><span class="fu">abline</span>(<span class="dv">0</span>, <span class="dv">1</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+
+</div>
+<img data-src="06-count-regression_files/figure-revealjs/unnamed-chunk-12-1.png" class="quarto-figure quarto-figure-center r-stretch" style="width:100.0%"></section>
+<section id="galápagos-islands-data-10" class="slide level2">
+<h2>Galápagos islands data</h2>
+<p>Crude check for overdispersion</p>
+<div class="cell" data-layout-align="center">
+<details class="code-fold">
+<summary>Show R code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a></a>performance<span class="sc">::</span><span class="fu">check_overdispersion</span>(gala.poi)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code># Overdispersion test
+
+       dispersion ratio =  31.749
+  Pearson's Chi-Squared = 761.979
+                p-value = &lt; 0.001</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Overdispersion detected.</code></pre>
+</div>
+</div>
+</section>
+<section id="galápagos-islands-data-11" class="slide level2">
+<h2>Galápagos islands data</h2>
+<p>Similar to before, can use <code>quasipoisson()</code> family to correct fo overdispersion:</p>
+<div class="cell" data-layout-align="center">
+<details class="code-fold">
+<summary>Show R code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a></a>gala.quasipoi <span class="ot">&lt;-</span> <span class="fu">glm</span>(Species <span class="sc">~</span> ., <span class="at">family =</span> <span class="fu">quasipoisson</span>(<span class="at">link =</span> <span class="st">"log"</span>),  <span class="at">data =</span> gala)</span>
+<span id="cb22-2"><a></a><span class="fu">summary</span>(gala.quasipoi)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+glm(formula = Species ~ ., family = quasipoisson(link = "log"), 
+    data = gala)
+
+Coefficients:
+              Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)  3.1548079  0.2915901  10.819 1.03e-10 ***
+Area        -0.0005799  0.0001480  -3.918 0.000649 ***
+Elevation    0.0035406  0.0004925   7.189 1.98e-07 ***
+Nearest      0.0088256  0.0102622   0.860 0.398292    
+Scruz       -0.0057094  0.0035251  -1.620 0.118380    
+Adjacent    -0.0006630  0.0001653  -4.012 0.000511 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+(Dispersion parameter for quasipoisson family taken to be 31.74921)
+
+    Null deviance: 3510.73  on 29  degrees of freedom
+Residual deviance:  716.85  on 24  degrees of freedom
+AIC: NA
+
+Number of Fisher Scoring iterations: 5</code></pre>
+</div>
+</div>
+</section>
+<section id="rates-and-offsets" class="slide level2">
+<h2>Rates and offsets</h2>
+<ul>
+<li><p>The number of observed events may depend on a size variable that determines the number of opportunities for the events to occur</p>
+<ul>
+<li>For example, the number of burglaries reported in different cities</li>
+</ul></li>
+<li><p>In other cases, the size variable may be time</p>
+<ul>
+<li>For example, the number of customers served by a sales worker (must take account of the differing amounts of time worked)</li>
+</ul></li>
+</ul>
+</section>
+<section id="rates-and-offsets-1" class="slide level2">
+<h2>Rates and offsets</h2>
+<p>An experiment was conducted to determine the effect of gamma radiation on the numbers of chromosomal abnormalities (<code>ca</code>) observed. The number (<code>cells</code>), in hundreds of cells exposed in each run, differs. The dose amount (<code>doseamt</code>) and the rate (<code>doserate</code>) at which the dose is applied are the predictors of interest. The hypothesized model is as follows:</p>
+<p><span class="math display">\[
+\begin{align}
+\log\left(\mathtt{ca}/\mathtt{cells}\right) &amp;= \boldsymbol{x}^\top\boldsymbol{\beta} \\
+\implies \log\left(\mathtt{ca}\right) &amp;= \log\left(\mathtt{cells}\right) + \boldsymbol{x}^\top\boldsymbol{\beta}
+\end{align}
+\]</span></p>
+</section>
+<section id="rates-and-offsets-2" class="slide level2">
+<h2>Rates and offsets</h2>
+<div class="cell" data-layout-align="center">
+<details class="code-fold">
+<summary>Show R code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a></a>dicentric <span class="ot">&lt;-</span> faraway<span class="sc">::</span>dicentric</span>
+<span id="cb24-2"><a></a>dicentric<span class="sc">$</span>dosef <span class="ot">&lt;-</span> <span class="fu">factor</span>(dicentric<span class="sc">$</span>doseamt)</span>
+<span id="cb24-3"><a></a>fit <span class="ot">&lt;-</span> <span class="fu">glm</span>(ca <span class="sc">~</span> <span class="fu">offset</span>(<span class="fu">log</span>(cells)) <span class="sc">+</span> <span class="fu">log</span>(doserate)<span class="sc">*</span>dosef, <span class="at">family =</span> poisson, </span>
+<span id="cb24-4"><a></a>           <span class="at">data =</span> dicentric)</span>
+<span id="cb24-5"><a></a><span class="fu">summary</span>(fit)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+glm(formula = ca ~ offset(log(cells)) + log(doserate) * dosef, 
+    family = poisson, data = dicentric)
+
+Coefficients:
+                       Estimate Std. Error z value Pr(&gt;|z|)    
+(Intercept)            -2.74671    0.03426 -80.165  &lt; 2e-16 ***
+log(doserate)           0.07178    0.03518   2.041 0.041299 *  
+dosef2.5                1.62542    0.04946  32.863  &lt; 2e-16 ***
+dosef5                  2.76109    0.04349  63.491  &lt; 2e-16 ***
+log(doserate):dosef2.5  0.16122    0.04830   3.338 0.000844 ***
+log(doserate):dosef5    0.19350    0.04243   4.561  5.1e-06 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+(Dispersion parameter for poisson family taken to be 1)
+
+    Null deviance: 4753.00  on 26  degrees of freedom
+Residual deviance:   21.75  on 21  degrees of freedom
+AIC: 209.16
+
+Number of Fisher Scoring iterations: 4</code></pre>
+</div>
+</div>
+</section>
+<section id="zero-inflated-outcomes" class="slide level2">
+<h2>zero-inflated outcomes</h2>
+<p>The state wildlife biologists want to model how many fish are being caught by fishermen at a state park. Visitors are asked how long they stayed, how many people were in the group, were there children in the group, and how many fish were caught. Some visitors do not fish, but there is no data on whether a person fished or not. Some visitors who did fish did not catch any fish so there are excess zeros in the data because of the people that did not fish.</p>
+</section>
+<section id="zero-inflated-outcomes-1" class="slide level2">
+<h2>Zero-inflated outcomes</h2>
+<p>Our sample consists of We have data on N=250 groups that went to a park. Each group was questioned about how many fish they caught (count), how many children were in the group (child), how many people were in the group (persons), and whether or not they brought a camper to the park (camper).</p>
+<p>The data can be read in as follows:</p>
+<div class="cell" data-layout-align="center">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a></a>fish <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"https://stats.idre.ucla.edu/stat/data/fish.csv"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="zero-inflated-outcomes-2" class="slide level2">
+<h2>Zero-inflated outcomes</h2>
+<div class="cell" data-layout-align="center">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a></a><span class="co"># Retain only variables of interest and print summary</span></span>
+<span id="cb27-2"><a></a>fish <span class="ot">&lt;-</span> fish[, <span class="fu">c</span>(<span class="st">"count"</span>, <span class="st">"child"</span>, <span class="st">"persons"</span>, <span class="st">"camper"</span>)]</span>
+<span id="cb27-3"><a></a><span class="fu">summary</span>(fish)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     count             child          persons          camper     
+ Min.   :  0.000   Min.   :0.000   Min.   :1.000   Min.   :0.000  
+ 1st Qu.:  0.000   1st Qu.:0.000   1st Qu.:2.000   1st Qu.:0.000  
+ Median :  0.000   Median :0.000   Median :2.000   Median :1.000  
+ Mean   :  3.296   Mean   :0.684   Mean   :2.528   Mean   :0.588  
+ 3rd Qu.:  2.000   3rd Qu.:1.000   3rd Qu.:4.000   3rd Qu.:1.000  
+ Max.   :149.000   Max.   :3.000   Max.   :4.000   Max.   :1.000  </code></pre>
+</div>
+</div>
+</section>
+<section id="zero-inflated-outcomes-3" class="slide level2">
+<h2>Zero-inflated outcomes</h2>
+<div class="cell" data-layout-align="center" data-par="true">
+<details class="code-fold">
+<summary>Show R code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a></a><span class="fu">pairs</span>(<span class="fu">log</span>(count <span class="sc">+</span> <span class="fl">0.1</span>) <span class="sc">~</span> ., <span class="at">data =</span> fish)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+
+</div>
+<img data-src="06-count-regression_files/figure-revealjs/unnamed-chunk-18-1.png" class="quarto-figure quarto-figure-center r-stretch" style="width:100.0%"></section>
+<section id="zero-inflated-outcomes-4" class="slide level2">
+<h2>Zero-inflated outcomes</h2>
+<p>Too many zeros?</p>
+<div class="cell" data-layout-align="center" data-par="true">
+<details class="code-fold">
+<summary>Show R code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a></a><span class="fu">barplot</span>(<span class="fu">table</span>(fish<span class="sc">$</span>count))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+
+</div>
+<img data-src="06-count-regression_files/figure-revealjs/unnamed-chunk-19-1.png" class="quarto-figure quarto-figure-center r-stretch" style="width:100.0%"></section>
+<section id="zero-inflated-outcomes-5" class="slide level2">
+<h2>Zero-inflated outcomes</h2>
+<div class="cell" data-layout-align="center">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a></a>fish.poi <span class="ot">&lt;-</span> <span class="fu">glm</span>(count <span class="sc">~</span> ., <span class="at">data =</span> fish, <span class="at">family =</span> poisson)</span>
+<span id="cb31-2"><a></a><span class="fu">summary</span>(fish.poi)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+glm(formula = count ~ ., family = poisson, data = fish)
+
+Coefficients:
+            Estimate Std. Error z value Pr(&gt;|z|)    
+(Intercept) -1.98183    0.15226  -13.02   &lt;2e-16 ***
+child       -1.68996    0.08099  -20.87   &lt;2e-16 ***
+persons      1.09126    0.03926   27.80   &lt;2e-16 ***
+camper       0.93094    0.08909   10.45   &lt;2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+(Dispersion parameter for poisson family taken to be 1)
+
+    Null deviance: 2958.4  on 249  degrees of freedom
+Residual deviance: 1337.1  on 246  degrees of freedom
+AIC: 1682.1
+
+Number of Fisher Scoring iterations: 6</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a></a>performance<span class="sc">::</span><span class="fu">check_zeroinflation</span>(fish.poi)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># Check for zero-inflation
+
+   Observed zeros: 142
+  Predicted zeros: 95
+            Ratio: 0.67</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Model is underfitting zeros (probable zero-inflation).</code></pre>
+</div>
+</div>
+</section>
+<section id="the-hurdle-model" class="slide level2 scrollable">
+<h2>The hurdle model</h2>
+<p>In addition to predicting the number of fish caught, there is interest in predicting the existence of excess zeros (i.e., the zeroes that were not simply a result of bad luck or lack of fishing skill). In particular, we’d like to estimate the effect of party size on catching zero fish.</p>
+<p>We can accomplish this in several ways, but popular choices include:</p>
+<ol type="1">
+<li>The zero-inflated Poisson (or negative binomial) model</li>
+<li>The hurdle model</li>
+</ol>
+</section>
+<section id="the-hurdle-model-1" class="slide level2 scrollable">
+<h2>The hurdle model</h2>
+<p>In this example, we’ll use a simple hurdle model, which essentially fits two separate models:</p>
+<ol type="1">
+<li><span class="math inline">\(\mathrm{P}\left(Y = 0\right)\)</span> via a logistic regression</li>
+<li><span class="math inline">\(\mathrm{P}\left(Y = j\right)\)</span>, <span class="math inline">\(j = 1, 2, \dots\)</span> via a <a href="https://en.wikipedia.org/wiki/Zero-truncated_Poisson_distribution">truncated Poisson</a> regression</li>
+</ol>
+</section>
+<section id="the-hurdle-model-2" class="slide level2">
+<h2>The hurdle model</h2>
+<p>You can fit hurdle models using the <code>hurdle()</code> function from package <a href="https://cran.r-project.org/package=pscl">pscl</a>:</p>
+<div class="cell" data-layout-align="center">
+<details class="code-fold">
+<summary>Show R code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a></a><span class="fu">suppressMessages</span>(<span class="fu">library</span>(pscl))</span>
+<span id="cb36-2"><a></a></span>
+<span id="cb36-3"><a></a><span class="fu">summary</span>(fish.hur <span class="ot">&lt;-</span> <span class="fu">hurdle</span>(count <span class="sc">~</span> child <span class="sc">+</span> camper <span class="sc">|</span> persons, <span class="at">data =</span> fish))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+hurdle(formula = count ~ child + camper | persons, data = fish)
+
+Pearson residuals:
+    Min      1Q  Median      3Q     Max 
+-0.8590 -0.7384 -0.6782 -0.1234 23.9679 
+
+Count model coefficients (truncated poisson with log link):
+            Estimate Std. Error z value Pr(&gt;|z|)    
+(Intercept)  1.64668    0.08278  19.892   &lt;2e-16 ***
+child       -0.75918    0.09004  -8.432   &lt;2e-16 ***
+camper       0.75166    0.09112   8.249   &lt;2e-16 ***
+Zero hurdle model coefficients (binomial with logit link):
+            Estimate Std. Error z value Pr(&gt;|z|)  
+(Intercept)  -0.7808     0.3240  -2.410   0.0160 *
+persons       0.1993     0.1161   1.716   0.0862 .
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
+
+Number of iterations in BFGS optimization: 14 
+Log-likelihood: -1047 on 5 Df</code></pre>
+</div>
+</div>
+</section>
+<section id="the-hurdle-model-3" class="slide level2">
+<h2>The hurdle model</h2>
+<p>Check the logit part directly:</p>
+<div class="cell" data-layout-align="center">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a></a>z <span class="ot">&lt;-</span> fish</span>
+<span id="cb38-2"><a></a>z<span class="sc">$</span>count <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(z<span class="sc">$</span>count <span class="sc">==</span> <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>)</span>
+<span id="cb38-3"><a></a><span class="fu">glm</span>(count <span class="sc">~</span> persons, <span class="at">data =</span> z, <span class="at">family =</span> binomial)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:  glm(formula = count ~ persons, family = binomial, data = z)
+
+Coefficients:
+(Intercept)      persons  
+    -0.7808       0.1993  
+
+Degrees of Freedom: 249 Total (i.e. Null);  248 Residual
+Null Deviance:      341.9 
+Residual Deviance: 339  AIC: 343</code></pre>
+</div>
+</div>
+</section>
+<section id="the-hurdle-model-4" class="slide level2">
+<h2>The hurdle model</h2>
+<p>Interpretation of the previous model</p>
+<ul>
+<li><p>The expected log number of the fish caught reduces by 0.759 for every additional chile (all else held constant)</p></li>
+<li><p>Being a camper increases the expected log number of fish caught by 0.752 (all else held constant)</p></li>
+<li><p>The log odds of catching at least one fish increases by 0.199 for every additional person</p></li>
+</ul>
+</section>
+<section id="the-hurdle-model-5" class="slide level2">
+<h2>The hurdle model</h2>
+<p>Predicting new observations</p>
+<div class="cell" data-layout-align="center">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb40"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a></a>newobs <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="st">"child"</span> <span class="ot">=</span> <span class="dv">0</span>, <span class="st">"persons"</span> <span class="ot">=</span> <span class="dv">3</span>, <span class="st">"camper"</span> <span class="ot">=</span> <span class="dv">1</span>)</span>
+<span id="cb40-2"><a></a><span class="fu">head</span>(<span class="fu">predict</span>(fish.hur, <span class="at">newdata =</span> newobs, <span class="at">type =</span> <span class="st">"prob"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>          0            1           2           3           4          5
+1 0.5456108 8.310743e-05 0.000457296 0.001677504 0.004615207 0.01015801
+           6          7          8          9         10         11         12
+1 0.01863138 0.02929101 0.04029322 0.04926936 0.05422062 0.05424495 0.04974685
+          13         14         15         16         17          18         19
+1 0.04211237 0.03310314 0.02428653 0.01670448 0.01081363 0.006611296 0.00382931
+           20          21           22           23           24          25
+1 0.002107065 0.001104196 0.0005523458 0.0002642839 0.0001211845 5.33451e-05
+            26           27           28           29           30          31
+1 2.257921e-05 9.203065e-06 3.617112e-06 1.372624e-06 5.035212e-07 1.78749e-07
+            32           33           34           35           36          37
+1 6.147253e-08 2.050004e-08 6.635341e-09 2.086329e-09 6.377754e-10 1.89694e-10
+            38           39           40           41           42           43
+1 5.493605e-11 1.550174e-11 4.264891e-12 1.144752e-12 2.999506e-13 7.676599e-14
+            44           45           46           47           48           49
+1 1.920011e-14 4.695466e-15 1.123333e-15 2.630256e-16 6.030375e-17 1.354365e-17
+           50           51           52           53         54           55
+1 2.98094e-18 6.432364e-19 1.361303e-19 2.826613e-20 5.7605e-21 1.152617e-21
+            56           57          58           59           60          61
+1 2.265085e-22 4.373178e-23 8.29768e-24 1.547719e-24 2.838758e-25 5.12137e-26
+            62           63           64           65           66           67
+1 9.090378e-27 1.587921e-27 2.730464e-28 4.622859e-29 7.708222e-30 1.266097e-30
+            68           69           70           71           72           73
+1 2.049017e-31 3.268014e-32 5.137755e-33 7.963474e-34 1.217188e-34 1.834942e-35
+           74           75        76           77           78           79
+1 2.72884e-36 4.004094e-37 5.798e-38 8.286574e-39 1.169144e-39 1.628652e-40
+            80           81           82           83         84           85
+1 2.240402e-41 3.043886e-42 4.085094e-43 5.416409e-44 7.0961e-45 9.187308e-46
+            86           87           88           89           90           91
+1 1.175648e-46 1.487119e-47 1.859732e-48 2.299577e-49 2.811855e-50 3.400471e-51
+            92           93           94           95           96          97
+1 4.067605e-52 4.813305e-53 5.635118e-54 6.527801e-55 7.483129e-56 8.48983e-57
+            98           99          100          101          102          103
+1 9.533677e-58 1.059773e-58 1.166273e-59 1.270768e-60 1.371051e-61 1.464887e-62
+           104          105          106         107          108          109
+1 1.550095e-63 1.624637e-64 1.686701e-65 1.73477e-66 1.767688e-67 1.784706e-68
+           110          111          112          113          114          115
+1 1.785507e-69 1.770215e-70 1.739384e-71 1.693965e-72 1.635262e-73 1.564865e-74
+          116          117          118          119          120          121
+1 1.48459e-75 1.396394e-76 1.302308e-77 1.204354e-78 1.104486e-79 1.004529e-80
+           122          123          124          125          126          127
+1 9.061294e-82 8.107233e-83 7.195127e-84 6.334553e-85 5.532647e-86 4.794207e-87
+          128         129          130          131          132          133
+1 4.12187e-88 3.51635e-89 2.976708e-90 2.500647e-91 2.084808e-92 1.725051e-93
+           134          135          136          137          138
+1 1.416722e-94 1.154884e-95 9.345166e-97 7.506785e-98 5.986354e-99
+            139           140          141           142           143
+1 4.739528e-100 3.725586e-101 2.90779e-102 2.253524e-103 1.734258e-104
+            144           145           146          147           148
+1 1.325375e-105 1.005908e-106 7.582158e-108 5.67627e-109 4.220742e-110
+            149
+1 3.117382e-111</code></pre>
+</div>
+</div>
+
+
+</section>
+    </div>
+  <div class="quarto-auto-generated-content" style="display: none;">
+<p><img src="images/uc.png" class="slide-logo"></p>
+<div class="footer footer-default">
+<p>BANA 7042: Statistical Modeling</p>
+</div>
+</div></div>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script>
+  <script src="../site_libs/revealjs/dist/reveal.js"></script>
+  <!-- reveal.js plugins -->
+  <script src="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="../site_libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="../site_libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="../site_libs/revealjs/plugin/reveal-chalkboard/plugin.js"></script>
+  <script src="../site_libs/revealjs/plugin/quarto-support/support.js"></script>
+  
+
+  <script src="../site_libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="../site_libs/revealjs/plugin/search/search.js"></script>
+  <script src="../site_libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script src="../site_libs/revealjs/plugin/math/math.js"></script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://revealjs.com/config/
+      Reveal.initialize({
+'controlsAuto': true,
+'previewLinksAuto': false,
+'pdfSeparateFragments': false,
+'autoAnimateEasing': "ease",
+'autoAnimateDuration': 1,
+'autoAnimateUnmatched': true,
+'jumpToSlide': true,
+'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleScrollView(event)\"><kbd>r</kbd> Scroll View Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleChalkboard(event)\"><kbd>b</kbd> Toggle Chalkboard</a></li>\n<li class=\"slide-tool-item\" data-item=\"6\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleNotesCanvas(event)\"><kbd>c</kbd> Toggle Notes Canvas</a></li>\n<li class=\"slide-tool-item\" data-item=\"7\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.downloadDrawings(event)\"><kbd>d</kbd> Download Drawings</a></li>\n<li class=\"slide-tool-item\" data-item=\"8\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
+'chalkboard': {"buttons":true},
+'smaller': false,
+ 
+        // Display controls in the bottom right corner
+        controls: false,
+
+        // Help the user learn the controls by providing hints, for example by
+        // bouncing the down arrow when they first encounter a vertical slide
+        controlsTutorial: false,
+
+        // Determines where controls appear, "edges" or "bottom-right"
+        controlsLayout: 'edges',
+
+        // Visibility rule for backwards navigation arrows; "faded", "hidden"
+        // or "visible"
+        controlsBackArrows: 'faded',
+
+        // Display a presentation progress bar
+        progress: true,
+
+        // Display the page number of the current slide
+        slideNumber: 'c/t',
+
+        // 'all', 'print', or 'speaker'
+        showSlideNumber: 'all',
+
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: true,
+
+        // Start with 1 for the hash rather than 0
+        hashOneBasedIndex: false,
+
+        // Flags if we should monitor the hash and change slides accordingly
+        respondToHashChanges: true,
+
+        // Push each slide change to the browser history
+        history: true,
+
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+
+        // Enable the slide overview mode
+        overview: true,
+
+        // Disables the default reveal.js slide layout (scaling and centering)
+        // so that you can use custom CSS layout
+        disableLayout: false,
+
+        // Vertical centering of slides
+        center: false,
+
+        // Enables touch navigation on devices with touch input
+        touch: true,
+
+        // Loop the presentation
+        loop: false,
+
+        // Change the presentation direction to be RTL
+        rtl: false,
+
+        // see https://revealjs.com/vertical-slides/#navigation-mode
+        navigationMode: 'linear',
+
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // Flags whether to include the current fragment in the URL,
+        // so that reloading brings you to the same fragment position
+        fragmentInURL: false,
+
+        // Flags if the presentation is running in an embedded mode,
+        // i.e. contained within a limited portion of the screen
+        embedded: false,
+
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+
+        // Flags if it should be possible to pause the presentation (blackout)
+        pause: true,
+
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+
+        // Global override for autoplaying embedded media (null/true/false)
+        autoPlayMedia: null,
+
+        // Global override for preloading lazy-loaded iframes (null/true/false)
+        preloadIframes: null,
+
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+
+        // Use this method for navigation when auto-sliding
+        autoSlideMethod: null,
+
+        // Specify the average time in seconds that you think you will spend
+        // presenting each slide. This is used to show a pacing timer in the
+        // speaker view
+        defaultTiming: null,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: false,
+
+        // The display mode that will be used to show slides
+        display: 'block',
+
+        // Hide cursor if inactive
+        hideInactiveCursor: true,
+
+        // Time before the cursor is hidden (in ms)
+        hideCursorTime: 5000,
+
+        // Opens links in an iframe preview overlay
+        previewLinks: false,
+
+        // Transition style (none/fade/slide/convex/concave/zoom)
+        transition: 'none',
+
+        // Transition speed (default/fast/slow)
+        transitionSpeed: 'default',
+
+        // Transition style for full page slide backgrounds
+        // (none/fade/slide/convex/concave/zoom)
+        backgroundTransition: 'none',
+
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+        // Number of slides away from the current that are visible on mobile
+        // devices. It is advisable to set this to a lower number than
+        // viewDistance in order to save resources.
+        mobileViewDistance: 2,
+
+        // The "normal" size of the presentation, aspect ratio will be preserved
+        // when the presentation is scaled to fit different resolutions. Can be
+        // specified using percentage units.
+        width: 1050,
+
+        height: 700,
+
+        // Factor of the display size that should remain empty around the content
+        margin: 5.0e-2,
+
+        math: {
+          mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@2.7.9/MathJax.js',
+          config: 'TeX-AMS_HTML-full',
+          tex2jax: {
+            inlineMath: [['\\(','\\)']],
+            displayMath: [['\\[','\\]']],
+            balanceBraces: true,
+            processEscapes: false,
+            processRefs: true,
+            processEnvironments: true,
+            preview: 'TeX',
+            skipTags: ['script','noscript','style','textarea','pre','code'],
+            ignoreClass: 'tex2jax_ignore',
+            processClass: 'tex2jax_process'
+          },
+        },
+
+        // reveal.js plugins
+        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, RevealChalkboard, QuartoSupport,
+
+          RevealMath,
+          RevealNotes,
+          RevealSearch,
+          RevealZoom
+        ]
+      });
+    </script>
+    
+    <script>
+      // htmlwidgets need to know to resize themselves when slides are shown/hidden.
+      // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
+      // slide changes (different for each slide format).
+      (function () {
+        // dispatch for htmlwidgets
+        function fireSlideEnter() {
+          const event = window.document.createEvent("Event");
+          event.initEvent("slideenter", true, true);
+          window.document.dispatchEvent(event);
+        }
+
+        function fireSlideChanged(previousSlide, currentSlide) {
+          fireSlideEnter();
+
+          // dispatch for shiny
+          if (window.jQuery) {
+            if (previousSlide) {
+              window.jQuery(previousSlide).trigger("hidden");
+            }
+            if (currentSlide) {
+              window.jQuery(currentSlide).trigger("shown");
+            }
+          }
+        }
+
+        // hookup for slidy
+        if (window.w3c_slidy) {
+          window.w3c_slidy.add_observer(function (slide_num) {
+            // slide_num starts at position 1
+            fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
+          });
+        }
+
+      })();
+    </script>
+
+    <script id="quarto-html-after-body" type="application/javascript">
+      window.document.addEventListener("DOMContentLoaded", function (event) {
+        const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
+        tabsets.forEach(function(tabset) {
+          const tabby = new Tabby('#' + tabset.id);
+        });
+        const isCodeAnnotation = (el) => {
+          for (const clz of el.classList) {
+            if (clz.startsWith('code-annotation-')) {                     
+              return true;
+            }
+          }
+          return false;
+        }
+        const onCopySuccess = function(e) {
+          // button target
+          const button = e.trigger;
+          // don't keep focus
+          button.blur();
+          // flash "checked"
+          button.classList.add('code-copy-button-checked');
+          var currentTitle = button.getAttribute("title");
+          button.setAttribute("title", "Copied!");
+          let tooltip;
+          if (window.bootstrap) {
+            button.setAttribute("data-bs-toggle", "tooltip");
+            button.setAttribute("data-bs-placement", "left");
+            button.setAttribute("data-bs-title", "Copied!");
+            tooltip = new bootstrap.Tooltip(button, 
+              { trigger: "manual", 
+                customClass: "code-copy-button-tooltip",
+                offset: [0, -8]});
+            tooltip.show();    
+          }
+          setTimeout(function() {
+            if (tooltip) {
+              tooltip.hide();
+              button.removeAttribute("data-bs-title");
+              button.removeAttribute("data-bs-toggle");
+              button.removeAttribute("data-bs-placement");
+            }
+            button.setAttribute("title", currentTitle);
+            button.classList.remove('code-copy-button-checked');
+          }, 1000);
+          // clear code selection
+          e.clearSelection();
+        }
+        const getTextToCopy = function(trigger) {
+          const outerScaffold = trigger.parentElement.cloneNode(true);
+          const codeEl = outerScaffold.querySelector('code');
+          for (const childEl of codeEl.children) {
+            if (isCodeAnnotation(childEl)) {
+              childEl.remove();
+            }
+          }
+          return codeEl.innerText;
+        }
+        const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+          text: getTextToCopy
+        });
+        clipboard.on('success', onCopySuccess);
+        if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+          const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+            text: getTextToCopy,
+            container: window.document.getElementById('quarto-embedded-source-code-modal')
+          });
+          clipboardModal.on('success', onCopySuccess);
+        }
+          var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+          var mailtoRegex = new RegExp(/^mailto:/);
+            var filterRegex = new RegExp("https:\/\/bgreenwell\.github\.io\/uc-bana7042\/");
+          var isInternal = (href) => {
+              return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+          }
+          // Inspect non-navigation links and adorn them if external
+         var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+          for (var i=0; i<links.length; i++) {
+            const link = links[i];
+            if (!isInternal(link.href)) {
+              // undo the damage that might have been done by quarto-nav.js in the case of
+              // links that we want to consider external
+              if (link.dataset.originalHref !== undefined) {
+                link.href = link.dataset.originalHref;
+              }
+            }
+          }
+        function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+          const config = {
+            allowHTML: true,
+            maxWidth: 500,
+            delay: 100,
+            arrow: false,
+            appendTo: function(el) {
+                return el.closest('section.slide') || el.parentElement;
+            },
+            interactive: true,
+            interactiveBorder: 10,
+            theme: 'light-border',
+            placement: 'bottom-start',
+          };
+          if (contentFn) {
+            config.content = contentFn;
+          }
+          if (onTriggerFn) {
+            config.onTrigger = onTriggerFn;
+          }
+          if (onUntriggerFn) {
+            config.onUntrigger = onUntriggerFn;
+          }
+            config['offset'] = [0,0];
+            config['maxWidth'] = 700;
+          window.tippy(el, config); 
+        }
+        const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+        for (var i=0; i<noterefs.length; i++) {
+          const ref = noterefs[i];
+          tippyHover(ref, function() {
+            // use id or data attribute instead here
+            let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+            try { href = new URL(href).hash; } catch {}
+            const id = href.replace(/^#\/?/, "");
+            const note = window.document.getElementById(id);
+            if (note) {
+              return note.innerHTML;
+            } else {
+              return "";
+            }
+          });
+        }
+        const findCites = (el) => {
+          const parentEl = el.parentElement;
+          if (parentEl) {
+            const cites = parentEl.dataset.cites;
+            if (cites) {
+              return {
+                el,
+                cites: cites.split(' ')
+              };
+            } else {
+              return findCites(el.parentElement)
+            }
+          } else {
+            return undefined;
+          }
+        };
+        var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+        for (var i=0; i<bibliorefs.length; i++) {
+          const ref = bibliorefs[i];
+          const citeInfo = findCites(ref);
+          if (citeInfo) {
+            tippyHover(citeInfo.el, function() {
+              var popup = window.document.createElement('div');
+              citeInfo.cites.forEach(function(cite) {
+                var citeDiv = window.document.createElement('div');
+                citeDiv.classList.add('hanging-indent');
+                citeDiv.classList.add('csl-entry');
+                var biblioDiv = window.document.getElementById('ref-' + cite);
+                if (biblioDiv) {
+                  citeDiv.innerHTML = biblioDiv.innerHTML;
+                }
+                popup.appendChild(citeDiv);
+              });
+              return popup.innerHTML;
+            });
+          }
+        }
+      });
+      </script>
+    
+
+</body></html>
