@@ -1,0 +1,17 @@
+project:
+  type: default
+
+format:
+  revealjs:
+    theme: dracula
+    margin: 0.05
+    df-print: paged
+    code-fold: true
+    code-summary: "Show R code"
+    code-copy: true
+    logo: images/uc.png
+    chalkboard: true
+    slide-number: true
+    scrollable: true
+    embed-resources: false
+    footer: "BANA 7042: Statistical Modeling"

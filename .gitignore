@@ -1,2 +1,4 @@
 # Ignore final exam files
 assignments/final.*
+_site/
+.quarto/

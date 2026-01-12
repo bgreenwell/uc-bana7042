@@ -1,0 +1,17 @@
+---
+title: "BANA 7042: Statistical Modeling"
+---
+
+Welcome to the course website for **BANA 7042: Statistical Modeling**.
+
+## Quick Links
+
+- [Syllabus](syllabus/syllabus.qmd)
+- [Slides](slides/index.qmd)
+- [Assignments](assignments/index.qmd)
+
+## Instructor
+**Brandon Greenwell**
+
+## Announcements
+*   Welcome to the class!

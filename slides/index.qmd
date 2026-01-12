@@ -1,0 +1,12 @@
+---
+title: "Slides"
+listing:
+  contents: 
+    - "*.qmd"
+    - "!index.qmd"
+  type: table
+  fields: [title, subtitle]
+  sort: "title"
+---
+
+Lecture slides for the course.

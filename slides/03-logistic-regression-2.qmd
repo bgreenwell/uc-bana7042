@@ -1,0 +1,550 @@
+---
+title: "Logistic Regression (Part II)"
+author: "Brandon M. Greenwell, PhD"
+institute: "University of Cincinnati"
+from: markdown+emoji
+---
+
+```{r, include=FALSE}
+palette("Okabe-Ito")
+
+library(knitr)
+
+opts_chunk$set(
+  echo = TRUE,
+  dpi = 300,     
+  #fig.retina = 3,  
+  fig.align = "center",
+  fig.width = 6,
+  fig.asp = 0.618,
+  out.width = "100%",
+ # size = "small",
+  message = FALSE,
+  warning = FALSE,
+  error = FALSE
+)
+
+knit_hooks$set(
+  par = function(before, options, envir) {
+    if (before && options$fig.show != "none") {
+      par(
+        mar = c(4, 4, 2, 0.1), 
+        cex.lab = 0.95, 
+        cex.axis = 0.8,  # was 0.9
+        mgp = c(2, 0.7, 0), 
+        tcl = -0.3, 
+        las = 1
+      )
+      if (is.list(options$par)) {
+        do.call(par, options$par)
+      }
+    }
+  }
+)
+```
+
+
+## Western collaborative group study
+
+$N = 3154$ healthy young men aged 39--59 from the San Francisco area were assessed for their personality type. All were free from coronary heart disease at the start of the research. Eight and a half years later change in this situation was recorded. See `?faraway::wcgs` in R.
+
+```{r}
+# install.packages("faraway")
+head(wcgs <- faraway::wcgs)
+```
+
+
+# Model selection
+
+---
+
+![](https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExYzRudmd3aDAxcmFvZGRueTFpbHlndHpqYmZ2azZudjM1cHAxbGtlMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/SaKvh2fShKr1hYZssC/giphy.gif)
+
+
+## Exploratory data analysis
+
+Try fitting a full model first!
+```{r}
+lr.fit.all <- glm(chd ~ ., family = binomial(link = "logit"), data = wcgs)#, maxit = 9999)
+summary(lr.fit.all)
+```
+
+
+## Exploratory data analysis
+
+Refit without *leakage* variables `typechd` and `timechd`:
+```{r}
+wcgs <- subset(wcgs, select = -c(typechd, timechd))
+lr.fit.all <- glm(chd ~ ., family = binomial(link = "logit"), data = wcgs)#, maxit = 9999)
+summary(lr.fit.all)
+```
+
+
+## What's going on with `dibep`?
+
+Let's inspect the data a bit more; we'll start with a [SPLOM](https://en.wikipedia.org/wiki/Scatter_plot#Scatter_plot_matrices)
+
+```{r}
+#| par: true
+y <- ifelse(wcgs$chd == "yes", 1, 0)
+pairs(wcgs, col = adjustcolor(y + 1, alpha.f = 0.1))
+```
+
+
+## Check for `NA`s
+
+The `lapply()` function (and friends) are quite useful!
+```{r}
+# Which columns contain missing values?
+sapply(wcgs, FUN = function(column) mean(is.na(column)))
+```
+
+
+## [Measures of Association: How to Choose?](https://journals.sagepub.com/doi/10.1177/8756479308317006)^[Nice little paper from Harry Khamis, my old graduate advisor at WSU.]
+
+![](images/measures-of-association.png)
+
+
+## Check pairwise correlations 
+
+Only looking at numeric columns:
+```{r}
+# Look at correlations between numeric features
+num <- sapply(wcgs, FUN = is.numeric)  # identify numeric columns
+(corx <- cor(wcgs[, num], use = "pairwise.complete.obs"))  # simple correlation matrix
+```
+
+
+## Check pairwise correlations 
+
+Only looking at numeric columns:
+```{r}
+#| par: true
+corrplot::corrplot(corx, method = "square", order = "FPC", type = "lower", diag = TRUE)
+```
+
+
+## Check pairwise correlations 
+
+Pairwise scatterplots with [LOWESS](https://en.wikipedia.org/wiki/Local_regression) smoothers:
+```{r}
+#| par: true
+par(mfrow = c(1, 2))
+plot(weight ~ height, data = wcgs, col = adjustcolor(1, alpha.f = 0.4))
+lines(lowess(x=wcgs$height, y=wcgs$weight), lwd = 2, col = 2)
+plot(dbp ~ sdp, data = wcgs, col = adjustcolor(1, alpha.f = 0.4))
+lines(lowess(wcgs$sdp, y = wcgs$dbp), lwd = 2, col = 2)
+```
+
+
+## What about categorical variables?
+
+[Contingency table](https://en.wikipedia.org/wiki/Contingency_table) cross-classifying `dibep` and `behave`:
+```{r}
+# What about categorical features?
+xtabs(~ behave + dibep, data = wcgs)  # perfect correlation?
+```
+
+
+## So far...
+
+* As expected, looks like there's moderate positive correlation between
+
+  - `sdp` and `dbp`
+  - `height` and `weight`
+
+* Not necessarily a problem (yet). But how could potentially fix any issues?
+
+* Also looks like some redunancy between the categorical variables `dibep` and `behave`
+
+
+## Looking more closely at `dibep`
+
+Try a decision tree:
+```{r}
+# What about categorical features?
+rpart::rpart(dibep ~ ., data = wcgs)  # perfect correlation?
+```
+
+</br>
+
+Looks like `dipep` can be predicted perfectly from `behave` (i.e., they are redundant)
+
+
+## Redundancy analysis
+
+[Redunancy analysis](https://search.r-project.org/CRAN/refmans/Hmisc/html/redun.html) is a powerful tool available in the [Hmisc]() package:
+```{r}
+# Notice we're ignoring the response here!
+Hmisc::redun(~ . - chd, nk = 0, data = wcgs)
+```
+
+
+## Battery target
+
+Cool idea from [Salford Systems](https://www.minitab.com/en-us/products/spm/) back in the day (now part of Minitab). Think of it as VIFs and redundancy analysis on steroids!
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/C5gGcIUjots?si=3nEcQWEKXvNOR8Ou" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+[Source](https://www.youtube.com/watch?v=C5gGcIUjots)
+
+## Full model (again)
+
+This time we've removed both the leakage and redundant predictors:
+```{r}
+# Refit model without leakage or redundant features
+summary(lr.fit.all <- glm(chd ~ . - dibep, family = binomial(link = "logit"), data = wcgs))
+```
+
+
+## Variance inflation factors (VIFs)
+
+VIFs aren't built into base R, so here we'll use the [car]() package:
+```{r}
+# Check (generalized) VIFs
+car::vif(lr.fit.all)
+```
+
+</br>
+
+Does anyone recall how VIFs are computed? Try running this with `dibep` still in the model!
+
+
+## Body mass index = f(height, weight)
+
+* Feature engineering is useful in cases where it makes sense!
+
+* Not sure we can combine `sdb` and `dbp` in any useful way?!
+
+* `height` and `weight` can be combined into a single number called [body mass index](https://en.wikipedia.org/wiki/Body_mass_index) (BMI): $\text{BMI} = \frac{\text{mass}_\text{lb}}{\text{height}_\text{in}^2} \times 703$
+
+```{r}
+wcgs$bmi <- with(wcgs, 703 * weight / (height^2))
+head(wcgs[, c("height", "weight", "bmi")])
+```
+
+
+## Full model (again again)
+
+This time, we'll remove `sdb`, `height`, and `weight`, and include `bmi`:
+```{r}
+summary(lr.fit.all <- update(lr.fit.all, formula = . ~ . + bmi - sdp - height - weight))
+```
+
+
+## Backward elimination
+
+* [Stepwise procedures](https://en.wikipedia.org/wiki/Stepwise_regression) work the same here as they did for ordinary linear models
+
+* While base R has the `step()` function, the `stepAIC()` function from package [MASS]() is a bit better:
+```{r}
+summary(lr.fit.back <- MASS::stepAIC(lr.fit.all, direction = "backward", trace = 0))
+```
+
+
+## Forward selection
+
+Let's assume we know `cigs` is relevant for predicting `chd` (regardless of its statistical significance). So we start with that in the model:
+```{r}
+# Variable selection using forward selection with AIC; which variables were added?
+m <- glm(chd ~ cigs, data = wcgs, 
+         family = binomial(link = "logit"))
+(lr.fit.forward <- MASS::stepAIC(m, direction = "forward", trace = 0))
+```
+
+
+## Regularized regression
+
+* Regression coefficients are estimated under various constraints
+
+* Most common approaches include:
+  - [Ridge regression](https://en.wikipedia.org/wiki/Ridge_regression), which can be useful when dealing with [multicollinearity](https://en.wikipedia.org/wiki/Multicollinearity)
+  - [LASSO](https://en.wikipedia.org/wiki/Lasso_(statistics)), which can be useful for variable selection
+  - [Elastic net](https://en.wikipedia.org/wiki/Elastic_net_regularization) (ENet) $\approx$ Ridge + LASSO
+
+* The [glmnet]() package in R, among others, can fit the entire regularization path for many kinds of models, including GLMs and the [Cox PH model](https://en.wikipedia.org/wiki/Proportional_hazards_model)
+
+
+## Useful resources
+
+* See Section 6.2 of [ISL book](https://hastie.su.domains/ISLR2/ISLRv2_website.pdf) (FREE!!)
+
+* [My HOMLR book with Brad](https://bradleyboehmke.github.io/HOML/regularized-regression.html) (FREE!!)
+
+* Nice intro video (Python):
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/dI7xi5kRwwM?si=Ro1H3-AXmSI7Vqsj" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+
+## ENet fit to `wcgs` data
+
+```{r}
+#| par: true
+library(glmnet)
+
+# Fit an elastic net model (i.e., LASSO and ridge penalties) using 5-fold CV
+wcgs.complete <- na.omit(wcgs)
+X <- model.matrix(~. - chd - dibep - bmi - 1 , data = wcgs.complete)
+#lr.enet <- cv.glmnet(X, y = ifelse(wcgs.complete$chd == "yes", 1, 0), 
+#                     family = "binomial", nfold = 5, keep = TRUE)
+lr.enet <- glmnet(X, y = ifelse(wcgs.complete$chd == "yes", 1, 0), 
+                  family = "binomial")
+plot(lr.enet, label = TRUE, xvar = "lambda")
+```
+
+
+## ENet fit to `wcgs` data
+
+```{r}
+#| par: true
+library(glmnet)
+
+# Fit an elastic net model (i.e., LASSO and ridge penalties) using 5-fold CV
+lr.enet <- cv.glmnet(X, y = ifelse(wcgs.complete$chd == "yes", 1, 0), 
+                     family = "binomial", nfold = 5, keep = TRUE)
+plot(lr.enet)
+```
+
+
+## ENet fit to `wcgs` data
+
+```{r}
+coef(lr.enet)
+```
+
+
+# Model performance
+
+## Prediction accuracy
+
+* [Scoring rules](https://en.wikipedia.org/wiki/Scoring_rule) are used to evaluate probabilistic predictions 
+* A scoring rule is *proper* if it is minimized in expectation by the true probability
+* It is a metric that is optimized when the forecasted probabilities are identical to the true outcome probabilities
+* See [Gneiting & Raftery (2007, JASA)](https://www.tandfonline.com/doi/abs/10.1198/016214506000001437) and [this post](https://www.fharrell.com/post/class-damage/) for details
+* Examples include [log loss](https://scikit-learn.org/dev/modules/generated/sklearn.metrics.log_loss.html) and the [Brier score](https://en.wikipedia.org/wiki/Brier_score) (or MSE)
+
+
+## Statistical classification
+
+* A [classifier](https://en.wikipedia.org/wiki/Statistical_classification) is a model that outputs a class label, as opposed to a probabilistic prediction
+* Logistic regression is NOT a classifier!!
+  - Binary classification via logistic regression represents a forced choice based on a probability threshold
+* Classification is rarely useful for decision making (think about a weather app that only prodiced classifications and not forecasts!)
+
+## Classification boundary
+
+Perfect seperation (or discrimination):
+```{r}
+#| par: true
+# Simulate some data
+N <- 200
+d1 <- cbind(matrix(MASS::mvrnorm(2*N, mu = c(0, 0), Sigma = diag(2)), ncol = 2), 0)
+d2 <- cbind(matrix(MASS::mvrnorm(2*N, mu = c(8, 8), Sigma = diag(2)), ncol = 2), 1)
+d <- as.data.frame(rbind(d1, d2))
+names(d) <- c("x1", "x2", "y")
+
+# Fit a logistic regression
+fit <- glm(y ~ ., data = d, family = binomial)
+
+# Plot decision boundary using 0.5 threshold
+pfun <- function(object, newdata) {
+  prob <- predict(object, newdata = newdata, type = "response")
+  label <- ifelse(prob > 0.5, 1, 0)  # force into class label
+  label
+}
+plot(x2 ~ x1, data = d, col = d$y + 1)
+treemisc::decision_boundary(fit, train = d, y = "y", x1 = "x1", x2 = "x2", 
+                            pfun = pfun, grid.resolution = 999)
+legend("topleft", legend = c("y = 0", "y = 1"), col = c(1, 2), pch = 1)
+```
+
+
+## Classification boundary
+
+Class overlap (four possibilities in terms of classification):
+```{r}
+#| par: true
+# Simulate some data
+N <- 200
+d1 <- cbind(matrix(MASS::mvrnorm(2*N, mu = c(0, 0), Sigma = diag(2)), ncol = 2), 0)
+d2 <- cbind(matrix(MASS::mvrnorm(2*N, mu = c(2, 2), Sigma = diag(2)), ncol = 2), 1)
+d <- as.data.frame(rbind(d1, d2))
+names(d) <- c("x1", "x2", "y")
+
+# Fit a logistic regression
+fit <- glm(y ~ ., data = d, family = binomial)
+
+# Plot decision boundary using 0.5 threshold
+pfun <- function(object, newdata) {
+  prob <- predict(object, newdata = newdata, type = "response")
+  label <- ifelse(prob > 0.5, 1, 0)  # force into class label
+  label
+}
+plot(x2 ~ x1, data = d, col = d$y + 1)
+treemisc::decision_boundary(fit, train = d, y = "y", x1 = "x1", x2 = "x2", 
+                            pfun = pfun, grid.resolution = 999)
+legend("topleft", legend = c("y = 0", "y = 1"), col = c(1, 2), pch = 1)
+```
+
+
+## Confusion matrix
+
+* A [confusion matrix](https://en.wikipedia.org/wiki/Confusion_matrix) is a special [contingency table](https://en.wikipedia.org/wiki/Contingency_table) that describes the performance of a binary classifier
+* More of a [matrix of confusion](https://www.fharrell.com/post/mlconfusion/) :scream:
+* Lots of statistics can be computed from a given confusion matrix 
+  - They are all improper scoring rules and can be optimized by a bogus model
+  - Most are not useful for decision making IMO
+
+
+## Example with `wcgs` data
+
+```{r}
+# Confusion matrix (i.e., 2x2 contingency table of classification results)
+y <- na.omit(wcgs)$chd  # observed classes
+prob <- predict(lr.fit.all, type = "response")  # predicted probabilities
+classes <- ifelse(prob > 0.5, "yes", "no")  # classification based on 0.5 threshold
+(cm <- table("actual" = y, "predicted" = classes))  # confusion matrix
+```
+
+
+## Confusion matrix
+
+![](images/confusion-matrix.jpg)
+[Source](https://medium.com/@danyal.wainstein1/understanding-the-confusion-matrix-b9bc45ba2679)
+
+
+## ROC curves
+
+* [Receiver operating characteristic (ROC) curves](https://en.wikipedia.org/wiki/Receiver_operating_characteristic) display the tradeoff between the true positive rate (TPR or sensitivity) and false positive rate (FPR or 1 - specificity) for a range of probability thresholds 
+* Invariant to monotone transformations of $\hat{p}$
+* [Precision-recall](https://en.wikipedia.org/wiki/Precision_and_recall#Imbalanced_data) plots can be more informative when dealing with class imbalance (really not a problem with logistic regression or when dealing with probabilities)
+
+
+## Transposed conditionals
+
+* [Confusion of the inverse](https://en.wikipedia.org/wiki/Confusion_of_the_inverse): $P\left(A|B\right) \ne P\left(B|A\right)$
+* [The error of the transposed conditional is rampant in research](https://www.fharrell.com/post/backwards-probs/):
+  - "Conditioning on what is unknowable to predict what is already known leads to a host of complexities and interpretation problems."
+* TPR and FPR (and others) are [transposed conditionals](https://en.wikipedia.org/wiki/Confusion_of_the_inverse)
+$$
+  \begin{align}
+  TPR &= P\left(\hat{Y} = 1 | Y = 1\right) \\
+  &= P\left(\text{known} | \text{unknown}\right)
+  \end{align}
+$$
+
+
+## ROC curve (by hand)
+
+```{r}
+#| par: true
+threshold <- seq(from = 0, to = 1, length = 999)
+tp <- tn <- fp <- fn <- numeric(length(threshold))
+for (i in seq_len(length(threshold))) {
+  classes <- ifelse(prob > threshold[i], "yes", "no")
+  tp[i] <- sum(classes == "yes" & y == "yes")  # true positives
+  tn[i] <- sum(classes == "no"  & y == "no")  # true negatives
+  fp[i] <- sum(classes == "yes" & y == "no")  # false positives
+  fn[i] <- sum(classes == "no"  & y == "yes")  # false negatives
+}
+tpr <- tp / (tp + fn)  # sensitivity
+tnr <- tn / (tn + fp)  # specificity
+
+# Plot ROC curve
+plot(tnr, y = tpr, type = "l", col = 2, lwd = 2, xlab = "TNR (or specificity)", 
+     ylab = "TPR (or sensitivity)")
+abline(1, -1, lty = 2)
+```
+
+
+## ROC curve ([pROC](https://cran.r-project.org/package=pROC) package)
+
+Can be useful to use a package sometimes (e.g., for computing are under the ROC curve; AKA AUROC or AUC)
+```{r}
+#| par: true
+plot(roc <- pROC::roc(y, predictor = prob))
+roc
+```
+
+
+
+## Leave-one-covariate-out (LOCO) importance
+
+A simple and intuitive way to measure the "importance" of each covariate in a model. In the simplest terms:
+
+1. Estimate baseline performance (e.g., AUROC or Brier score)
+2. For $j = 1, 2, \dots p$, refit the model without feature $x_j$ and compute the degredation to the baseline performance.
+3. Sort these values in a table or plot them.
+
+See [here](https://slds-lmu.github.io/iml_methods_limitations/pfi.html#leave-one-covariate-out-loco) for more details.
+
+
+## LOCO scores for `wcgs` example
+
+```{r}
+#| par: true
+wcgs <- faraway::wcgs
+wcgs$bmi <- with(wcgs, weight / (height^2) * 703)
+omit <- c("typechd", "timechd", "dibep", "height", "weight")
+keep <- setdiff(names(wcgs), y = omit)
+wcgs <- wcgs[, keep]
+fit <- glm(chd ~ ., data = wcgs, family = binomial)
+summary(fit)
+
+# Leave-one-covariate-out (LOCO) method
+#
+# Note: Would be better to incorporate some form of cross-validation (or bootstrap)
+x.names <- attr(fit$terms, "term.labels")
+loco <- numeric(length(x.names))
+baseline <- deviance(fit)  # smaller is better; could also use AUROC, Brier score, etc.
+loco <- sapply(x.names, FUN = function(x.name) {
+  wcgs.copy <- wcgs
+  wcgs.copy[[x.name]] <- NULL
+  fit.new <- glm(chd ~ ., data = wcgs.copy, family = binomial(link = "logit"))
+  deviance(fit.new) - baseline  # measure drop in performance
+})
+names(loco) <- x.names
+sort(loco, decreasing = TRUE)
+dotchart(sort(loco, decreasing = TRUE), pch = 19)
+```
+
+
+## Lift charts
+
+* Classification is a forced choice! 
+* In marketing, analysts generally know better than to try to classify a potential customer as someone to ignore or someone to spend resources on
+  - Instead, potential customers are sorted in decreasing order of estimated probability of purchasing a product
+  - The marketer who can afford to advertise to $n$ persons then picks the $n$ highest-probability customers as targets!
+* I like the idea of *cumulative gain charts* for this!
+
+
+## Lift charts
+
+Cumulative gains chart applied to `wcgs` example (`lr.fit.all`):
+```{r}
+#| par: true
+res <- treemisc::lift(prob, y = y, pos.class = "yes")
+plot(res)
+```
+
+
+## Probability calibration
+
+* A probability $p$ is *well calibrated* if a fraction of about *p* of the events we predict with probability $p$ actually occur
+* [Calibration curves](https://scikit-learn.org/1.5/modules/calibration.html) are the :1st_place_medal: gold standard :1st_place_medal:
+* Compared to general machine learning models, logistic regression tends to return well calibrated probabilities
+* For details, see [Niculescu-Mizil & Caruana (2005)](https://www.cs.cornell.edu/~alexn/papers/calibration.icml05.crc.rev3.pdf) and [Kull et al. (2017)](https://projecteuclid.org/journals/electronic-journal-of-statistics/volume-11/issue-2/Beyond-sigmoids--How-to-obtain-well-calibrated-probabilities-from/10.1214/17-EJS1338SI.full) and 
+
+
+## Probability calibration
+
+The [rms](https://cran.r-project.org/package=rms) function `val.prob()` can be used for this:
+```{r}
+#| par: true
+#| results: hide
+wcgs2 <- na.omit(faraway::wcgs)
+y <- ifelse(wcgs2$chd == "yes", 1, 0)
+fit <- glm(y ~ cigs + height, data = wcgs2, family = binomial)
+prob <- predict(fit, newdata = wcgs2, type = "response")
+rms::val.prob(prob, y = y)
+```

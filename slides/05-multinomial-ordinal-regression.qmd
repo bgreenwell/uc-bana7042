@@ -1,0 +1,471 @@
+---
+title: "Regression for Multinomial and Ordinal Outcomes"
+author: "Brandon M. Greenwell, PhD"
+institute: "University of Cincinnati"
+from: markdown+emoji
+---
+
+```{r, include=FALSE}
+palette("Okabe-Ito")
+
+library(knitr)
+
+opts_chunk$set(
+  echo = TRUE,
+  dpi = 300,     
+  #fig.retina = 3,  
+  fig.align = "center",
+  fig.width = 6,
+  fig.asp = 0.618,
+  out.width = "100%",
+ # size = "small",
+  message = FALSE,
+  warning = FALSE,
+  error = FALSE
+)
+
+knit_hooks$set(
+  par = function(before, options, envir) {
+    if (before && options$fig.show != "none") {
+      par(
+        mar = c(4, 4, 2, 0.1), 
+        cex.lab = 0.95, 
+        cex.axis = 0.8,  # was 0.9
+        mgp = c(2, 0.7, 0), 
+        tcl = -0.3, 
+        las = 1
+      )
+      if (is.list(options$par)) {
+        do.call(par, options$par)
+      }
+    }
+  }
+)
+```
+
+
+# Regression for Multinomial Outcomes
+
+## Multinomial data
+
+* The [multinomial distribution](https://en.wikipedia.org/wiki/Multinomial_distribution) is an extension of the binomial where the outcome can take on more than two values
+
+* The categories can be nominal (e.g., have no natural ordering) or ordinal in nature (e.g., low < medium < high)
+
+* We'll start with the case of a nominal outcome having more than two categories
+
+* Let $Y$ be a discrete r.v. that can take on one of $J$ categories with $\left\{\mathrm{P}\left(Y = j\right) = p_j\right\}_{j=1}^J$, where $\sum_{j=1}^Jp_j=1$
+
+
+## Multinomial logit model
+
+* Similar to binary regression, we need a way to *link* the probabilities $p_j$ to the predictors $\boldsymbol{x} = \left(x_1, x_2, \dots, x_p\right)^\top$
+
+* Need to ensure each $0 \le p_j \le 1$ and that $\sum_{j=1}^Jp_j = 1$
+
+* Idea is similar to fitting several logistic regressions using one of the categories as the reference or baseline (say, $j = 1$)
+
+* To that end, we define the $J-1$ logits $\eta_j = \boldsymbol{x}^\top\boldsymbol{\beta}_j = \log\left(p_j / p_1\right)$, where $j \ne 1$
+
+* Notice we have a set of coefficients for each comparison!
+
+
+## Multinomial logit model
+
+* To ensure $\sum_{j=1}^Jp_j = 1$, we have
+$$
+p_i = \frac{\exp\left(\eta_i\right)}{1 + \sum_{j=2}^J\exp\left(\eta_j\right)}
+$$
+
+* This implies that $p_1 = 1 - \sum_{j=2}^Jp_j$
+
+
+## 1996 National Election Study
+
+![](images/nes96.png){fig-align="center"}
+
+
+## 1996 National Election Study
+
+* We'll consider a sample taken from a subset of the 1996 American National Election Study 
+
+* Contained in the `nes96` data frame in the [faraway](https://cran.r-project.org/package=faraway) :package:
+
+```{r}
+str(nes96 <- faraway::nes96)
+```
+
+
+## 1996 National Election Study
+
+* For simplicity, we'll consider three variables: age, education level, and income groups of each respondent
+
+* Some of the factors are "ordered" by default; E.g., `income` (respondent's education level):
+```{r}
+#| code-fold: false
+levels(nes96$income)
+```
+
+* Same goes for `PID` and `educ` (respondent's party identification and education, respectively)
+
+
+## 1996 National Election Study
+
+Here's a cleaned up version of the data we'll work with:
+```{r}
+# Condense party identification (PID) column into three categories
+party <- nes96$PID
+levels(party) <- c(
+  "Democrat", "Democrat",
+  "Independent", "Independent", "Independent", 
+  "Republican", "Republican"
+)
+
+# Convert income to numeric
+inca <- c(1.5, 4, 6, 8, 9.5, 10.5, 11.5, 12.5, 13.5, 14.5, 16, 18.5, 21, 23.5,
+          27.5, 32.5, 37.5, 42.5, 47.5, 55, 67.5, 82.5, 97.5, 115)
+income <- inca[unclass(nes96$income)]
+
+# Construct new data set for analysis
+rnes96 <- data.frame(
+  "party" = party, 
+  "income" = income, 
+  "education" = nes96$educ, 
+  "age" = nes96$age
+)
+
+# Print summary of data set
+summary(rnes96)
+```
+
+
+## 1996 National Election Study
+
+Let's continue with some visual exploration:
+```{r}
+#| par: true
+library(dplyr)
+library(ggplot2)
+
+theme_set(theme_bw())
+
+# Aggregate data; what's happening here?
+egp <- group_by(rnes96, education, party) %>% 
+  summarise(count = n()) %>%
+  group_by(education) %>% 
+  mutate(etotal = sum(count), proportion = count/etotal)
+
+# Plot results
+ggplot(egp, aes(x = education, y = proportion, group = party, 
+                linetype = party, color = party)) + 
+  geom_line(size = 2)
+```
+
+
+## 1996 National Election Study
+
+Let's continue with some visual exploration:
+```{r}
+#| par: true
+# Aggregate data; what's happening here?
+igp <- mutate(rnes96, income_group = cut_number(income, 7)) %>% 
+  group_by(income_group, party) %>% 
+  summarise(count = n()) %>% 
+  group_by(income_group) %>% 
+  mutate(etotal = sum(count), proportion = count / etotal)
+
+# Plot results
+ggplot(igp, aes(x = income_group, y = proportion, group = party, 
+                linetype = party, color = party)) +
+  scale_x_discrete(guide = guide_axis(angle = 45)) +
+  geom_line(size = 2)
+```
+
+
+## 1996 National Election Study
+
+Let's continue with some visual exploration:
+```{r}
+#| plot: true
+# Aggregate data; what's happening here?
+agp <- rnes96 %>% 
+  group_by(age, party) %>% 
+  summarise(count = n()) %>% 
+  group_by(age) %>% 
+  mutate(etotal = sum(count), proportion = count / etotal)
+
+# Plot results
+ggplot(agp, aes(x = age, y = proportion, group = party, 
+                linetype = party, color = party)) +
+  geom_line(size = 1, alpha = 0.5)
+```
+
+
+## 1996 National Election Study
+
+Define the following probabilities:
+
+* $p_{d} = P\left(\text{voting democrat}\right)$;
+* $p_{i} = P\left(\text{voting independent}\right)$;
+* $p_{r} = P\left(\text{voting republican}\right)$,
+
+where $p_d + p_i + p_r = 1$. Assume for now that `income` is the only independent variable of interest. 
+
+
+## 1996 National Election Study
+
+The multinomial logit model effectively fits several logits (one for every class except the baseline, which is arbitrary; here, it's democrat):
+
+* $\log\left(p_{i} / p_{d}\right) = \beta_0 + \beta_1 \mathtt{income}\quad$ (log odds of voting independent vs. democrat);
+* $\log\left(p_{r} / p_{d}\right) = \alpha_0 + \alpha_1 \mathtt{income}\quad$ (log odds of voting republican vs. democrat).
+
+Here we use $\beta_i$ and $\alpha_i$ to remind us that the estimated coefficients between the two logits will be different.
+
+
+## 1996 National Election Study
+
+Multinomial logit model using all three predictors:
+```{r}
+library(nnet)  # install.packages("nnet")
+
+(mfit <- multinom(party ~ age + education + income, data = rnes96, trace = FALSE))
+```
+
+
+## Brief digression...
+
+* By default, R encodes ordered factors using *orthogonal polynomials*
+
+* Ames Housing example:
+
+```{r}
+#| plot: true
+ames <- AmesHousing::make_ames()
+ggplot(ames, aes(x = Overall_Qual, y = Sale_Price)) +#log(Sale_Price))) +
+  geom_boxplot(aes(color = Overall_Qual)) +
+  scale_x_discrete(guide = guide_axis(angle = 45)) 
+```
+
+
+## 1996 National Election Study
+
+No $p$-values here!
+```{r}
+summary(mfit)
+```
+
+
+## 1996 National Election Study
+
+* How do we interpret the coefficients? How about for `income`?
+
+* All else held constant, for every :warning:one-unit increase in income:warning:, the multinomial log odds of voting republican, relative to democrat increase by 0.017.
+
+* Gross... :nauseated_face:
+
+* Effect plots to the rescue!
+
+
+## 1996 National Election Study
+
+Look at predicted probabilities:
+```{r}
+#| code-fold: false
+head(probs <- predict(mfit, type = "probs"))
+
+# Sanity check
+head(rowSums(probs))
+```
+
+
+## 1996 National Election Study
+
+```{r}
+library(pdp)  # for partial dependence (PD) plots
+
+# Compute partial dependence of party identification on income
+pfun <- function(object, newdata) {
+  probs <- predict(object, newdata = newdata, type = "probs")
+  colMeans(probs)  # return average probability for each class
+}
+pd.inc <- partial(mfit, pred.var = "income", pred.fun = pfun)
+ggplot(pd.inc, aes(x = income, y = yhat, linetype = yhat.id, color = yhat.id)) +
+  geom_line(size = 2) +
+  xlab("Income group midpoint (in thousands)") +
+  ylab("Partial dependence")
+```
+
+
+## 1996 National Election Study
+
+Can perform classification, if desired...:roll_eyes:
+```{r}
+table("Predicted" = predict(mfit), "Actual" = rnes96$party)
+```
+
+. . .
+
+Ummm...majority of actual Republicans are classified as Democrats?!
+
+
+## 1996 National Election Study
+
+For kicks, try stepwise selection; since the model is based on a (multinomial) likelihood, the AIC/BIC are well-defined and the usual stepwise procedures are still valid:
+```{r}
+(mfit2 <- MASS::stepAIC(mfit, direction = "both", scope = list("upper" = ~.^2)))
+```
+
+
+## 1996 National Election Study
+
+For comparison, fit a (default) random forest:
+```{r}
+set.seed(2008)  # for reproducibility
+(rfo <- randomForest::randomForest(party ~ ., data = rnes96, ntree = 1000))
+```
+
+
+## 1996 National Election Study
+
+Random forest results for comparison:
+```{r}
+#| par: true
+# Construct the same PD plot as before, but using the RF model
+pd <- partial(rfo, pred.var = "income", pred.fun = function(object, newdata) {
+  colMeans(predict(object, newdata = newdata, type = "prob"))
+})
+ggplot(pd, aes(x = income, y = yhat, linetype = yhat.id, color = yhat.id)) +
+  geom_line(size = 2) +
+  xlab("Income (midpoint in thousands)") +
+  ylab("Partial dependence") +
+  geom_rug(data = data.frame("income" = quantile(rnes96$income, prob = 1:9/10)), aes(x = income), inherit.aes = FALSE)
+```
+
+
+# Regression for Ordinal Outcomes
+
+
+# Ordinal outcomes
+
+* Technically, party identification (`party`) is ordinal variable: `Democrat` < `Independent` < `Republican`
+
+* With an ordered response (e.g., Likert scale), it's often easier to work with the [*cumulative probabilities*](https://en.wikipedia.org/wiki/Cumulative_distribution_function) $p_j^\le = \mathrm{P}\left(Y \le j\right)$
+
+* Note that if the $J$ response categories have order $1 < 2 < \cdots < J$, then $p_J^\le = \mathrm{P}\left(Y \le J\right) = 1$
+
+* Suppose $Z$ is some unobserved (i.e., [latent](https://en.wikipedia.org/wiki/Latent_and_observable_variables)) response but we only observe a discretized version of the form $Y = j$ if $\alpha_{j-1} < Z < \alpha_j$
+
+
+## Ordinal outcomes
+
+* If $Z - \boldsymbol{x}^\top\boldsymbol{\beta}$ has distribution $F$, then
+$$
+\mathrm{P}\left(Y \le j\right) = \mathrm{P}\left(Z \le \alpha_j\right) = F\left(\alpha_j - \boldsymbol{x}^\top\boldsymbol{\beta}\right)
+$$
+
+* If, for example, $F$ is a standard logistic distribution, then
+$$
+p_j^\le = \frac{\exp\left(\alpha_j - \boldsymbol{x}^\top\boldsymbol{\beta}\right)}{1 + \exp\left(\alpha_j - \boldsymbol{x}^\top\boldsymbol{\beta}\right)}
+$$
+which is a logit model for the cumulative probabilities!
+
+* Choosing a standard normal distribution for $F$ would lead to a probit model for the cumulative probabilities, and so on...
+
+
+## Proportional odds (PO) model
+
+* Let $p_j^\top = \mathrm{P}\left(Y \le j|\boldsymbol{x}\right)$
+
+* The standard PO model, which uses a logit link, is
+$$
+\log\left(\frac{p_j^\le}{1-p_j^\le}\right) = \alpha_j - \boldsymbol{x}^\top\boldsymbol{\beta}, \quad j = 1, 2, \dots, J-1
+$$
+
+
+## Proportional odds (PO) model
+
+* PO assumption, etc...
+
+
+## 1996 National Election Study
+
+The simplest implementation is `polr()` from [MASS](https://cran.r-project.org/package=MASS)
+```{r}
+library(MASS)
+
+(pofit <- polr(party ~ age + education + income, data = rnes96))
+```
+
+
+## 1996 National Election Study
+
+Similar to before, we can use AIC-based stepwise procedures:
+```{r}
+(pofit2 <- stepAIC(pofit, direction = "both"))
+```
+
+
+## 1996 National Election Study
+
+```{r}
+#| code-fold: false
+cbind(
+  "deviance" = c("PO" = deviance(pofit2), "Multi" = deviance(mfit2)),
+  "nparam" = c("PO" = pofit2$edf, "Multi" = mfit2$edf)
+)
+```
+
+
+## 1996 National Election Study
+
+Compare full and reduced model using LR test
+```{r}
+#| code-fold: false
+anova(pofit2, pofit, test = "Chisq")
+```
+
+
+## 1996 National Election Study
+
+Interpreting the coefficients:
+```{r}
+#| code-fold: false
+summary(pofit2)
+```
+
+We can say that the odds of moving from Democrat to Independent/Republican (or from Democrat/Independent to Republican) increase by a factor of $\exp\left(0.013120\right) = 1.0132$ per unit increase in income.
+
+
+## Non-proportional odds (NPO) model
+
+* We can generalize the PO model by allowing the coefficients to vary between categories (similar to the mulinomial logit model form earlier):
+$$
+\log\left(\frac{p_j^\le}{1-p_j^\le}\right) = \alpha_j - \boldsymbol{x}^\top\boldsymbol{\beta}_j, \quad j = 1, 2, \dots, J-1
+$$
+
+* This relaxes the PO assumptions but requires more complicated software (e.g., the [VGAM](https://cran.r-project.org/package=VGAM) package)
+
+* Careful, different packages use different default parameterizations; E.g., [see Table 2 here](https://journal.r-project.org/archive/2018/RJ-2018-004/RJ-2018-004.pdf)
+
+
+## 1996 National Election Study
+
+PO and NPO fits to election data using [VGAM](https://cran.r-project.org/package=VGAM):
+```{r}
+library(VGAM)
+
+(pofit <- vglm(party ~ income, data = rnes96,
+               family = cumulative(parallel = TRUE, reverse = TRUE)))
+(npofit <- vglm(party ~ income, data = rnes96,
+                family = cumulative(parallel = FALSE, reverse = TRUE)))
+```
+
+
+## Assigning scores
+
+*  When the ordinal response has a larger number of categories, it may be reasonable to assign scores (i.e., integers) to each level and then model these scores using a standard linear model
+
+* Rule of thumb from my old advisor was 10 or more categories
+
+
+# Questions?

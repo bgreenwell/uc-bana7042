@@ -1,0 +1,11 @@
+---
+title: "Assignment 6"
+subtitle: "Count Regression"
+format: html
+---
+
+## Overview
+
+This assignment covers count regression models (Poisson, Negative Binomial).
+
+**Coming Soon**
