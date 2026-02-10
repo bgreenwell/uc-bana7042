@@ -8,7 +8,7 @@ format:
 
 ## Overview
 
-Please review Chapter 7 of "Extending the Linear Model with R: Generalized Linear, Mixed Effects and Nonparametric Regression Models" (second edition) by Julian J. Faraway. The chapter covers multinomial and ordinal regression models, which are used for modeling categorical response variables with more than two categories. You can find a PDF copy of the book in `resources/elmr2.pdf`.
+Please review Chapter 7 of "Extending the Linear Model with R: Generalized Linear, Mixed Effects and Nonparametric Regression Models" (second edition) by Julian J. Faraway. The chapter covers multinomial and ordinal regression models, which are used for modeling categorical response variables with more than two categories. You can find a PDF copy of the book in `resources/elmr2.pdf` ([direct link](https://github.com/bgreenwell/uc-bana7042/blob/main/resources/elmr2.pdf)).
 
 For this assignment, please do Exercise 1 (a)--(j) from chapter 7 located on pp. 147--148. You can load the associated data set using the following code:
 ```{r}
