@@ -149,15 +149,6 @@ plot(cigs ~ chd, data = wcgs, col = c(2, 3))
 
 ## Visualizing discrete data
 
-Boxplot of `cigs` vs. `chd` status
-```{r}
-#| par: true
-plot(cigs ~ chd, data = wcgs, col = c(2, 3))
-```
-
-
-## Visualizing discrete data
-
 Boxplot of `height` vs. `chd` status with *notches*
 ```{r}
 #| par: true
@@ -275,6 +266,19 @@ $$
 Note how the LR model is nonlinear in $p$!
 
 
+## Assumptions of the LR model
+
+* **Binary response**: The response variable $Y$ must be binary (e.g., 0/1, yes/no, etc.)
+
+* **Independence**: The observations must be independent of one another (i.e., no repeated measures)
+
+* **Linearity**: There must be a linear relationship between the predictors and the *logit* of the response
+
+* **No multicollinearity**: The predictors should not be highly correlated with one another
+
+* **Sample size**: Since LR uses MLE, it typically requires a larger sample size than ordinary linear regression for the results to be reliable (asymptotic properties)
+
+
 ## Fitting an LR model in R
 
 * Use the `glm()` function instead of `lm()`
@@ -332,7 +336,7 @@ summary(fit.lr2 <- glm(chd ~ cigs + height, data = wcgs, family = binomial))
 
 * Let $p = P\left(Y = 1\right)$ and $1 - p = P\left(Y = 0\right)$
 * The odds of $Y = 1$ occuring is defined as $p / \left(1 - p\right)$
-* For a fair coin :coin:, the probability of getting tails is $p = 0.5$. Therefore, the odds of getting tails vs. heads is $p / (1 - p) = 0.5 / 0.5 = 1$. (We might also say the odds of getting tails is "1 to 1").
+* For a fair coin :coin:, the probability of getting tails is $p = 0.5$. Therefore, the odds of getting tails vs. heads is $p / (1 - p) = 0.5 / 0.5 = 1$. (We might also say the odds of getting tails is "1 to 1" or "1:1").
 
 . . .
 
@@ -379,13 +383,13 @@ coef(fit.lr2)
 
 ## Effect plots
 
-Lot's of different methods and packages:
+Lots of different methods and packages:
 
 * Marginal effects via [effects](https://cran.r-project.org/package=effects) library
 * [Partial dependence (PD) plots](https://christophm.github.io/interpretable-ml-book/pdp.html) and [individual conditional expectation]() (ICE) plots via the [pdp]() package
 * Marginal effect and PD plots via the [plotmo]([plotmo](http://www.milbo.org/doc/plotmo-notes.pdf)) library
 * And many, many more (see [R's ML Task View](https://cran.r-project.org/web/views/MachineLearning.html))
-* All have there own assumptions and drawbacks; typically, similar in shape when the model is additive in nature (i.e., no interaction effects)
+* All have their own assumptions and drawbacks; typically, similar in shape when the model is additive in nature (i.e., no interaction effects)
 
 
 ## Effect plots
@@ -438,7 +442,7 @@ lattice::wireframe(yhat ~ height * cigs, data = pd.2d, shade = TRUE)
 
 * [In LR, ML estimation is more common](https://en.wikipedia.org/wiki/Logistic_regression#Model_fitting)^[Technically, there are a number of ways to estimate the parameters of an LR model, but ML estimation is most common.]
 
-* Recall that if $Y_i \stackrel{iid}{\sim} Bernoulli\left(p\right)$, then the [likilhood function](https://en.wikipedia.org/wiki/Likelihood_function) is defined as
+* Recall that if $Y_i \stackrel{iid}{\sim} Bernoulli\left(p\right)$, then the [likelihood function](https://en.wikipedia.org/wiki/Likelihood_function) is defined as
 
 $$
 L\left(p\right) = \prod_{i=1}^n p^{y_i} \left(1-p\right)^{1-y_i}
@@ -484,7 +488,7 @@ y <- ifelse(wcgs$chd == "yes", 1, 0)
 # Model matrix; includes a column for the intercept by default
 X <- model.matrix(~ cigs + height, data = wcgs)
 
-# Function to compute the negative log-liklihood (as a function of the betas)
+# Function to compute the negative log-likelihood (as a function of the betas)
 nll <- function(beta) {
   lp <- X %*% beta  # linear predictor; same as b0 + b1*x1 + b2*x2 + ...
   -sum(y * lp - log(1 + exp(lp)))
@@ -500,7 +504,7 @@ optim(coef(lp.fit), fn = nll,
 ## Wald statistic
 
 * Consider the usual marginal test: $H_0: \beta_j = 0$ vs. $H_1: \beta_j \ne 0$
-* Assymptotically speaking, $Z_i = \hat{\beta}_i / \mathrm{SE}\left(\hat{\beta}_i\right)$ has a standard normal distribution under $H_0$
+* Asymptotically speaking, $Z_i = \hat{\beta}_i / \mathrm{SE}\left(\hat{\beta}_i\right)$ has a standard normal distribution under $H_0$
 * This leads to the usual [Wald-based confidence intervals](https://en.wikipedia.org/wiki/Wald_test), etc.
 * Better (but more complicated) approaches available, like [likelihood ratio tests](https://en.wikipedia.org/wiki/Likelihood-ratio_test#:~:text=In%20statistics%2C%20the%20likelihood%2Dratio,the%20ratio%20of%20their%20likelihoods.), [profile likelihood methods](https://en.wikipedia.org/wiki/Likelihood_function#Profile_likelihood), and the [bootstrap](https://en.wikipedia.org/wiki/Bootstrapping_(statistics)).
 
@@ -534,7 +538,7 @@ anova(fit.H0, fit.H1, test = "Chi")
 
 ## Confidence intervals
 
-Lot's of ways to do this (some bad, some better). R defaults to using a [profile likelihood](https://en.wikipedia.org/wiki/Likelihood_function) method:
+Lots of ways to do this (some bad, some better). R defaults to using a [profile likelihood](https://en.wikipedia.org/wiki/Likelihood_function) method:
 
 ```{r}
 confint(fit.lr2, level = 0.95)

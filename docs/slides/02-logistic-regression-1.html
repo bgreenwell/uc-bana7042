@@ -371,26 +371,15 @@ Brandon M. Greenwell, PhD
 <img data-src="02-logistic-regression-1_files/figure-revealjs/unnamed-chunk-10-1.png" class="quarto-figure quarto-figure-center r-stretch" style="width:100.0%"></section>
 <section id="visualizing-discrete-data-5" class="slide level2">
 <h2>Visualizing discrete data</h2>
-<p>Boxplot of <code>cigs</code> vs.&nbsp;<code>chd</code> status</p>
-<div class="cell" data-layout-align="center" data-par="true">
-<details class="code-fold">
-<summary>Show R code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a></a><span class="fu">plot</span>(cigs <span class="sc">~</span> chd, <span class="at">data =</span> wcgs, <span class="at">col =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">3</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
-
-</div>
-<img data-src="02-logistic-regression-1_files/figure-revealjs/unnamed-chunk-11-1.png" class="quarto-figure quarto-figure-center r-stretch" style="width:100.0%"></section>
-<section id="visualizing-discrete-data-6" class="slide level2">
-<h2>Visualizing discrete data</h2>
 <p>Boxplot of <code>height</code> vs.&nbsp;<code>chd</code> status with <em>notches</em></p>
 <div class="cell" data-layout-align="center" data-par="true">
 <details class="code-fold">
 <summary>Show R code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a></a><span class="fu">plot</span>(height <span class="sc">~</span> chd, <span class="at">data =</span> wcgs, <span class="at">col =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">3</span>), <span class="at">notch =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a></a><span class="fu">plot</span>(height <span class="sc">~</span> chd, <span class="at">data =</span> wcgs, <span class="at">col =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">3</span>), <span class="at">notch =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 
 </div>
-<img data-src="02-logistic-regression-1_files/figure-revealjs/unnamed-chunk-12-1.png" class="quarto-figure quarto-figure-center r-stretch" style="width:100.0%"></section>
+<img data-src="02-logistic-regression-1_files/figure-revealjs/unnamed-chunk-11-1.png" class="quarto-figure quarto-figure-center r-stretch" style="width:100.0%"></section>
 <section id="visualizing-discrete-data-detour" class="slide level2">
 <h2>Visualizing discrete data (detour)</h2>
 <ul>
@@ -404,28 +393,28 @@ Brandon M. Greenwell, PhD
 </ul></li>
 </ul>
 </section>
-<section id="visualizing-discrete-data-7" class="slide level2">
+<section id="visualizing-discrete-data-6" class="slide level2">
 <h2>Visualizing discrete data</h2>
 <p>Standard <a href="https://cran.r-project.org/web/packages/rpart/vignettes/longintro.pdf">CART-like decision tree</a> using <a href="https://cran.r-project.org/package=rpart">rpart</a> and <a href="https://cran.r-project.org/package=rpart.plot">rpart.plot</a> (all variables allowed):</p>
 <div class="cell" data-layout-align="center" data-par="true">
 <details class="code-fold">
 <summary>Show R code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a></a>rpart.plot<span class="sc">::</span><span class="fu">rpart.plot</span>(rpart<span class="sc">::</span><span class="fu">rpart</span>(chd <span class="sc">~</span> ., <span class="at">data =</span> wcgs))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a></a>rpart.plot<span class="sc">::</span><span class="fu">rpart.plot</span>(rpart<span class="sc">::</span><span class="fu">rpart</span>(chd <span class="sc">~</span> ., <span class="at">data =</span> wcgs))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 
 </div>
-<img data-src="02-logistic-regression-1_files/figure-revealjs/unnamed-chunk-13-1.png" class="quarto-figure quarto-figure-center r-stretch" style="width:100.0%"></section>
-<section id="visualizing-discrete-data-8" class="slide level2">
+<img data-src="02-logistic-regression-1_files/figure-revealjs/unnamed-chunk-12-1.png" class="quarto-figure quarto-figure-center r-stretch" style="width:100.0%"></section>
+<section id="visualizing-discrete-data-7" class="slide level2">
 <h2>Visualizing discrete data</h2>
 <p><a href="https://cran.r-project.org/web/packages/partykit/vignettes/ctree.pdf">Conditional inference tree</a> using <a href="https://cran.r-project.org/package=partykit">partykit</a> (using only variables of interest):</p>
 <div class="cell" data-layout-align="center" data-par="true">
 <details class="code-fold">
 <summary>Show R code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a></a><span class="fu">plot</span>(partykit<span class="sc">::</span><span class="fu">ctree</span>(chd <span class="sc">~</span> height <span class="sc">+</span> cigs, <span class="at">data =</span> wcgs))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a></a><span class="fu">plot</span>(partykit<span class="sc">::</span><span class="fu">ctree</span>(chd <span class="sc">~</span> height <span class="sc">+</span> cigs, <span class="at">data =</span> wcgs))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 
 </div>
-<img data-src="02-logistic-regression-1_files/figure-revealjs/unnamed-chunk-14-1.png" class="quarto-figure quarto-figure-center r-stretch" style="width:100.0%"></section>
+<img data-src="02-logistic-regression-1_files/figure-revealjs/unnamed-chunk-13-1.png" class="quarto-figure quarto-figure-center r-stretch" style="width:100.0%"></section>
 <section id="observations-so-far" class="slide level2">
 <h2>Observations so far…</h2>
 <ul>
@@ -458,8 +447,8 @@ P\left(Y = 1|\boldsymbol{x}\right) = \beta_0 + \beta_1x_1 + \dots \beta_px_p = \
 <div class="cell" data-layout-align="center">
 <details class="code-fold">
 <summary>Show R code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a></a>y <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(wcgs<span class="sc">$</span>chd <span class="sc">==</span> <span class="st">"yes"</span>, <span class="dv">1</span>, <span class="dv">0</span>)</span>
-<span id="cb18-2"><a></a><span class="fu">summary</span>(fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(y <span class="sc">~</span> cigs, <span class="at">data =</span> wcgs))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a></a>y <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(wcgs<span class="sc">$</span>chd <span class="sc">==</span> <span class="st">"yes"</span>, <span class="dv">1</span>, <span class="dv">0</span>)</span>
+<span id="cb17-2"><a></a><span class="fu">summary</span>(fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(y <span class="sc">~</span> cigs, <span class="at">data =</span> wcgs))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>
@@ -489,12 +478,12 @@ F-statistic: 34.42 on 1 and 3152 DF,  p-value: 4.91e-09</code></pre>
 <div class="cell" data-layout-align="center" data-par="true">
 <details class="code-fold">
 <summary>Show R code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a></a><span class="fu">plot</span>(y <span class="sc">~</span> cigs, <span class="at">data =</span> wcgs, <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="at">las =</span> <span class="dv">1</span>)</span>
-<span id="cb20-2"><a></a><span class="fu">abline</span>(fit, <span class="at">col =</span> <span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a></a><span class="fu">plot</span>(y <span class="sc">~</span> cigs, <span class="at">data =</span> wcgs, <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="at">las =</span> <span class="dv">1</span>)</span>
+<span id="cb19-2"><a></a><span class="fu">abline</span>(fit, <span class="at">col =</span> <span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 
 </div>
-<img data-src="02-logistic-regression-1_files/figure-revealjs/unnamed-chunk-16-1.png" class="quarto-figure quarto-figure-center r-stretch" style="width:100.0%"></section>
+<img data-src="02-logistic-regression-1_files/figure-revealjs/unnamed-chunk-15-1.png" class="quarto-figure quarto-figure-center r-stretch" style="width:100.0%"></section>
 <section id="the-logistic-regression-lr-model" class="slide level2">
 <h2>The logistic regression (LR) model</h2>
 <p>Assume <span class="math inline">\(Y \sim \mathrm{Bernoulli}\left(p\right)\)</span>, where <span class="math display">\[
@@ -512,6 +501,16 @@ p\left(\boldsymbol{x}\right) = \frac{\exp\left(\boldsymbol{\beta}^\top\boldsymbo
 <p>Note how the LR model is nonlinear in <span class="math inline">\(p\)</span>!</p>
 </div>
 </section>
+<section id="assumptions-of-the-lr-model" class="slide level2">
+<h2>Assumptions of the LR model</h2>
+<ul>
+<li><p><strong>Binary response</strong>: The response variable <span class="math inline">\(Y\)</span> must be binary (e.g., 0/1, yes/no, etc.)</p></li>
+<li><p><strong>Independence</strong>: The observations must be independent of one another (i.e., no repeated measures)</p></li>
+<li><p><strong>Linearity</strong>: There must be a linear relationship between the predictors and the <em>logit</em> of the response</p></li>
+<li><p><strong>No multicollinearity</strong>: The predictors should not be highly correlated with one another</p></li>
+<li><p><strong>Sample size</strong>: Since LR uses MLE, it typically requires a larger sample size than ordinary linear regression for the results to be reliable (asymptotic properties)</p></li>
+</ul>
+</section>
 <section id="fitting-an-lr-model-in-r" class="slide level2">
 <h2>Fitting an LR model in R</h2>
 <ul>
@@ -524,7 +523,7 @@ p\left(\boldsymbol{x}\right) = \frac{\exp\left(\boldsymbol{\beta}^\top\boldsymbo
 <div class="cell" data-layout-align="center">
 <details class="code-fold">
 <summary>Show R code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a></a><span class="fu">levels</span>(wcgs<span class="sc">$</span>chd)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a></a><span class="fu">levels</span>(wcgs<span class="sc">$</span>chd)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "no"  "yes"</code></pre>
@@ -536,7 +535,7 @@ p\left(\boldsymbol{x}\right) = \frac{\exp\left(\boldsymbol{\beta}^\top\boldsymbo
 <div class="cell" data-layout-align="center">
 <details class="code-fold">
 <summary>Show R code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a></a><span class="fu">summary</span>(fit.lr <span class="ot">&lt;-</span> <span class="fu">glm</span>(chd <span class="sc">~</span> cigs, <span class="at">data =</span> wcgs, <span class="at">family =</span> binomial))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a></a><span class="fu">summary</span>(fit.lr <span class="ot">&lt;-</span> <span class="fu">glm</span>(chd <span class="sc">~</span> cigs, <span class="at">data =</span> wcgs, <span class="at">family =</span> binomial))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>
@@ -566,37 +565,37 @@ Number of Fisher Scoring iterations: 5</code></pre>
 <div class="cell" data-layout-align="center" data-par="true">
 <details class="code-fold">
 <summary>Show R code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a></a>prob <span class="ot">&lt;-</span> <span class="fu">predict</span>(fit.lr, <span class="at">newdata =</span> <span class="fu">data.frame</span>(<span class="at">cigs =</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">99</span>), <span class="at">type =</span> <span class="st">"response"</span>)</span>
-<span id="cb25-2"><a></a><span class="fu">plot</span>(y <span class="sc">~</span> cigs, <span class="at">data =</span> wcgs, <span class="at">ylab =</span> <span class="st">"chd"</span>, <span class="at">las =</span> <span class="dv">1</span>, <span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">99</span>))</span>
-<span id="cb25-3"><a></a><span class="fu">lines</span>(<span class="dv">0</span><span class="sc">:</span><span class="dv">99</span>, <span class="at">y =</span> prob, <span class="at">col =</span> <span class="dv">2</span>)</span>
-<span id="cb25-4"><a></a><span class="fu">abline</span>(fit, <span class="at">col =</span> <span class="dv">3</span>, <span class="at">lty =</span> <span class="dv">2</span>)</span>
-<span id="cb25-5"><a></a><span class="fu">legend</span>(<span class="st">"topright"</span>, <span class="at">legend =</span> <span class="fu">c</span>(<span class="st">"LR fit"</span>, <span class="st">"LP fit"</span>), <span class="at">lty =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>), <span class="at">col =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">3</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a></a>prob <span class="ot">&lt;-</span> <span class="fu">predict</span>(fit.lr, <span class="at">newdata =</span> <span class="fu">data.frame</span>(<span class="at">cigs =</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">99</span>), <span class="at">type =</span> <span class="st">"response"</span>)</span>
+<span id="cb24-2"><a></a><span class="fu">plot</span>(y <span class="sc">~</span> cigs, <span class="at">data =</span> wcgs, <span class="at">ylab =</span> <span class="st">"chd"</span>, <span class="at">las =</span> <span class="dv">1</span>, <span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">99</span>))</span>
+<span id="cb24-3"><a></a><span class="fu">lines</span>(<span class="dv">0</span><span class="sc">:</span><span class="dv">99</span>, <span class="at">y =</span> prob, <span class="at">col =</span> <span class="dv">2</span>)</span>
+<span id="cb24-4"><a></a><span class="fu">abline</span>(fit, <span class="at">col =</span> <span class="dv">3</span>, <span class="at">lty =</span> <span class="dv">2</span>)</span>
+<span id="cb24-5"><a></a><span class="fu">legend</span>(<span class="st">"topright"</span>, <span class="at">legend =</span> <span class="fu">c</span>(<span class="st">"LR fit"</span>, <span class="st">"LP fit"</span>), <span class="at">lty =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>), <span class="at">col =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">3</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 
 </div>
-<img data-src="02-logistic-regression-1_files/figure-revealjs/unnamed-chunk-19-1.png" class="quarto-figure quarto-figure-center r-stretch" style="width:100.0%"></section>
+<img data-src="02-logistic-regression-1_files/figure-revealjs/unnamed-chunk-18-1.png" class="quarto-figure quarto-figure-center r-stretch" style="width:100.0%"></section>
 <section id="fitting-an-lr-model-in-r-3" class="slide level2">
 <h2>Fitting an LR model in R</h2>
 <p>Let’s compare the fitted LR and LP models:</p>
 <div class="cell" data-layout-align="center" data-par="true">
 <details class="code-fold">
 <summary>Show R code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a></a>prob <span class="ot">&lt;-</span> <span class="fu">predict</span>(fit.lr, <span class="at">newdata =</span> <span class="fu">data.frame</span>(<span class="at">cigs =</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">999</span>), <span class="at">type =</span> <span class="st">"response"</span>)</span>
-<span id="cb26-2"><a></a><span class="fu">plot</span>(y <span class="sc">~</span> cigs, <span class="at">data =</span> wcgs, <span class="at">ylab =</span> <span class="st">"chd"</span>, <span class="at">las =</span> <span class="dv">1</span>, <span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">999</span>))</span>
-<span id="cb26-3"><a></a><span class="fu">lines</span>(<span class="dv">0</span><span class="sc">:</span><span class="dv">999</span>, <span class="at">y =</span> prob, <span class="at">col =</span> <span class="dv">2</span>)</span>
-<span id="cb26-4"><a></a><span class="fu">abline</span>(fit, <span class="at">col =</span> <span class="dv">3</span>, <span class="at">lty =</span> <span class="dv">2</span>)</span>
-<span id="cb26-5"><a></a><span class="fu">legend</span>(<span class="st">"topright"</span>, <span class="at">legend =</span> <span class="fu">c</span>(<span class="st">"LR fit"</span>, <span class="st">"LP fit"</span>), <span class="at">lty =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>), <span class="at">col =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">3</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a></a>prob <span class="ot">&lt;-</span> <span class="fu">predict</span>(fit.lr, <span class="at">newdata =</span> <span class="fu">data.frame</span>(<span class="at">cigs =</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">999</span>), <span class="at">type =</span> <span class="st">"response"</span>)</span>
+<span id="cb25-2"><a></a><span class="fu">plot</span>(y <span class="sc">~</span> cigs, <span class="at">data =</span> wcgs, <span class="at">ylab =</span> <span class="st">"chd"</span>, <span class="at">las =</span> <span class="dv">1</span>, <span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">999</span>))</span>
+<span id="cb25-3"><a></a><span class="fu">lines</span>(<span class="dv">0</span><span class="sc">:</span><span class="dv">999</span>, <span class="at">y =</span> prob, <span class="at">col =</span> <span class="dv">2</span>)</span>
+<span id="cb25-4"><a></a><span class="fu">abline</span>(fit, <span class="at">col =</span> <span class="dv">3</span>, <span class="at">lty =</span> <span class="dv">2</span>)</span>
+<span id="cb25-5"><a></a><span class="fu">legend</span>(<span class="st">"topright"</span>, <span class="at">legend =</span> <span class="fu">c</span>(<span class="st">"LR fit"</span>, <span class="st">"LP fit"</span>), <span class="at">lty =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>), <span class="at">col =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">3</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 
 </div>
-<img data-src="02-logistic-regression-1_files/figure-revealjs/unnamed-chunk-20-1.png" class="quarto-figure quarto-figure-center r-stretch" style="width:100.0%"></section>
+<img data-src="02-logistic-regression-1_files/figure-revealjs/unnamed-chunk-19-1.png" class="quarto-figure quarto-figure-center r-stretch" style="width:100.0%"></section>
 <section id="fitting-an-lr-model-in-r-4" class="slide level2">
 <h2>Fitting an LR model in R</h2>
 <p>Now let’s include an additional predictor (i.e., <code>height</code>):</p>
 <div class="cell" data-layout-align="center">
 <details class="code-fold">
 <summary>Show R code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a></a><span class="fu">summary</span>(fit.lr2 <span class="ot">&lt;-</span> <span class="fu">glm</span>(chd <span class="sc">~</span> cigs <span class="sc">+</span> height, <span class="at">data =</span> wcgs, <span class="at">family =</span> binomial))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a></a><span class="fu">summary</span>(fit.lr2 <span class="ot">&lt;-</span> <span class="fu">glm</span>(chd <span class="sc">~</span> cigs <span class="sc">+</span> height, <span class="at">data =</span> wcgs, <span class="at">family =</span> binomial))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>
@@ -626,7 +625,7 @@ Number of Fisher Scoring iterations: 5</code></pre>
 <ul>
 <li>Let <span class="math inline">\(p = P\left(Y = 1\right)\)</span> and <span class="math inline">\(1 - p = P\left(Y = 0\right)\)</span></li>
 <li>The odds of <span class="math inline">\(Y = 1\)</span> occuring is defined as <span class="math inline">\(p / \left(1 - p\right)\)</span></li>
-<li>For a fair coin <span class="emoji" data-emoji="coin">🪙</span>, the probability of getting tails is <span class="math inline">\(p = 0.5\)</span>. Therefore, the odds of getting tails vs.&nbsp;heads is <span class="math inline">\(p / (1 - p) = 0.5 / 0.5 = 1\)</span>. (We might also say the odds of getting tails is “1 to 1”).</li>
+<li>For a fair coin <span class="emoji" data-emoji="coin">🪙</span>, the probability of getting tails is <span class="math inline">\(p = 0.5\)</span>. Therefore, the odds of getting tails vs.&nbsp;heads is <span class="math inline">\(p / (1 - p) = 0.5 / 0.5 = 1\)</span>. (We might also say the odds of getting tails is “1 to 1” or “1:1”).</li>
 </ul>
 <div class="fragment">
 <p><br></p>
@@ -654,7 +653,7 @@ Number of Fisher Scoring iterations: 5</code></pre>
 <div class="cell" data-layout-align="center">
 <details class="code-fold">
 <summary>Show R code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a></a><span class="fu">coef</span>(fit.lr2)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a></a><span class="fu">coef</span>(fit.lr2)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>(Intercept)        cigs      height 
@@ -670,13 +669,13 @@ Number of Fisher Scoring iterations: 5</code></pre>
 </section>
 <section id="effect-plots" class="slide level2">
 <h2>Effect plots</h2>
-<p>Lot’s of different methods and packages:</p>
+<p>Lots of different methods and packages:</p>
 <ul>
 <li>Marginal effects via <a href="https://cran.r-project.org/package=effects">effects</a> library</li>
 <li><a href="https://christophm.github.io/interpretable-ml-book/pdp.html">Partial dependence (PD) plots</a> and <a href="">individual conditional expectation</a> (ICE) plots via the <a href="">pdp</a> package</li>
 <li>Marginal effect and PD plots via the <a href="[plotmo](http://www.milbo.org/doc/plotmo-notes.pdf)">plotmo</a> library</li>
 <li>And many, many more (see <a href="https://cran.r-project.org/web/views/MachineLearning.html">R’s ML Task View</a>)</li>
-<li>All have there own assumptions and drawbacks; typically, similar in shape when the model is additive in nature (i.e., no interaction effects)</li>
+<li>All have their own assumptions and drawbacks; typically, similar in shape when the model is additive in nature (i.e., no interaction effects)</li>
 </ul>
 </section>
 <section id="effect-plots-1" class="slide level2">
@@ -685,7 +684,7 @@ Number of Fisher Scoring iterations: 5</code></pre>
 <div class="cell" data-layout-align="center" data-par="true">
 <details class="code-fold">
 <summary>Show R code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a></a>plotmo<span class="sc">::</span><span class="fu">plotmo</span>(fit.lr2)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a></a>plotmo<span class="sc">::</span><span class="fu">plotmo</span>(fit.lr2)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code> plotmo grid:    cigs height
@@ -693,54 +692,54 @@ Number of Fisher Scoring iterations: 5</code></pre>
 </div>
 
 </div>
-<img data-src="02-logistic-regression-1_files/figure-revealjs/unnamed-chunk-23-1.png" class="quarto-figure quarto-figure-center r-stretch" style="width:100.0%"></section>
+<img data-src="02-logistic-regression-1_files/figure-revealjs/unnamed-chunk-22-1.png" class="quarto-figure quarto-figure-center r-stretch" style="width:100.0%"></section>
 <section id="effect-plots-2" class="slide level2">
 <h2>Effect plots</h2>
 <p>I generally prefer PD plots; see <a href="https://journal.r-project.org/archive/2017/RJ-2017-016/RJ-2017-016.pdf">Greenwell (2017)</a> for details</p>
 <div class="cell" data-layout-align="center" data-par="true">
 <details class="code-fold">
 <summary>Show R code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a></a><span class="fu">library</span>(pdp)</span>
-<span id="cb33-2"><a></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb33-3"><a></a></span>
-<span id="cb33-4"><a></a><span class="fu">theme_set</span>(<span class="fu">theme_bw</span>())</span>
-<span id="cb33-5"><a></a><span class="fu">partial</span>(fit.lr2, <span class="at">pred.var =</span> <span class="st">"cigs"</span>, <span class="at">prob =</span> <span class="cn">TRUE</span>, <span class="at">plot =</span> <span class="cn">TRUE</span>, </span>
-<span id="cb33-6"><a></a>        <span class="at">plot.engine =</span> <span class="st">"ggplot2"</span>, <span class="at">rug =</span> <span class="cn">TRUE</span>) <span class="sc">+</span> </span>
-<span id="cb33-7"><a></a>    <span class="fu">ylim</span>(<span class="dv">0</span>, <span class="dv">1</span>) <span class="sc">+</span> </span>
-<span id="cb33-8"><a></a>    <span class="fu">ylab</span>(<span class="st">"Probability"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a></a><span class="fu">library</span>(pdp)</span>
+<span id="cb32-2"><a></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb32-3"><a></a></span>
+<span id="cb32-4"><a></a><span class="fu">theme_set</span>(<span class="fu">theme_bw</span>())</span>
+<span id="cb32-5"><a></a><span class="fu">partial</span>(fit.lr2, <span class="at">pred.var =</span> <span class="st">"cigs"</span>, <span class="at">prob =</span> <span class="cn">TRUE</span>, <span class="at">plot =</span> <span class="cn">TRUE</span>, </span>
+<span id="cb32-6"><a></a>        <span class="at">plot.engine =</span> <span class="st">"ggplot2"</span>, <span class="at">rug =</span> <span class="cn">TRUE</span>) <span class="sc">+</span> </span>
+<span id="cb32-7"><a></a>    <span class="fu">ylim</span>(<span class="dv">0</span>, <span class="dv">1</span>) <span class="sc">+</span> </span>
+<span id="cb32-8"><a></a>    <span class="fu">ylab</span>(<span class="st">"Probability"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 
 </div>
-<img data-src="02-logistic-regression-1_files/figure-revealjs/unnamed-chunk-24-1.png" class="quarto-figure quarto-figure-center r-stretch" style="width:100.0%"></section>
+<img data-src="02-logistic-regression-1_files/figure-revealjs/unnamed-chunk-23-1.png" class="quarto-figure quarto-figure-center r-stretch" style="width:100.0%"></section>
 <section id="effect-plots-3" class="slide level2">
 <h2>Effect plots</h2>
 <p>Can easily extend these methods to two or three variables:</p>
 <div class="cell" data-layout-align="center" data-par="true">
 <details class="code-fold">
 <summary>Show R code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a></a>pd<span class="fl">.2</span>d <span class="ot">&lt;-</span> <span class="fu">partial</span>(fit.lr2, <span class="at">pred.var =</span> <span class="fu">c</span>(<span class="st">"cigs"</span>, <span class="st">"height"</span>), <span class="at">chull =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb34-2"><a></a><span class="fu">plotPartial</span>(pd<span class="fl">.2</span>d)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a></a>pd<span class="fl">.2</span>d <span class="ot">&lt;-</span> <span class="fu">partial</span>(fit.lr2, <span class="at">pred.var =</span> <span class="fu">c</span>(<span class="st">"cigs"</span>, <span class="st">"height"</span>), <span class="at">chull =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb33-2"><a></a><span class="fu">plotPartial</span>(pd<span class="fl">.2</span>d)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 
 </div>
-<img data-src="02-logistic-regression-1_files/figure-revealjs/unnamed-chunk-25-1.png" class="quarto-figure quarto-figure-center r-stretch" style="width:100.0%"></section>
+<img data-src="02-logistic-regression-1_files/figure-revealjs/unnamed-chunk-24-1.png" class="quarto-figure quarto-figure-center r-stretch" style="width:100.0%"></section>
 <section id="effect-plots-4" class="slide level2">
 <h2>Effect plots</h2>
 <p>Three-dimensional plots look cool, but generally aren’t all that useful:</p>
 <div class="cell" data-layout-align="center" data-par="true">
 <details class="code-fold">
 <summary>Show R code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a></a>lattice<span class="sc">::</span><span class="fu">wireframe</span>(yhat <span class="sc">~</span> height <span class="sc">*</span> cigs, <span class="at">data =</span> pd<span class="fl">.2</span>d, <span class="at">shade =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a></a>lattice<span class="sc">::</span><span class="fu">wireframe</span>(yhat <span class="sc">~</span> height <span class="sc">*</span> cigs, <span class="at">data =</span> pd<span class="fl">.2</span>d, <span class="at">shade =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 
 </div>
-<img data-src="02-logistic-regression-1_files/figure-revealjs/unnamed-chunk-26-1.png" class="quarto-figure quarto-figure-center r-stretch" style="width:100.0%"></section>
+<img data-src="02-logistic-regression-1_files/figure-revealjs/unnamed-chunk-25-1.png" class="quarto-figure quarto-figure-center r-stretch" style="width:100.0%"></section>
 <section id="ml-estimation-bernoulli" class="slide level2 scrollable">
 <h2>ML estimation (Bernoulli)</h2>
 <ul>
 <li><p>In the linear model, LS and ML estimation are equivalent and rather straightforward</p></li>
 <li><p><a href="https://en.wikipedia.org/wiki/Logistic_regression#Model_fitting">In LR, ML estimation is more common</a><sup>1</sup></p></li>
-<li><p>Recall that if <span class="math inline">\(Y_i \stackrel{iid}{\sim} Bernoulli\left(p\right)\)</span>, then the <a href="https://en.wikipedia.org/wiki/Likelihood_function">likilhood function</a> is defined as</p></li>
+<li><p>Recall that if <span class="math inline">\(Y_i \stackrel{iid}{\sim} Bernoulli\left(p\right)\)</span>, then the <a href="https://en.wikipedia.org/wiki/Likelihood_function">likelihood function</a> is defined as</p></li>
 </ul>
 <p><span class="math display">\[
 L\left(p\right) = \prod_{i=1}^n p^{y_i} \left(1-p\right)^{1-y_i}
@@ -777,22 +776,22 @@ p_i = p\left(\boldsymbol{x}_i\right) = \frac{\exp\left(\boldsymbol{\beta}^\top\b
 <div class="cell" data-layout-align="center">
 <details class="code-fold">
 <summary>Show R code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a></a><span class="co"># Response (as a binary 0/1 variable)</span></span>
-<span id="cb36-2"><a></a>y <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(wcgs<span class="sc">$</span>chd <span class="sc">==</span> <span class="st">"yes"</span>, <span class="dv">1</span>, <span class="dv">0</span>)</span>
-<span id="cb36-3"><a></a></span>
-<span id="cb36-4"><a></a><span class="co"># Model matrix; includes a column for the intercept by default</span></span>
-<span id="cb36-5"><a></a>X <span class="ot">&lt;-</span> <span class="fu">model.matrix</span>(<span class="sc">~</span> cigs <span class="sc">+</span> height, <span class="at">data =</span> wcgs)</span>
-<span id="cb36-6"><a></a></span>
-<span id="cb36-7"><a></a><span class="co"># Function to compute the negative log-liklihood (as a function of the betas)</span></span>
-<span id="cb36-8"><a></a>nll <span class="ot">&lt;-</span> <span class="cf">function</span>(beta) {</span>
-<span id="cb36-9"><a></a>  lp <span class="ot">&lt;-</span> X <span class="sc">%*%</span> beta  <span class="co"># linear predictor; same as b0 + b1*x1 + b2*x2 + ...</span></span>
-<span id="cb36-10"><a></a>  <span class="sc">-</span><span class="fu">sum</span>(y <span class="sc">*</span> lp <span class="sc">-</span> <span class="fu">log</span>(<span class="dv">1</span> <span class="sc">+</span> <span class="fu">exp</span>(lp)))</span>
-<span id="cb36-11"><a></a>}</span>
-<span id="cb36-12"><a></a></span>
-<span id="cb36-13"><a></a><span class="co"># Use general optimization; would be better to use gradient and hessian info (e.g., first and second derivative info)</span></span>
-<span id="cb36-14"><a></a>lp.fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(y <span class="sc">~</span> cigs <span class="sc">+</span> height, <span class="at">data =</span> wcgs)</span>
-<span id="cb36-15"><a></a><span class="fu">optim</span>(<span class="fu">coef</span>(lp.fit), <span class="at">fn =</span> nll, </span>
-<span id="cb36-16"><a></a>      <span class="at">control =</span> <span class="fu">list</span>(<span class="st">"maxit"</span> <span class="ot">=</span> <span class="dv">9999</span>, <span class="st">"reltol"</span> <span class="ot">=</span> <span class="fl">1e-20</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a></a><span class="co"># Response (as a binary 0/1 variable)</span></span>
+<span id="cb35-2"><a></a>y <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(wcgs<span class="sc">$</span>chd <span class="sc">==</span> <span class="st">"yes"</span>, <span class="dv">1</span>, <span class="dv">0</span>)</span>
+<span id="cb35-3"><a></a></span>
+<span id="cb35-4"><a></a><span class="co"># Model matrix; includes a column for the intercept by default</span></span>
+<span id="cb35-5"><a></a>X <span class="ot">&lt;-</span> <span class="fu">model.matrix</span>(<span class="sc">~</span> cigs <span class="sc">+</span> height, <span class="at">data =</span> wcgs)</span>
+<span id="cb35-6"><a></a></span>
+<span id="cb35-7"><a></a><span class="co"># Function to compute the negative log-likelihood (as a function of the betas)</span></span>
+<span id="cb35-8"><a></a>nll <span class="ot">&lt;-</span> <span class="cf">function</span>(beta) {</span>
+<span id="cb35-9"><a></a>  lp <span class="ot">&lt;-</span> X <span class="sc">%*%</span> beta  <span class="co"># linear predictor; same as b0 + b1*x1 + b2*x2 + ...</span></span>
+<span id="cb35-10"><a></a>  <span class="sc">-</span><span class="fu">sum</span>(y <span class="sc">*</span> lp <span class="sc">-</span> <span class="fu">log</span>(<span class="dv">1</span> <span class="sc">+</span> <span class="fu">exp</span>(lp)))</span>
+<span id="cb35-11"><a></a>}</span>
+<span id="cb35-12"><a></a></span>
+<span id="cb35-13"><a></a><span class="co"># Use general optimization; would be better to use gradient and hessian info (e.g., first and second derivative info)</span></span>
+<span id="cb35-14"><a></a>lp.fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(y <span class="sc">~</span> cigs <span class="sc">+</span> height, <span class="at">data =</span> wcgs)</span>
+<span id="cb35-15"><a></a><span class="fu">optim</span>(<span class="fu">coef</span>(lp.fit), <span class="at">fn =</span> nll, </span>
+<span id="cb35-16"><a></a>      <span class="at">control =</span> <span class="fu">list</span>(<span class="st">"maxit"</span> <span class="ot">=</span> <span class="dv">9999</span>, <span class="st">"reltol"</span> <span class="ot">=</span> <span class="fl">1e-20</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>$par
@@ -818,7 +817,7 @@ NULL</code></pre>
 <h2>Wald statistic</h2>
 <ul>
 <li>Consider the usual marginal test: <span class="math inline">\(H_0: \beta_j = 0\)</span> vs.&nbsp;<span class="math inline">\(H_1: \beta_j \ne 0\)</span></li>
-<li>Assymptotically speaking, <span class="math inline">\(Z_i = \hat{\beta}_i / \mathrm{SE}\left(\hat{\beta}_i\right)\)</span> has a standard normal distribution under <span class="math inline">\(H_0\)</span></li>
+<li>Asymptotically speaking, <span class="math inline">\(Z_i = \hat{\beta}_i / \mathrm{SE}\left(\hat{\beta}_i\right)\)</span> has a standard normal distribution under <span class="math inline">\(H_0\)</span></li>
 <li>This leads to the usual <a href="https://en.wikipedia.org/wiki/Wald_test">Wald-based confidence intervals</a>, etc.</li>
 <li>Better (but more complicated) approaches available, like <a href="https://en.wikipedia.org/wiki/Likelihood-ratio_test#:~:text=In%20statistics%2C%20the%20likelihood%2Dratio,the%20ratio%20of%20their%20likelihoods.">likelihood ratio tests</a>, <a href="https://en.wikipedia.org/wiki/Likelihood_function#Profile_likelihood">profile likelihood methods</a>, and the <a href="https://en.wikipedia.org/wiki/Bootstrapping_(statistics)">bootstrap</a>.</li>
 </ul>
@@ -832,13 +831,13 @@ X = -2\log\left(\frac{L_{H_0}}{L_{H_1}}\right) = D_{H_0} - D_{H_1} \sim \chi^2\l
 <div class="cell" data-layout-align="center">
 <details class="code-fold">
 <summary>Show R code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a></a>fit.H0 <span class="ot">&lt;-</span> <span class="fu">glm</span>(chd <span class="sc">~</span> cigs, <span class="at">data =</span> wcgs, <span class="at">family =</span> binomial)</span>
-<span id="cb38-2"><a></a>fit.H1 <span class="ot">&lt;-</span> <span class="fu">glm</span>(chd <span class="sc">~</span> cigs <span class="sc">+</span> height, <span class="at">data =</span> wcgs, <span class="at">family =</span> binomial)</span>
-<span id="cb38-3"><a></a>D.H0 <span class="ot">&lt;-</span> <span class="fu">deviance</span>(fit.H0)  <span class="co"># same as `-2*logLik(fit.H0)`</span></span>
-<span id="cb38-4"><a></a>D.H1 <span class="ot">&lt;-</span> <span class="fu">deviance</span>(fit.H1)  <span class="co"># same as `-2*logLik(fit.H1)`</span></span>
-<span id="cb38-5"><a></a>chisq.stat <span class="ot">&lt;-</span> D.H0 <span class="sc">-</span> D.H1</span>
-<span id="cb38-6"><a></a>pval <span class="ot">&lt;-</span> <span class="fu">pchisq</span>(chisq.stat, <span class="at">df =</span> <span class="dv">1</span>, <span class="at">lower.tail =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb38-7"><a></a><span class="fu">c</span>(<span class="st">"stat"</span> <span class="ot">=</span> chisq.stat, <span class="st">"pval"</span> <span class="ot">=</span> pval)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb37"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a></a>fit.H0 <span class="ot">&lt;-</span> <span class="fu">glm</span>(chd <span class="sc">~</span> cigs, <span class="at">data =</span> wcgs, <span class="at">family =</span> binomial)</span>
+<span id="cb37-2"><a></a>fit.H1 <span class="ot">&lt;-</span> <span class="fu">glm</span>(chd <span class="sc">~</span> cigs <span class="sc">+</span> height, <span class="at">data =</span> wcgs, <span class="at">family =</span> binomial)</span>
+<span id="cb37-3"><a></a>D.H0 <span class="ot">&lt;-</span> <span class="fu">deviance</span>(fit.H0)  <span class="co"># same as `-2*logLik(fit.H0)`</span></span>
+<span id="cb37-4"><a></a>D.H1 <span class="ot">&lt;-</span> <span class="fu">deviance</span>(fit.H1)  <span class="co"># same as `-2*logLik(fit.H1)`</span></span>
+<span id="cb37-5"><a></a>chisq.stat <span class="ot">&lt;-</span> D.H0 <span class="sc">-</span> D.H1</span>
+<span id="cb37-6"><a></a>pval <span class="ot">&lt;-</span> <span class="fu">pchisq</span>(chisq.stat, <span class="at">df =</span> <span class="dv">1</span>, <span class="at">lower.tail =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb37-7"><a></a><span class="fu">c</span>(<span class="st">"stat"</span> <span class="ot">=</span> chisq.stat, <span class="st">"pval"</span> <span class="ot">=</span> pval)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>     stat      pval 
@@ -852,7 +851,7 @@ X = -2\log\left(\frac{L_{H_0}}{L_{H_1}}\right) = D_{H_0} - D_{H_1} \sim \chi^2\l
 <div class="cell" data-layout-align="center">
 <details class="code-fold">
 <summary>Show R code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb40"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a></a><span class="fu">anova</span>(fit.H0, fit.H1, <span class="at">test =</span> <span class="st">"Chi"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb39"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a></a><span class="fu">anova</span>(fit.H0, fit.H1, <span class="at">test =</span> <span class="st">"Chi"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
 <div data-pagedtable="false">
@@ -865,11 +864,11 @@ X = -2\log\left(\frac{L_{H_0}}{L_{H_1}}\right) = D_{H_0} - D_{H_1} \sim \chi^2\l
 </section>
 <section id="confidence-intervals" class="slide level2">
 <h2>Confidence intervals</h2>
-<p>Lot’s of ways to do this (some bad, some better). R defaults to using a <a href="https://en.wikipedia.org/wiki/Likelihood_function">profile likelihood</a> method:</p>
+<p>Lots of ways to do this (some bad, some better). R defaults to using a <a href="https://en.wikipedia.org/wiki/Likelihood_function">profile likelihood</a> method:</p>
 <div class="cell" data-layout-align="center">
 <details class="code-fold">
 <summary>Show R code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb41"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a></a><span class="fu">confint</span>(fit.lr2, <span class="at">level =</span> <span class="fl">0.95</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb40"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a></a><span class="fu">confint</span>(fit.lr2, <span class="at">level =</span> <span class="fl">0.95</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>                  2.5 %      97.5 %

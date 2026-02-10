@@ -1,0 +1,1930 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.25">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Install required packages – BANA 7042</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" integrity="sha384-ZvpUoO/+PpLXR1lu4jmpXWu80pZlYUAfxl5NsBMWOEPSjUn/6Z/hRTt8+pR6L4N2" crossorigin="anonymous"></script><script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-a8976c3e89df70b272bdfba3d2fda974.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script src="https://cdn.jsdelivr.net/npm/requirejs@2.3.6/require.min.js" integrity="sha384-c9c+LnTbwQ3aujuU7ULEPVvgLs+Fn6fJUvIGTsuu1ZcCf11fiEubah0ttpca4ntM sha384-6V1/AdqZRWk1KAlWbKBlGhN7VG4iE/yAZcO6NZPMF8od0vukrvr0tg4qY6NSrItx" crossorigin="anonymous"></script>
+
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../styles.css">
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="../index.html" class="navbar-brand navbar-brand-logo">
+    </a>
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">BANA 7042</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../syllabus/syllabus.pdf"> 
+<span class="menu-text">Syllabus</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-slides" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Slides</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-slides">    
+        <li>
+    <a class="dropdown-item" href="../slides/index.html">
+ <span class="dropdown-text">All Slides</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../slides/01-linear-regression.html">
+ <span class="dropdown-text">01: Linear Regression</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../slides/02-logistic-regression-1.html">
+ <span class="dropdown-text">02: Logistic Regression I</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../slides/03-logistic-regression-2.html">
+ <span class="dropdown-text">03: Logistic Regression II</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../slides/04-logistic-regression-3.html">
+ <span class="dropdown-text">04: Logistic Regression III</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../slides/05-multinomial-ordinal-regression.html">
+ <span class="dropdown-text">05: Multinomial/Ordinal</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../slides/06-count-regression.html">
+ <span class="dropdown-text">06: Count Regression</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-assignments" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Assignments</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-assignments">    
+        <li>
+    <a class="dropdown-item" href="../assignments/index.html">
+ <span class="dropdown-text">All Assignments</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../assignments/assignment-01.html">
+ <span class="dropdown-text">Assignment 01</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../assignments/assignment-02.html">
+ <span class="dropdown-text">Assignment 02</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../assignments/assignment-03.html">
+ <span class="dropdown-text">Assignment 03</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../assignments/assignment-04.html">
+ <span class="dropdown-text">Assignment 04</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../assignments/assignment-05.html">
+ <span class="dropdown-text">Assignment 05</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../assignments/assignment-06.html">
+ <span class="dropdown-text">Assignment 06</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="../assignments/final-exam.html"> 
+<span class="menu-text">Final Exam</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/bgreenwell/uc-bana7042"> <i class="bi bi-github" role="img" aria-label="GitHub">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#load-some-useful-packages" id="toc-load-some-useful-packages" class="nav-link active" data-scroll-target="#load-some-useful-packages">Load some useful packages</a></li>
+  <li><a href="#data-exploration" id="toc-data-exploration" class="nav-link" data-scroll-target="#data-exploration">Data exploration</a></li>
+  <li><a href="#multinomial-logistic-model" id="toc-multinomial-logistic-model" class="nav-link" data-scroll-target="#multinomial-logistic-model">Multinomial logistic model</a></li>
+  <li><a href="#brief-non-math-digression-into-orthogonal-polynomial-encoding" id="toc-brief-non-math-digression-into-orthogonal-polynomial-encoding" class="nav-link" data-scroll-target="#brief-non-math-digression-into-orthogonal-polynomial-encoding">Brief (non-math) digression into orthogonal polynomial encoding</a></li>
+  <li><a href="#end-digression" id="toc-end-digression" class="nav-link" data-scroll-target="#end-digression">End digression…</a></li>
+  <li><a href="#proportional-odds-cummulative-logit-model" id="toc-proportional-odds-cummulative-logit-model" class="nav-link" data-scroll-target="#proportional-odds-cummulative-logit-model">Proportional odds cummulative logit model</a></li>
+  <li><a href="#interpreting-the-coefficients" id="toc-interpreting-the-coefficients" class="nav-link" data-scroll-target="#interpreting-the-coefficients">Interpreting the coefficients</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Install required packages</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div id="cell-2" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;vscode&quot;,&quot;value&quot;:{&quot;languageId&quot;:&quot;r&quot;}}">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Install required package(s)</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>pkgs <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"AmesHousing"</span>, <span class="st">"dplyr"</span>, <span class="st">"faraway"</span>, <span class="st">"ggplot2"</span>, <span class="st">"MASS"</span>, <span class="st">"nnet"</span>, <span class="st">"ordinal"</span>, <span class="st">"rms"</span>, <span class="st">"VGAM"</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>lib <span class="ot">&lt;-</span> <span class="fu">installed.packages</span>()[, <span class="st">"Package"</span>]</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="fu">setdiff</span>(pkgs, lib))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<section id="load-some-useful-packages" class="level2">
+<h2 class="anchored" data-anchor-id="load-some-useful-packages">Load some useful packages</h2>
+<div id="cell-4" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;vscode&quot;,&quot;value&quot;:{&quot;languageId&quot;:&quot;r&quot;}}" data-execution_count="15">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)    <span class="co"># for data wrangling</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)  <span class="co"># for plotting</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Set ggplot2 theme for the notebook</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="fu">theme_set</span>(<span class="fu">theme_bw</span>())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="data-exploration" class="level2">
+<h2 class="anchored" data-anchor-id="data-exploration">Data exploration</h2>
+<p>In the code chunk below, we’ll load data from the US 1996 national election study and take a peek at the first few rows:</p>
+<div id="cell-6" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;vscode&quot;,&quot;value&quot;:{&quot;languageId&quot;:&quot;r&quot;}}" data-execution_count="17">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load 10 variable subset of US 1996 National Election Study</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(nes96, <span class="at">package =</span> <span class="st">"faraway"</span>)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Print first few rows</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(nes96, <span class="at">n =</span> <span class="dv">10</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<table class="dataframe caption-top table table-sm table-striped small">
+<caption>A data.frame: 10 × 10</caption>
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th" scope="col">popul</th>
+<th data-quarto-table-cell-role="th" scope="col">TVnews</th>
+<th data-quarto-table-cell-role="th" scope="col">selfLR</th>
+<th data-quarto-table-cell-role="th" scope="col">ClinLR</th>
+<th data-quarto-table-cell-role="th" scope="col">DoleLR</th>
+<th data-quarto-table-cell-role="th" scope="col">PID</th>
+<th data-quarto-table-cell-role="th" scope="col">age</th>
+<th data-quarto-table-cell-role="th" scope="col">educ</th>
+<th data-quarto-table-cell-role="th" scope="col">income</th>
+<th data-quarto-table-cell-role="th" scope="col">vote</th>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th" scope="col">&lt;int&gt;</th>
+<th data-quarto-table-cell-role="th" scope="col">&lt;int&gt;</th>
+<th data-quarto-table-cell-role="th" scope="col">&lt;ord&gt;</th>
+<th data-quarto-table-cell-role="th" scope="col">&lt;ord&gt;</th>
+<th data-quarto-table-cell-role="th" scope="col">&lt;ord&gt;</th>
+<th data-quarto-table-cell-role="th" scope="col">&lt;ord&gt;</th>
+<th data-quarto-table-cell-role="th" scope="col">&lt;int&gt;</th>
+<th data-quarto-table-cell-role="th" scope="col">&lt;ord&gt;</th>
+<th data-quarto-table-cell-role="th" scope="col">&lt;ord&gt;</th>
+<th data-quarto-table-cell-role="th" scope="col">&lt;fct&gt;</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th" scope="row">1</th>
+<td>0</td>
+<td>7</td>
+<td>extCon</td>
+<td>extLib</td>
+<td>Con</td>
+<td>strRep</td>
+<td>36</td>
+<td>HS</td>
+<td>$3Kminus</td>
+<td>Dole</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th" scope="row">2</th>
+<td>190</td>
+<td>1</td>
+<td>sliLib</td>
+<td>sliLib</td>
+<td>sliCon</td>
+<td>weakDem</td>
+<td>20</td>
+<td>Coll</td>
+<td>$3Kminus</td>
+<td>Clinton</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th" scope="row">3</th>
+<td>31</td>
+<td>7</td>
+<td>Lib</td>
+<td>Lib</td>
+<td>Con</td>
+<td>weakDem</td>
+<td>24</td>
+<td>BAdeg</td>
+<td>$3Kminus</td>
+<td>Clinton</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th" scope="row">4</th>
+<td>83</td>
+<td>4</td>
+<td>sliLib</td>
+<td>Mod</td>
+<td>sliCon</td>
+<td>weakDem</td>
+<td>28</td>
+<td>BAdeg</td>
+<td>$3Kminus</td>
+<td>Clinton</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th" scope="row">5</th>
+<td>640</td>
+<td>7</td>
+<td>sliCon</td>
+<td>Con</td>
+<td>Mod</td>
+<td>strDem</td>
+<td>68</td>
+<td>BAdeg</td>
+<td>$3Kminus</td>
+<td>Clinton</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th" scope="row">6</th>
+<td>110</td>
+<td>3</td>
+<td>sliLib</td>
+<td>Mod</td>
+<td>Con</td>
+<td>weakDem</td>
+<td>21</td>
+<td>Coll</td>
+<td>$3Kminus</td>
+<td>Clinton</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th" scope="row">7</th>
+<td>100</td>
+<td>7</td>
+<td>sliCon</td>
+<td>Con</td>
+<td>Mod</td>
+<td>weakDem</td>
+<td>77</td>
+<td>Coll</td>
+<td>$3Kminus</td>
+<td>Clinton</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th" scope="row">8</th>
+<td>31</td>
+<td>1</td>
+<td>sliCon</td>
+<td>Mod</td>
+<td>sliCon</td>
+<td>indRep</td>
+<td>21</td>
+<td>Coll</td>
+<td>$3Kminus</td>
+<td>Clinton</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th" scope="row">9</th>
+<td>180</td>
+<td>7</td>
+<td>Mod</td>
+<td>Con</td>
+<td>sliLib</td>
+<td>indind</td>
+<td>31</td>
+<td>Coll</td>
+<td>$3Kminus</td>
+<td>Clinton</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th" scope="row">10</th>
+<td>2800</td>
+<td>0</td>
+<td>sliLib</td>
+<td>sliLib</td>
+<td>extCon</td>
+<td>strDem</td>
+<td>39</td>
+<td>HS</td>
+<td>$3Kminus</td>
+<td>Clinton</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>Let’s use the <code>str()</code> function to print a more useful summary of the <code>str()</code>ucture of this data set:</p>
+<div id="cell-8" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;vscode&quot;,&quot;value&quot;:{&quot;languageId&quot;:&quot;r&quot;}}" data-execution_count="18">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(nes96)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>'data.frame':   944 obs. of  10 variables:
+ $ popul : int  0 190 31 83 640 110 100 31 180 2800 ...
+ $ TVnews: int  7 1 7 4 7 3 7 1 7 0 ...
+ $ selfLR: Ord.factor w/ 7 levels "extLib"&lt;"Lib"&lt;..: 7 3 2 3 5 3 5 5 4 3 ...
+ $ ClinLR: Ord.factor w/ 7 levels "extLib"&lt;"Lib"&lt;..: 1 3 2 4 6 4 6 4 6 3 ...
+ $ DoleLR: Ord.factor w/ 7 levels "extLib"&lt;"Lib"&lt;..: 6 5 6 5 4 6 4 5 3 7 ...
+ $ PID   : Ord.factor w/ 7 levels "strDem"&lt;"weakDem"&lt;..: 7 2 2 2 1 2 2 5 4 1 ...
+ $ age   : int  36 20 24 28 68 21 77 21 31 39 ...
+ $ educ  : Ord.factor w/ 7 levels "MS"&lt;"HSdrop"&lt;..: 3 4 6 6 6 4 4 4 4 3 ...
+ $ income: Ord.factor w/ 24 levels "$3Kminus"&lt;"$3K-$5K"&lt;..: 1 1 1 1 1 1 1 1 1 1 ...
+ $ vote  : Factor w/ 2 levels "Clinton","Dole": 2 1 1 1 1 1 1 1 1 1 ...</code></pre>
+</div>
+</div>
+<p>Note that some of the factors are “ordered” by default; for example, take a look at the <code>educ</code> variable (respondent’s education level):</p>
+<div id="cell-10" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;vscode&quot;,&quot;value&quot;:{&quot;languageId&quot;:&quot;r&quot;}}" data-execution_count="22">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(nes96<span class="sc">$</span>educ)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<pre><code>
+    MS HSdrop     HS   Coll  CCdeg  BAdeg  MAdeg 
+    13     52    248    187     90    227    127 </code></pre>
+</div>
+</div>
+<p>Same goes for <code>PID</code> (respondent’s party identification) and <code>income</code>. Does it make sense for these variables to be treated as ordinal?</p>
+<div id="cell-12" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;vscode&quot;,&quot;value&quot;:{&quot;languageId&quot;:&quot;r&quot;}}" data-execution_count="20">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(nes96<span class="sc">$</span>PID)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(nes96<span class="sc">$</span>income)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<pre><code>
+ strDem weakDem  indDem  indind  indRep weakRep  strRep 
+    200     180     108      37      94     150     175 </code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<pre><code>
+  $3Kminus    $3K-$5K    $5K-$7K    $7K-$9K   $9K-$10K  $10K-$11K  $11K-$12K 
+        19         12         17         19         18         13         11 
+ $12K-$13K  $13K-$14K  $14K-$15K  $15K-$17K  $17K-$20K  $20K-$22K  $22K-$25K 
+        17         10         15         23         35         26         39 
+ $25K-$30K  $30K-$35K  $35K-$40K  $40K-$45K  $45K-$50K  $50K-$60K  $60K-$75K 
+        68         70         62         48         51        100        103 
+ $75K-$90K $90K-$105K  $105Kplus 
+        53         47         68 </code></pre>
+</div>
+</div>
+<p>In the next code chunk, we’ll clean up the data a bit by:</p>
+<ul>
+<li>condensing <code>PID</code> into a new variable (<code>party</code>) iwht only three categories;</li>
+<li>convert <code>income</code> to numeric by taking the midpoint of each bin (is this a reasonable thing to do?);</li>
+<li>create a new data frame with the variables of interest.</li>
+</ul>
+<div id="cell-14" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;vscode&quot;,&quot;value&quot;:{&quot;languageId&quot;:&quot;r&quot;}}" data-execution_count="23">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Condense party identification (PID) column into three categories</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>party <span class="ot">&lt;-</span> nes96<span class="sc">$</span>PID</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(party) <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Democrat"</span>, <span class="st">"Democrat"</span>,</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Independent"</span>, <span class="st">"Independent"</span>, <span class="st">"Independent"</span>, </span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Republican"</span>, <span class="st">"Republican"</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert income to numeric</span></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>inca <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">1.5</span>, <span class="dv">4</span>, <span class="dv">6</span>, <span class="dv">8</span>, <span class="fl">9.5</span>, <span class="fl">10.5</span>, <span class="fl">11.5</span>, <span class="fl">12.5</span>, <span class="fl">13.5</span>, <span class="fl">14.5</span>, <span class="dv">16</span>, <span class="fl">18.5</span>, <span class="dv">21</span>, <span class="fl">23.5</span>,</span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>          <span class="fl">27.5</span>, <span class="fl">32.5</span>, <span class="fl">37.5</span>, <span class="fl">42.5</span>, <span class="fl">47.5</span>, <span class="dv">55</span>, <span class="fl">67.5</span>, <span class="fl">82.5</span>, <span class="fl">97.5</span>, <span class="dv">115</span>)</span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>income <span class="ot">&lt;-</span> inca[<span class="fu">unclass</span>(nes96<span class="sc">$</span>income)]</span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Construct new data set for analysis</span></span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>rnes96 <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a>  <span class="st">"party"</span> <span class="ot">=</span> party, </span>
+<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a>  <span class="st">"income"</span> <span class="ot">=</span> income, </span>
+<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a>  <span class="st">"education"</span> <span class="ot">=</span> nes96<span class="sc">$</span>educ, </span>
+<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a>  <span class="st">"age"</span> <span class="ot">=</span> nes96<span class="sc">$</span>age</span>
+<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-22"><a href="#cb11-22" aria-hidden="true" tabindex="-1"></a><span class="co"># Print summary of data set</span></span>
+<span id="cb11-23"><a href="#cb11-23" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(rnes96)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>'data.frame':   944 obs. of  4 variables:
+ $ party    : Ord.factor w/ 3 levels "Democrat"&lt;"Independent"&lt;..: 3 1 1 1 1 1 1 2 2 1 ...
+ $ income   : num  1.5 1.5 1.5 1.5 1.5 1.5 1.5 1.5 1.5 1.5 ...
+ $ education: Ord.factor w/ 7 levels "MS"&lt;"HSdrop"&lt;..: 3 4 6 6 6 4 4 4 4 3 ...
+ $ age      : int  36 20 24 28 68 21 77 21 31 39 ...</code></pre>
+</div>
+</div>
+<p>The next couple of code blocks try to visualize party affiliation by education level and income.</p>
+<div id="cell-16" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;vscode&quot;,&quot;value&quot;:{&quot;languageId&quot;:&quot;r&quot;}}" data-execution_count="24">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Aggregate data; what's happening here?</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>egp <span class="ot">&lt;-</span> <span class="fu">group_by</span>(rnes96, education, party) <span class="sc">%&gt;%</span> </span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">count =</span> <span class="fu">n</span>()) <span class="sc">%&gt;%</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(education) <span class="sc">%&gt;%</span> </span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">etotal =</span> <span class="fu">sum</span>(count), <span class="at">proportion =</span> count<span class="sc">/</span>etotal)</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot results</span></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(egp, <span class="fu">aes</span>(<span class="at">x =</span> education, <span class="at">y =</span> proportion, <span class="at">group =</span> party, </span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>                <span class="at">linetype =</span> party, <span class="at">color =</span> party)) <span class="sc">+</span> </span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">size =</span> <span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<div class="ansi-escaped-output">
+<pre>`summarise()` has grouped output by 'education'. You can override using the
+
+`.groups` argument.
+</pre>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="lecture-5_files/figure-html/cell-9-output-2.png" width="420" height="420" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<div id="cell-17" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;vscode&quot;,&quot;value&quot;:{&quot;languageId&quot;:&quot;r&quot;}}" data-execution_count="25">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Aggregate data; what's happening here?</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>igp <span class="ot">&lt;-</span> <span class="fu">mutate</span>(rnes96, <span class="at">incomegp =</span> <span class="fu">cut_number</span>(income, <span class="dv">7</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(incomegp, party) <span class="sc">%&gt;%</span> </span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">count =</span> <span class="fu">n</span>()) <span class="sc">%&gt;%</span> </span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(incomegp) <span class="sc">%&gt;%</span> </span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">etotal =</span> <span class="fu">sum</span>(count), <span class="at">proportion =</span> count <span class="sc">/</span> etotal)</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot results</span></span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(igp, <span class="fu">aes</span>(<span class="at">x =</span> incomegp, <span class="at">y  =</span>proportion, <span class="at">group  =</span>party, </span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>                <span class="at">linetype =</span> party, <span class="at">color =</span> party)) <span class="sc">+</span></span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">size =</span> <span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<div class="ansi-escaped-output">
+<pre>`summarise()` has grouped output by 'incomegp'. You can override using the
+
+`.groups` argument.
+</pre>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="lecture-5_files/figure-html/cell-10-output-2.png" width="420" height="420" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="multinomial-logistic-model" class="level2">
+<h2 class="anchored" data-anchor-id="multinomial-logistic-model">Multinomial logistic model</h2>
+<p>Define the following probabilities:</p>
+<ul>
+<li><span class="math inline">\(p_{d} = P\left(\text{voting democrat}\right)\)</span>;</li>
+<li><span class="math inline">\(p_{i} = P\left(\text{voting independent}\right)\)</span>;</li>
+<li><span class="math inline">\(p_{r} = P\left(\text{voting republican}\right)\)</span>,</li>
+</ul>
+<p>where <span class="math inline">\(p_d + p_i + p_r = 1\)</span>. Assume for now that <code>income</code> is the only independent variable of interest. The multinomial logit model effectively fits several logits (one for every class except the baseline, which is arbitrary; here, it’s democrat):</p>
+<ul>
+<li><span class="math inline">\(\log\left(p_{i} / p_{d}\right) = \beta_0 + \beta_1 \mathtt{income}\quad\)</span> (log odds of voting independent vs.&nbsp;democrat);</li>
+<li><span class="math inline">\(\log\left(p_{r} / p_{d}\right) = \alpha_0 + \alpha_1 \mathtt{income}\quad\)</span> (log odds of voting republican vs.&nbsp;democrat).</li>
+</ul>
+<p>Here we use <span class="math inline">\(\beta_i\)</span> and <span class="math inline">\(\alpha_i\)</span> to remind us that the estimated coefficients between the two models will be different.</p>
+<p>This is somewhat similar to fitting two seperate logit (i.e., logistic regresison) models; akin to a <em>one-vs-one</em> aproach. Hence, seperate coefficient estimates for each. For. <span class="math inline">\(J\)</span> classes, we would effectively have <span class="math inline">\(J - 1\)</span> seperate logit models (i.e., sets of different coefficients).</p>
+<p>Below, we use the <strong>nnet</strong> package in R to fit a multinomial logit model to the <code>rnes96</code> data.</p>
+<div id="cell-19" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;vscode&quot;,&quot;value&quot;:{&quot;languageId&quot;:&quot;r&quot;}}" data-execution_count="26">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(nnet)  <span class="co"># for multinom() and polr() functions</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit multinomial log-linear model; see ?nnet::multinom for details</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>(fit.multi <span class="ot">&lt;-</span> <span class="fu">multinom</span>(party <span class="sc">~</span> age <span class="sc">+</span> education <span class="sc">+</span> income, <span class="at">data =</span> rnes96))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># weights:  30 (18 variable)
+initial  value 1037.090001 
+iter  10 value 990.568608
+iter  20 value 984.319052
+final  value 984.166272 
+converged</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<pre><code>Call:
+multinom(formula = party ~ age + education + income, data = rnes96)
+
+Coefficients:
+            (Intercept)          age education.L education.Q education.C
+Independent   -1.197260 0.0001534525  0.06351451  -0.1217038   0.1119542
+Republican    -1.642656 0.0081943691  1.19413345  -1.2292869   0.1544575
+            education^4 education^5 education^6     income
+Independent -0.07657336   0.1360851  0.15427826 0.01623911
+Republican  -0.02827297  -0.1221176 -0.03741389 0.01724679
+
+Residual Deviance: 1968.333 
+AIC: 2004.333 </code></pre>
+</div>
+</div>
+<div id="cell-20" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;vscode&quot;,&quot;value&quot;:{&quot;languageId&quot;:&quot;r&quot;}}" data-execution_count="28">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit multinomial log-linear model with education as a nominal factor</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>rnes96_2 <span class="ot">&lt;-</span> rnes96</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>rnes96_2<span class="sc">$</span>education <span class="ot">&lt;-</span> <span class="fu">factor</span>(rnes96_2<span class="sc">$</span>education, <span class="at">ordered =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="fu">multinom</span>(party <span class="sc">~</span> age <span class="sc">+</span> education <span class="sc">+</span> income, <span class="at">data =</span> rnes96_2)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># weights:  30 (18 variable)
+initial  value 1037.090001 
+iter  10 value 990.364722
+iter  20 value 984.508641
+final  value 984.166272 
+converged</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<pre><code>Call:
+multinom(formula = party ~ age + education + income, data = rnes96_2)
+
+Coefficients:
+            (Intercept)          age educationHSdrop educationHS educationColl
+Independent   -1.373895 0.0001539014       0.2704482   0.2458744    0.09119446
+Republican    -3.048576 0.0081945031       0.9876547   1.6915600    1.95336096
+            educationCCdeg educationBAdeg educationMAdeg     income
+Independent      0.3269554      0.1082654      0.1933497 0.01623914
+Republican       1.8835335      1.8708213      1.4539589 0.01724696
+
+Residual Deviance: 1968.333 
+AIC: 2004.333 </code></pre>
+</div>
+</div>
+<p>What happened to <code>educucation</code>, and why did it not get dummy encoded?</p>
+</section>
+<section id="brief-non-math-digression-into-orthogonal-polynomial-encoding" class="level2">
+<h2 class="anchored" data-anchor-id="brief-non-math-digression-into-orthogonal-polynomial-encoding">Brief (non-math) digression into orthogonal polynomial encoding</h2>
+<p>Orthogonal polynomial (OP) encoding for factors helps look for the linear, quadratic, and cubic trends in the categorical variable of interest (see plots below). Note that OP encoding should only be used with an ordinal variable in which the levels are <em>equally spaced</em> (e.g., income or education).</p>
+<div id="cell-23" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;vscode&quot;,&quot;value&quot;:{&quot;languageId&quot;:&quot;r&quot;}}" data-execution_count="27">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>ames <span class="ot">&lt;-</span> AmesHousing<span class="sc">::</span><span class="fu">make_ames</span>()</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(ames, <span class="fu">aes</span>(<span class="at">x =</span> Overall_Qual, <span class="at">y =</span> Sale_Price)) <span class="sc">+</span><span class="co">#log(Sale_Price))) +</span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="fu">aes</span>(<span class="at">color =</span> Overall_Qual))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="lecture-5_files/figure-html/cell-13-output-1.png" width="420" height="420" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<div id="cell-24" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;vscode&quot;,&quot;value&quot;:{&quot;languageId&quot;:&quot;r&quot;}}">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">lm</span>(<span class="fu">log</span>(Sale_Price) <span class="sc">~</span> Overall_Qual, <span class="at">data =</span> ames))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="cell-25" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;vscode&quot;,&quot;value&quot;:{&quot;languageId&quot;:&quot;r&quot;}}">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>ames.ord <span class="ot">&lt;-</span> AmesHousing<span class="sc">::</span><span class="fu">make_ordinal_ames</span>()</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">lm</span>(<span class="fu">log</span>(Sale_Price) <span class="sc">~</span> Overall_Qual, <span class="at">data =</span> ames.ord))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="cell-26" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;vscode&quot;,&quot;value&quot;:{&quot;languageId&quot;:&quot;r&quot;}}">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># What if we ignore the log scale?</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(ames, <span class="fu">aes</span>(<span class="at">x =</span> Overall_Qual, <span class="at">y =</span> Sale_Price)) <span class="sc">+</span></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="fu">aes</span>(<span class="at">color =</span> Overall_Qual))</span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">lm</span>(Sale_Price <span class="sc">~</span> Overall_Qual, <span class="at">data =</span> ames))</span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">lm</span>(Sale_Price <span class="sc">~</span> Overall_Qual, <span class="at">data =</span> ames.ord))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="end-digression" class="level2">
+<h2 class="anchored" data-anchor-id="end-digression">End digression…</h2>
+<div id="cell-28" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;vscode&quot;,&quot;value&quot;:{&quot;languageId&quot;:&quot;r&quot;}}">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit.multi)  <span class="co"># no p-values here</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="cell-29" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;vscode&quot;,&quot;value&quot;:{&quot;languageId&quot;:&quot;r&quot;}}">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># How do we interpret the coefficients? For example, (all else held constant) for every one-unit increase</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="co"># in income, the multinomial log odds of voting republican, relative to democrat,</span></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a><span class="co"># increase by 0.003.</span></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a><span class="co">#</span></span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Gross...</span></span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a><span class="co">#</span></span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Effect plots to the rescue!</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="cell-30" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;vscode&quot;,&quot;value&quot;:{&quot;languageId&quot;:&quot;r&quot;}}" data-execution_count="29">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(pdp)  <span class="co"># for partial dependence (PD) plots</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute partial dependence of party identification on income</span></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>pfun <span class="ot">&lt;-</span> <span class="cf">function</span>(object, newdata) {</span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>  probs <span class="ot">&lt;-</span> <span class="fu">predict</span>(object, <span class="at">newdata =</span> newdata, <span class="at">type =</span> <span class="st">"probs"</span>)</span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">colMeans</span>(probs)  <span class="co"># return </span></span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>pd.inc <span class="ot">&lt;-</span> <span class="fu">partial</span>(fit.multi, <span class="at">pred.var =</span> <span class="st">"income"</span>, <span class="at">pred.fun =</span> pfun)</span>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(pd.inc, <span class="fu">aes</span>(<span class="at">x =</span> income, <span class="at">y =</span> yhat, <span class="at">linetype =</span> yhat.id, <span class="at">color =</span> yhat.id)) <span class="sc">+</span></span>
+<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">size =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"Income (midpoint in thousands)"</span>) <span class="sc">+</span></span>
+<span id="cb27-12"><a href="#cb27-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Partial dependence"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="lecture-5_files/figure-html/cell-19-output-1.png" width="420" height="420" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<div id="cell-31" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;vscode&quot;,&quot;value&quot;:{&quot;languageId&quot;:&quot;r&quot;}}" data-execution_count="30">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Try stepwise; since the model is based on a (multinomial) likelihood, the AIC/BIC </span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="co"># are well-defined and the usual stepwise procedures are still valid </span></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>MASS<span class="sc">::</span><span class="fu">stepAIC</span>(fit.multi, <span class="at">direction =</span> <span class="st">"both"</span>, <span class="at">scope =</span> <span class="fu">list</span>(<span class="st">"upper"</span> <span class="ot">=</span> <span class="er">~</span>.<span class="sc">^</span><span class="dv">2</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Start:  AIC=2004.33
+party ~ age + education + income
+
+# weights:  27 (16 variable)
+initial  value 1037.090001 
+iter  10 value 988.896864
+iter  20 value 985.822223
+final  value 985.812737 
+converged
+# weights:  12 (6 variable)
+initial  value 1037.090001 
+iter  10 value 992.269502
+final  value 992.269484 
+converged
+# weights:  27 (16 variable)
+initial  value 1037.090001 
+iter  10 value 1009.025560
+iter  20 value 1006.961593
+final  value 1006.955275 
+converged
+# weights:  48 (30 variable)
+initial  value 1037.090001 
+iter  10 value 1004.992102
+iter  20 value 981.097880
+iter  30 value 974.672766
+iter  40 value 974.632373
+iter  40 value 974.632372
+iter  40 value 974.632372
+final  value 974.632372 
+converged
+# weights:  33 (20 variable)
+initial  value 1037.090001 
+iter  10 value 989.133986
+iter  20 value 983.452423
+final  value 983.369209 
+converged
+# weights:  48 (30 variable)
+initial  value 1037.090001 
+iter  10 value 1002.858283
+iter  20 value 980.366035
+iter  30 value 976.643913
+final  value 976.619912 
+converged
+                   Df    AIC
+- education        12 1996.5
+- age               2 2003.6
+&lt;none&gt;                2004.3
++ age:income        2 2006.7
++ age:education    12 2009.3
++ education:income 12 2013.2
+- income            2 2045.9
+# weights:  12 (6 variable)
+initial  value 1037.090001 
+iter  10 value 992.269502
+final  value 992.269484 
+converged
+
+Step:  AIC=1996.54
+party ~ age + income
+
+# weights:  9 (4 variable)
+initial  value 1037.090001 
+final  value 992.712152 
+converged
+# weights:  9 (4 variable)
+initial  value 1037.090001 
+final  value 1020.425203 
+converged
+# weights:  30 (18 variable)
+initial  value 1037.090001 
+iter  10 value 990.568608
+iter  20 value 984.319052
+final  value 984.166272 
+converged
+# weights:  15 (8 variable)
+initial  value 1037.090001 
+iter  10 value 992.613103
+final  value 991.418362 
+converged
+             Df    AIC
+- age         2 1993.4
+&lt;none&gt;          1996.5
++ age:income  2 1998.8
++ education  12 2004.3
+- income      2 2048.8
+# weights:  9 (4 variable)
+initial  value 1037.090001 
+final  value 992.712152 
+converged
+
+Step:  AIC=1993.42
+party ~ income
+
+# weights:  6 (2 variable)
+initial  value 1037.090001 
+final  value 1020.636052 
+converged
+# weights:  12 (6 variable)
+initial  value 1037.090001 
+iter  10 value 992.269502
+final  value 992.269484 
+converged
+# weights:  27 (16 variable)
+initial  value 1037.090001 
+iter  10 value 988.896864
+iter  20 value 985.822223
+final  value 985.812737 
+converged
+            Df    AIC
+&lt;none&gt;         1993.4
++ age        2 1996.5
++ education 12 2003.6
+- income     2 2045.3</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<pre><code>Call:
+multinom(formula = party ~ income, data = rnes96)
+
+Coefficients:
+            (Intercept)     income
+Independent  -1.1749331 0.01608683
+Republican   -0.9503591 0.01766457
+
+Residual Deviance: 1985.424 
+AIC: 1993.424 </code></pre>
+</div>
+</div>
+<div id="cell-32" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;vscode&quot;,&quot;value&quot;:{&quot;languageId&quot;:&quot;r&quot;}}" data-execution_count="31">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Look at predicted probabilities</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(<span class="fu">predict</span>(fit.multi, <span class="at">type =</span> <span class="st">"probs"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<table class="dataframe caption-top table table-sm table-striped small">
+<caption>A matrix: 6 × 3 of type dbl</caption>
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th" scope="col">Democrat</th>
+<th data-quarto-table-cell-role="th" scope="col">Independent</th>
+<th data-quarto-table-cell-role="th" scope="col">Republican</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th" scope="row">1</th>
+<td>0.5923052</td>
+<td>0.1975326</td>
+<td>0.2101622</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th" scope="row">2</th>
+<td>0.5919378</td>
+<td>0.1687055</td>
+<td>0.2393567</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th" scope="row">3</th>
+<td>0.5970789</td>
+<td>0.1732058</td>
+<td>0.2297154</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th" scope="row">4</th>
+<td>0.5924809</td>
+<td>0.1719775</td>
+<td>0.2355417</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th" scope="row">5</th>
+<td>0.5423563</td>
+<td>0.1583973</td>
+<td>0.2992464</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th" scope="row">6</th>
+<td>0.5907590</td>
+<td>0.1683954</td>
+<td>0.2408456</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="cell-33" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;vscode&quot;,&quot;value&quot;:{&quot;languageId&quot;:&quot;r&quot;}}">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">proportions</span>(<span class="fu">table</span>(rnes96<span class="sc">$</span>party))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="cell-34" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;vscode&quot;,&quot;value&quot;:{&quot;languageId&quot;:&quot;r&quot;}}" data-execution_count="32">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Construct partial dependence of party affiliation on education</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>pd.edu <span class="ot">&lt;-</span> <span class="fu">partial</span>(fit.multi, <span class="at">pred.var =</span> <span class="st">"education"</span>, <span class="at">pred.fun =</span> pfun)</span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(pd.edu)</span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(pd.edu, <span class="fu">aes</span>(<span class="at">x =</span> education, <span class="at">y =</span> yhat, <span class="at">linetype =</span> yhat.id, <span class="at">color =</span> yhat.id)) <span class="sc">+</span></span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">3</span>, <span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"Education"</span>) <span class="sc">+</span></span>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Partial dependence"</span>) </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<table class="dataframe caption-top table table-sm table-striped small">
+<caption>A ice: 6 × 3</caption>
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th" scope="col">education</th>
+<th data-quarto-table-cell-role="th" scope="col">yhat</th>
+<th data-quarto-table-cell-role="th" scope="col">yhat.id</th>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th" scope="col">&lt;ord&gt;</th>
+<th data-quarto-table-cell-role="th" scope="col">&lt;dbl&gt;</th>
+<th data-quarto-table-cell-role="th" scope="col">&lt;chr&gt;</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th" scope="row">1</th>
+<td>MS</td>
+<td>0.5847048</td>
+<td>Democrat</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th" scope="row">2</th>
+<td>HSdrop</td>
+<td>0.4725179</td>
+<td>Democrat</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th" scope="row">3</th>
+<td>HS</td>
+<td>0.4009031</td>
+<td>Democrat</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th" scope="row">4</th>
+<td>Coll</td>
+<td>0.3796768</td>
+<td>Democrat</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th" scope="row">5</th>
+<td>CCdeg</td>
+<td>0.3688061</td>
+<td>Democrat</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th" scope="row">6</th>
+<td>BAdeg</td>
+<td>0.3900266</td>
+<td>Democrat</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="lecture-5_files/figure-html/cell-23-output-2.png" width="420" height="420" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<div id="cell-35" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;vscode&quot;,&quot;value&quot;:{&quot;languageId&quot;:&quot;r&quot;}}" data-execution_count="33">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Can perform classification, if desired (insert eyeroll emoji...)</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(<span class="st">"Predicted"</span> <span class="ot">=</span> <span class="fu">predict</span>(fit.multi), <span class="st">"Actual"</span> <span class="ot">=</span> rnes96<span class="sc">$</span>party)</span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Ummm...majority of actual Republicans are classified as Democrats</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<pre><code>             Actual
+Predicted     Democrat Independent Republican
+  Democrat         277         130        169
+  Independent        4           7          5
+  Republican        99         102        151</code></pre>
+</div>
+</div>
+<div id="cell-36" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;vscode&quot;,&quot;value&quot;:{&quot;languageId&quot;:&quot;r&quot;}}">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co"># For comparison, fit a (default) random forest (RF); see </span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="co"># ?randomForest::randomForest for additional details</span></span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">2008</span>)  <span class="co"># for reproducibility</span></span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>(fit.rfo <span class="ot">&lt;-</span> randomForest<span class="sc">::</span><span class="fu">randomForest</span>(party <span class="sc">~</span> ., <span class="at">data =</span> rnes96, <span class="at">ntree =</span> <span class="dv">1000</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="cell-37" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;vscode&quot;,&quot;value&quot;:{&quot;languageId&quot;:&quot;r&quot;}}">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Construct the same PD plot as before, but using the RF model</span></span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>pd.rfo <span class="ot">&lt;-</span> <span class="fu">partial</span>(fit.rfo, <span class="at">pred.var =</span> <span class="st">"income"</span>, <span class="at">pred.fun =</span> <span class="cf">function</span>(object, newdata) {</span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">colMeans</span>(<span class="fu">predict</span>(object, <span class="at">newdata =</span> newdata, <span class="at">type =</span> <span class="st">"prob"</span>))</span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(pd.rfo, <span class="fu">aes</span>(<span class="at">x =</span> income, <span class="at">y =</span> yhat, <span class="at">linetype =</span> yhat.id, <span class="at">color =</span> yhat.id)) <span class="sc">+</span></span>
+<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">size =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"Income (midpoint in thousands)"</span>) <span class="sc">+</span></span>
+<span id="cb37-8"><a href="#cb37-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Partial dependence"</span>) <span class="sc">+</span></span>
+<span id="cb37-9"><a href="#cb37-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_rug</span>(<span class="at">data =</span> <span class="fu">data.frame</span>(<span class="st">"income"</span> <span class="ot">=</span> <span class="fu">quantile</span>(rnes96<span class="sc">$</span>income, <span class="at">prob =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">9</span><span class="sc">/</span><span class="dv">10</span>)),</span>
+<span id="cb37-10"><a href="#cb37-10" aria-hidden="true" tabindex="-1"></a>           <span class="fu">aes</span>(<span class="at">x =</span> income), <span class="at">inherit.aes =</span> <span class="cn">FALSE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="proportional-odds-cummulative-logit-model" class="level2">
+<h2 class="anchored" data-anchor-id="proportional-odds-cummulative-logit-model">Proportional odds cummulative logit model</h2>
+<p>For an ordered outcome with <span class="math inline">\(J\)</span> categories <span class="math inline">\(1 &lt; 2 &lt; 3 &lt; \cdots &lt; J\)</span>, the <em>proportional odds cummulative logit</em> (PO, for short) models fits a logit-type model using the cumulative probabilities. For brevity, let</p>
+<ul>
+<li><span class="math inline">\(p_{\le j} = P\left(Y \le j | \boldsymbol{x}\right)\)</span>;</li>
+<li><span class="math inline">\(p_{&gt; j} = P\left(Y &gt; j | \boldsymbol{x}\right)\)</span>.</li>
+</ul>
+<p>The PO model uses the following logit:</p>
+<p><span class="math inline">\(\log\left(\frac{p_{\le j}}{p_{&gt;j}}\right) = \alpha_j + \boldsymbol{x}^\top\boldsymbol{\beta}\)</span>.</p>
+<p>It’s worth noting that for the non-proportional odds cummulative logit (NPO, for short) model:</p>
+<p><span class="math inline">\(\log\left(\frac{p_{\le j}}{p_{&gt;j}}\right) = \alpha_j + \boldsymbol{x}^\top\boldsymbol{\beta}_j\)</span>.</p>
+<p>That is, in the NPO model, the <span class="math inline">\(\beta\)</span> coefficients depend on <span class="math inline">\(j\)</span>. In short, the PO model has a simpler form since only the inetrcepts are allowed to vary (hence, proportional odds assumption).</p>
+<div id="cell-39" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;vscode&quot;,&quot;value&quot;:{&quot;languageId&quot;:&quot;r&quot;}}">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="do">###############################################################################</span></span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a><span class="co">#</span></span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Modeling ordinal data using the proportional odds (PO) model</span></span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a><span class="co">#</span></span>
+<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Reference: https://journal.r-project.org/archive/2018/RJ-2018-004/RJ-2018-004.pdf</span></span>
+<span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a><span class="co">#</span></span>
+<span id="cb38-7"><a href="#cb38-7" aria-hidden="true" tabindex="-1"></a><span class="do">###############################################################################</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="cell-40" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;vscode&quot;,&quot;value&quot;:{&quot;languageId&quot;:&quot;r&quot;}}" data-execution_count="34">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(MASS)  <span class="co"># for polr() function; already loaded but listed here again</span></span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a><span class="co"># The following packages offer similar functionality</span></span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a><span class="co">#library(rms)</span></span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a><span class="co">#library(ordinal)</span></span>
+<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a><span class="co">#library(VGAM)  # used in Dr. Liu's slides and videos</span></span>
+<span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-8"><a href="#cb39-8" aria-hidden="true" tabindex="-1"></a><span class="co"># This is the log odds of category k or less, and since these are log odds </span></span>
+<span id="cb39-9"><a href="#cb39-9" aria-hidden="true" tabindex="-1"></a><span class="co"># which differ only by a constant for different k, the odds are proportional. </span></span>
+<span id="cb39-10"><a href="#cb39-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Hence the term proportional odds logistic regression.</span></span>
+<span id="cb39-11"><a href="#cb39-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-12"><a href="#cb39-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit a proportional odds logistic regression</span></span>
+<span id="cb39-13"><a href="#cb39-13" aria-hidden="true" tabindex="-1"></a>(fit.polr <span class="ot">&lt;-</span> <span class="fu">polr</span>(party <span class="sc">~</span> age <span class="sc">+</span> education <span class="sc">+</span> income, <span class="at">data =</span> rnes96))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: ‘MASS’
+
+
+The following object is masked from ‘package:dplyr’:
+
+    select
+
+</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<pre><code>Call:
+polr(formula = party ~ age + education + income, data = rnes96)
+
+Coefficients:
+         age  education.L  education.Q  education.C  education^4  education^5 
+ 0.005774902  0.724086814 -0.781360508  0.040168238 -0.019925492 -0.079412657 
+ education^6       income 
+-0.061103738  0.012738693 
+
+Intercepts:
+  Democrat|Independent Independent|Republican 
+             0.6448794              1.7373541 
+
+Residual Deviance: 1984.211 
+AIC: 2004.211 </code></pre>
+</div>
+</div>
+<div id="cell-41" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;vscode&quot;,&quot;value&quot;:{&quot;languageId&quot;:&quot;r&quot;}}" data-execution_count="35">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Predicted (non-cumulative) probabilities</span></span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(<span class="fu">predict</span>(fit.polr, <span class="at">newdata =</span> rnes96, <span class="at">type =</span> <span class="st">"probs"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<table class="dataframe caption-top table table-sm table-striped small">
+<caption>A matrix: 6 × 3 of type dbl</caption>
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th" scope="col">Democrat</th>
+<th data-quarto-table-cell-role="th" scope="col">Independent</th>
+<th data-quarto-table-cell-role="th" scope="col">Republican</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th" scope="row">1</th>
+<td>0.5673361</td>
+<td>0.2289862</td>
+<td>0.2036777</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th" scope="row">2</th>
+<td>0.5346171</td>
+<td>0.2394053</td>
+<td>0.2259776</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th" scope="row">3</th>
+<td>0.5428780</td>
+<td>0.2369062</td>
+<td>0.2202158</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th" scope="row">4</th>
+<td>0.5371401</td>
+<td>0.2386517</td>
+<td>0.2242082</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th" scope="row">5</th>
+<td>0.4794712</td>
+<td>0.2536103</td>
+<td>0.2669185</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th" scope="row">6</th>
+<td>0.5331800</td>
+<td>0.2398307</td>
+<td>0.2269893</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="interpreting-the-coefficients" class="level2">
+<h2 class="anchored" data-anchor-id="interpreting-the-coefficients">Interpreting the coefficients</h2>
+<p><img src="https://media.giphy.com/media/dBsUACbhvDROt9pbFO/giphy.gif" class="img-fluid"></p>
+<p>Take a look at <strong>Table 2</strong> in this <a href="https://journal.r-project.org/archive/2018/RJ-2018-004/RJ-2018-004.pdf">paper</a>. Once you know which parameterization your software uses for the PO/NPO model, then you should be able to interpret the coefficient estimates in the right direction.</p>
+<div id="cell-43" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;vscode&quot;,&quot;value&quot;:{&quot;languageId&quot;:&quot;r&quot;}}">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="co"># One interprets the effects in the PO model using ordinary odds ratios. The </span></span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a><span class="co"># difference is that a single odds ratio is assumed to apply equally to *all*</span></span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a><span class="co"># events Y&lt;=j (or Y&gt;=j, depending on software), j=1,2,...,k. If linearity and additivity hold, exp(beta_m) is </span></span>
+<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a><span class="co"># the odds of Y&lt;=j (regardless of j) for every one-unit increase in X_m.</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="cell-44" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;vscode&quot;,&quot;value&quot;:{&quot;languageId&quot;:&quot;r&quot;}}" data-execution_count="36">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Just look at effect plots...</span></span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>pfun <span class="ot">&lt;-</span> <span class="cf">function</span>(object, newdata) {</span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>  probs <span class="ot">&lt;-</span> <span class="fu">predict</span>(object, <span class="at">newdata =</span> newdata, <span class="at">type =</span> <span class="st">"probs"</span>)  <span class="co"># individual probs</span></span>
+<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a>  cprobs <span class="ot">&lt;-</span> <span class="fu">t</span>(<span class="fu">apply</span>(probs[, <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>], <span class="at">MARGIN =</span> <span class="dv">1</span>, <span class="at">FUN =</span> cumsum))  <span class="co"># cumulative probs</span></span>
+<span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">colMeans</span>(cprobs)  <span class="co"># return averaged predicted probs for each class</span></span>
+<span id="cb44-6"><a href="#cb44-6" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb44-7"><a href="#cb44-7" aria-hidden="true" tabindex="-1"></a>pd.inc <span class="ot">&lt;-</span> <span class="fu">partial</span>(fit.polr, <span class="at">pred.var =</span> <span class="st">"income"</span>, <span class="at">pred.fun =</span> pfun)</span>
+<span id="cb44-8"><a href="#cb44-8" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(pd.inc, <span class="fu">aes</span>(<span class="at">x =</span> income, <span class="at">y =</span> yhat, <span class="at">linetype =</span> yhat.id, <span class="at">color =</span> yhat.id)) <span class="sc">+</span></span>
+<span id="cb44-9"><a href="#cb44-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">size =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb44-10"><a href="#cb44-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"Income (midpoint in thousands)"</span>) <span class="sc">+</span></span>
+<span id="cb44-11"><a href="#cb44-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Partial dependence"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="lecture-5_files/figure-html/cell-31-output-1.png" width="420" height="420" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<div id="cell-45" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;vscode&quot;,&quot;value&quot;:{&quot;languageId&quot;:&quot;r&quot;}}" data-execution_count="37">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Try stepwise</span></span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a><span class="fu">stepAIC</span>(fit.polr, <span class="at">direction =</span> <span class="st">"both"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Start:  AIC=2004.21
+party ~ age + education + income
+
+            Df    AIC
+- education  6 2002.8
+&lt;none&gt;         2004.2
+- age        1 2004.4
+- income     1 2038.6
+
+Step:  AIC=2002.83
+party ~ age + income
+
+            Df    AIC
+- age        1 2001.4
+&lt;none&gt;         2002.8
++ education  6 2004.2
+- income     1 2047.2
+
+Step:  AIC=2001.36
+party ~ income
+
+            Df    AIC
+&lt;none&gt;         2001.4
++ age        1 2002.8
++ education  6 2004.4
+- income     1 2045.3</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<pre><code>Call:
+polr(formula = party ~ income, data = rnes96)
+
+Coefficients:
+    income 
+0.01311984 
+
+Intercepts:
+  Democrat|Independent Independent|Republican 
+             0.2091045              1.2915566 
+
+Residual Deviance: 1995.363 
+AIC: 2001.363 </code></pre>
+</div>
+</div>
+<div id="cell-46" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;vscode&quot;,&quot;value&quot;:{&quot;languageId&quot;:&quot;r&quot;}}">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(VGAM)  <span class="co"># for vglm() function</span></span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit different models; some of these are the same, but use a different </span></span>
+<span id="cb48-4"><a href="#cb48-4" aria-hidden="true" tabindex="-1"></a><span class="co"># parameterization...</span></span>
+<span id="cb48-5"><a href="#cb48-5" aria-hidden="true" tabindex="-1"></a>(fit1 <span class="ot">&lt;-</span> <span class="fu">vglm</span>(party <span class="sc">~</span> age <span class="sc">+</span> education <span class="sc">+</span> income,  <span class="co"># uses P(Y &lt;= j),</span></span>
+<span id="cb48-6"><a href="#cb48-6" aria-hidden="true" tabindex="-1"></a>              <span class="at">family =</span> <span class="fu">propodds</span>(<span class="at">reverse =</span> <span class="cn">FALSE</span>), <span class="at">data =</span> rnes96))  </span>
+<span id="cb48-7"><a href="#cb48-7" aria-hidden="true" tabindex="-1"></a>(fit2 <span class="ot">&lt;-</span> <span class="fu">vglm</span>(<span class="at">formula =</span> party <span class="sc">~</span> age <span class="sc">+</span> education <span class="sc">+</span> income,  <span class="co"># same as above, but uses P(Y &gt;= j)</span></span>
+<span id="cb48-8"><a href="#cb48-8" aria-hidden="true" tabindex="-1"></a>              <span class="at">family =</span> <span class="fu">propodds</span>(<span class="at">reverse =</span> <span class="cn">TRUE</span>), <span class="at">data =</span> rnes96))</span>
+<span id="cb48-9"><a href="#cb48-9" aria-hidden="true" tabindex="-1"></a>(fit3 <span class="ot">&lt;-</span> <span class="fu">vglm</span>(<span class="at">formula =</span> party <span class="sc">~</span> age <span class="sc">+</span> education <span class="sc">+</span> income, </span>
+<span id="cb48-10"><a href="#cb48-10" aria-hidden="true" tabindex="-1"></a>              <span class="at">family =</span> <span class="fu">cumulative</span>(<span class="at">parallel =</span> <span class="cn">TRUE</span>), <span class="at">data =</span> rnes96))</span>
+<span id="cb48-11"><a href="#cb48-11" aria-hidden="true" tabindex="-1"></a>(fit4 <span class="ot">&lt;-</span> <span class="fu">vglm</span>(<span class="at">formula =</span> party <span class="sc">~</span> age <span class="sc">+</span> education <span class="sc">+</span> income,  <span class="co"># same as above (and with polr())</span></span>
+<span id="cb48-12"><a href="#cb48-12" aria-hidden="true" tabindex="-1"></a>              <span class="at">family =</span> <span class="fu">cumulative</span>(<span class="at">parallel =</span> <span class="cn">FALSE</span>), <span class="at">data =</span> rnes96))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="cell-47" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;vscode&quot;,&quot;value&quot;:{&quot;languageId&quot;:&quot;r&quot;}}">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="co"># A basic assumption of all commonly used ordinal regression models is that </span></span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a><span class="co"># the response variable behaves in an ordinal fashion. </span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="cell-48" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;vscode&quot;,&quot;value&quot;:{&quot;languageId&quot;:&quot;r&quot;}}" data-execution_count="39">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ?rms::plot.xmean.ordinaly</span></span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a><span class="co">#</span></span>
+<span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Separately for each predictor variable X in a formula, plots the mean of X </span></span>
+<span id="cb50-4"><a href="#cb50-4" aria-hidden="true" tabindex="-1"></a><span class="co"># vs. levels of Y. Then under the proportional odds assumption, the expected </span></span>
+<span id="cb50-5"><a href="#cb50-5" aria-hidden="true" tabindex="-1"></a><span class="co"># value of the predictor for each Y value is also plotted (as a dotted line). </span></span>
+<span id="cb50-6"><a href="#cb50-6" aria-hidden="true" tabindex="-1"></a><span class="co"># This plot is useful for assessing the ordinality assumption for Y separately </span></span>
+<span id="cb50-7"><a href="#cb50-7" aria-hidden="true" tabindex="-1"></a><span class="co"># for each X, and for assessing the proportional odds assumption in a simple </span></span>
+<span id="cb50-8"><a href="#cb50-8" aria-hidden="true" tabindex="-1"></a><span class="co"># univariable way. If several predictors do not distinguish adjacent categories </span></span>
+<span id="cb50-9"><a href="#cb50-9" aria-hidden="true" tabindex="-1"></a><span class="co"># of Y, those levels may need to be pooled. This display assumes that each </span></span>
+<span id="cb50-10"><a href="#cb50-10" aria-hidden="true" tabindex="-1"></a><span class="co"># predictor is linearly related to the log odds of each event in the </span></span>
+<span id="cb50-11"><a href="#cb50-11" aria-hidden="true" tabindex="-1"></a><span class="co"># proportional odds model. There is also an option to plot the expected means </span></span>
+<span id="cb50-12"><a href="#cb50-12" aria-hidden="true" tabindex="-1"></a><span class="co"># assuming a forward continuation ratio model.</span></span>
+<span id="cb50-13"><a href="#cb50-13" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rms)</span>
+<span id="cb50-14"><a href="#cb50-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-15"><a href="#cb50-15" aria-hidden="true" tabindex="-1"></a><span class="co"># plot mean of each x vs. ordinal y (assumes each x is linearly related to y)</span></span>
+<span id="cb50-16"><a href="#cb50-16" aria-hidden="true" tabindex="-1"></a>rms<span class="sc">::</span><span class="fu">plot.xmean.ordinaly</span>(party <span class="sc">~</span> age <span class="sc">+</span> education <span class="sc">+</span> income, <span class="at">data =</span> rnes96)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Loading required package: Hmisc
+
+
+Attaching package: ‘Hmisc’
+
+
+The following objects are masked from ‘package:dplyr’:
+
+    src, summarize
+
+
+The following objects are masked from ‘package:base’:
+
+    format.pval, units
+
+</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="lecture-5_files/figure-html/cell-35-output-2.png" width="420" height="420" class="figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="lecture-5_files/figure-html/cell-35-output-3.png" width="420" height="420" class="figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="lecture-5_files/figure-html/cell-35-output-4.png" width="420" height="420" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<div id="cell-49" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;vscode&quot;,&quot;value&quot;:{&quot;languageId&quot;:&quot;r&quot;}}" data-execution_count="40">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit model the PO model using rms package</span></span>
+<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a><span class="co">#options()$contrasts</span></span>
+<span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a>(fit.orm <span class="ot">&lt;-</span> <span class="fu">orm</span>(party <span class="sc">~</span> age <span class="sc">+</span> education <span class="sc">+</span> income, <span class="at">data =</span> rnes96))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-error">
+<pre><code>ERROR: Error in Design(X, formula = formula): Variable education is an ordered factor with non-numeric levels.
+ You should set options(contrasts=c("contr.treatment", "contr.treatment"))
+or rms will not work properly.
+
+Error in Design(X, formula = formula): Variable education is an ordered factor with non-numeric levels.
+ You should set options(contrasts=c("contr.treatment", "contr.treatment"))
+or rms will not work properly.
+Traceback:
+
+1. orm(party ~ age + education + income, data = rnes96)
+2. Design(X, formula = formula)
+3. stop(paste("Variable", nam, "is an ordered factor with non-numeric levels.\n", 
+ .     "You should set options(contrasts=c(\"contr.treatment\", \"contr.treatment\"))\nor rms will not work properly."))</code></pre>
+</div>
+</div>
+<div id="cell-50" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;vscode&quot;,&quot;value&quot;:{&quot;languageId&quot;:&quot;r&quot;}}" data-execution_count="41">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="co"># WTF?</span></span>
+<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a><span class="co">#</span></span>
+<span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Fine...</span></span>
+<span id="cb54-4"><a href="#cb54-4" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">contrasts =</span> <span class="fu">c</span>(<span class="st">"contr.treatment"</span>, <span class="st">"contr.treatment"</span>))  <span class="co"># I guess rms does not like ordered factors...</span></span>
+<span id="cb54-5"><a href="#cb54-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-6"><a href="#cb54-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Refit the model and treat all categorical variables as nominal</span></span>
+<span id="cb54-7"><a href="#cb54-7" aria-hidden="true" tabindex="-1"></a>(fit.orm <span class="ot">&lt;-</span> <span class="fu">orm</span>(party <span class="sc">~</span> age <span class="sc">+</span> education <span class="sc">+</span> income, <span class="at">data =</span> rnes96))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<pre><code>Logistic (Proportional Odds) Ordinal Regression Model
+
+orm(formula = party ~ age + education + income, data = rnes96)
+
+                        Model Likelihood               Discrimination    Rank Discrim.    
+                              Ratio Test                      Indexes          Indexes    
+Obs            944    LR chi2      57.06    R2                  0.066    rho     0.245    
+ Democrat      380    d.f.             8    R2(8,944)           0.051                     
+ Independent   239    Pr(&gt; chi2) &lt;0.0001    R2(8,828.6)         0.057                     
+ Republican    325    Score chi2   56.58    |Pr(Y&gt;=median)-0.5| 0.116                     
+Distinct Y       3    Pr(&gt; chi2) &lt;0.0001                                                  
+Median Y         2                                                                        
+max |deriv| 0.0002                                                                        
+
+                 Coef    S.E.   Wald Z Pr(&gt;|Z|)
+y&gt;=Independent   -1.4963 0.6503 -2.30  0.0214  
+y&gt;=Republican    -2.5887 0.6537 -3.96  &lt;0.0001 
+age               0.0058 0.0039  1.49  0.1372  
+education=HSdrop  0.5828 0.6464  0.90  0.3673  
+education=HS      0.9983 0.6079  1.64  0.1005  
+education=Coll    1.2230 0.6138  1.99  0.0463  
+education=CCdeg   1.1525 0.6312  1.83  0.0679  
+education=BAdeg   1.1666 0.6155  1.90  0.0580  
+education=MAdeg   0.8365 0.6255  1.34  0.1811  
+income            0.0127 0.0021  5.95  &lt;0.0001 </code></pre>
+</div>
+</div>
+<div id="cell-51" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;vscode&quot;,&quot;value&quot;:{&quot;languageId&quot;:&quot;r&quot;}}">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Exponentiating gives the multiplicative increase to P(Y&gt;j|x), for j=Dem&lt;Mod&lt;Rep</span></span>
+<span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a><span class="fu">exp</span>(<span class="fu">coef</span>(fit.orm))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>For example, for every “midpoint increase” in income, the odds of voting republican or independent over democrat increase by 1.3%.</p>
+<div id="cell-53" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;vscode&quot;,&quot;value&quot;:{&quot;languageId&quot;:&quot;r&quot;}}" data-execution_count="42">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="co"># More options when requesting predictions from an ordinal regression model</span></span>
+<span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(p1 <span class="ot">&lt;-</span> <span class="fu">predict</span>(fit.orm, <span class="at">type =</span> <span class="st">"fitted"</span>))  <span class="co"># cumulative probabilities</span></span>
+<span id="cb57-3"><a href="#cb57-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(p2 <span class="ot">&lt;-</span> <span class="fu">predict</span>(fit.orm, <span class="at">type =</span> <span class="st">"fitted.ind"</span>))  <span class="co"># individual probabilities</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<table class="dataframe caption-top table table-sm table-striped small">
+<caption>A matrix: 6 × 2 of type dbl</caption>
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th" scope="col">y&gt;=Independent</th>
+<th data-quarto-table-cell-role="th" scope="col">y&gt;=Republican</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th" scope="row">1</th>
+<td>0.4326639</td>
+<td>0.2036775</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th" scope="row">2</th>
+<td>0.4653843</td>
+<td>0.2259784</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th" scope="row">3</th>
+<td>0.4571215</td>
+<td>0.2202153</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th" scope="row">4</th>
+<td>0.4628592</td>
+<td>0.2242075</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th" scope="row">5</th>
+<td>0.5205267</td>
+<td>0.2669167</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th" scope="row">6</th>
+<td>0.4668214</td>
+<td>0.2269900</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="cell-output cell-output-display">
+<table class="dataframe caption-top table table-sm table-striped small">
+<caption>A matrix: 6 × 3 of type dbl</caption>
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th" scope="col">party=Democrat</th>
+<th data-quarto-table-cell-role="th" scope="col">party=Independent</th>
+<th data-quarto-table-cell-role="th" scope="col">party=Republican</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th" scope="row">1</th>
+<td>0.5673361</td>
+<td>0.2289864</td>
+<td>0.2036775</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th" scope="row">2</th>
+<td>0.5346157</td>
+<td>0.2394059</td>
+<td>0.2259784</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th" scope="row">3</th>
+<td>0.5428785</td>
+<td>0.2369062</td>
+<td>0.2202153</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th" scope="row">4</th>
+<td>0.5371408</td>
+<td>0.2386517</td>
+<td>0.2242075</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th" scope="row">5</th>
+<td>0.4794733</td>
+<td>0.2536101</td>
+<td>0.2669167</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th" scope="row">6</th>
+<td>0.5331786</td>
+<td>0.2398313</td>
+<td>0.2269900</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="cell-54" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;vscode&quot;,&quot;value&quot;:{&quot;languageId&quot;:&quot;r&quot;}}" data-execution_count="43">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Let's make a simple feature effect (e.g., a partial dependence) plot</span></span>
+<span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a>pfun.orm <span class="ot">&lt;-</span> <span class="cf">function</span>(object, newdata) {</span>
+<span id="cb58-3"><a href="#cb58-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">colMeans</span>(<span class="fu">predict</span>(object, <span class="at">newdata =</span> newdata, <span class="at">type =</span> <span class="st">"fitted"</span>))</span>
+<span id="cb58-4"><a href="#cb58-4" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb58-5"><a href="#cb58-5" aria-hidden="true" tabindex="-1"></a>pd.income <span class="ot">&lt;-</span> <span class="fu">partial</span>(fit.orm, <span class="at">pred.var =</span> <span class="st">"income"</span>, <span class="at">pred.fun =</span> pfun.orm)</span>
+<span id="cb58-6"><a href="#cb58-6" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(pd.income, <span class="fu">aes</span>(<span class="at">x =</span> income, <span class="at">y =</span> yhat, <span class="at">linetype =</span> yhat.id, <span class="at">color =</span> yhat.id)) <span class="sc">+</span></span>
+<span id="cb58-7"><a href="#cb58-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">size =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb58-8"><a href="#cb58-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"Income (midpoint in thousands)"</span>) <span class="sc">+</span></span>
+<span id="cb58-9"><a href="#cb58-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Partial dependence"</span>) <span class="sc">+</span></span>
+<span id="cb58-10"><a href="#cb58-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_rug</span>(<span class="at">data =</span> <span class="fu">data.frame</span>(<span class="st">"income"</span> <span class="ot">=</span> <span class="fu">quantile</span>(rnes96<span class="sc">$</span>income, <span class="at">prob =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">9</span><span class="sc">/</span><span class="dv">10</span>)),</span>
+<span id="cb58-11"><a href="#cb58-11" aria-hidden="true" tabindex="-1"></a>           <span class="fu">aes</span>(<span class="at">x =</span> income), <span class="at">inherit.aes =</span> <span class="cn">FALSE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="lecture-5_files/figure-html/cell-40-output-1.png" width="420" height="420" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

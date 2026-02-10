@@ -1,0 +1,378 @@
+{
+ "cells": [
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# Install required package(s)\n",
+    "pkgs <- c(\"faraway\", \"ggplot2\", \" RPart\", \" RPart.plot\", \"partykit\", \"pdp\")\n",
+    "lib <- installed.packages()[, \"Package\"]\n",
+    "install.packages(setdiff(pkgs, lib))"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# Load WCGS data set from faraway package\n",
+    "data(wcgs, package = \"faraway\")\n",
+    "\n",
+    "head(wcgs)  # print first few records"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# Print general structure of object\n",
+    "str(wcgs)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# Extract the three columns of interest and print a summary of each\n",
+    "summary(wcgs[, c(\"chd\", \"height\", \"cigs\")])"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## Visualizing discrete data"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# Construct a pie chart of the (binary) response\n",
+    "ptab <- prop.table(table(wcgs$chd))  # convert frequencies to proportions\n",
+    "pie(ptab, main = \"Pie chart of Coronary Heart Disease\")"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# Bar chart\n",
+    "barplot(ptab, las = 1, col = \"forestgreen\")"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# Mosaic plot showing relationship between cigs and chd\n",
+    "plot(chd ~ cigs, data = wcgs) "
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "library(lattice)\n",
+    "\n",
+    "# Nonparametric density plot of height by chd\n",
+    "densityplot(~ height, groups = chd, data = wcgs, auto.key = TRUE)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "library(ggplot2)\n",
+    "\n",
+    "# Nonparametric density plot of height by chd using ggplot2\n",
+    "ggplot(wcgs, aes(x = height, color = chd)) + \n",
+    "  geom_density() +\n",
+    "  theme_bw()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# Boxplot of cigs vs. chd status\n",
+    "plot(cigs ~ chd, data = wcgs, col = c(2, 3))"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# Boxplot of height vs. chd status with notches\n",
+    "plot(height ~ chd, data = wcgs, col = c(2, 3), notch = TRUE)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# Detour: decision trees are immensely useful tools for exploring new data sets\n",
+    "# Fit a default CART-like decision tree \n",
+    "rpart.plot::rpart.plot(rpart::rpart(chd ~ ., data = wcgs))"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# Fit a default conditional inference tree\n",
+    "plot(partykit::ctree(chd ~ height + cigs, data = wcgs))"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## The Linear Probability Model"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "wcgs$y <- ifelse(wcgs$chd == \"no\", 0, 1)  # convert binary factory to a 0/1 indicator\n",
+    "\n",
+    "# Try fitting a linear model\n",
+    "wrong.fit <- lm(y ~ height + cigs, data = wcgs)\n",
+    "summary(wrong.fit)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "### Assumptions of the LR model\n",
+    "\n",
+    "* **Binary Response**: The response variable $Y$ must be binary (e.g., 0/1, yes/no, etc.)\n",
+    "* **Independence**: The observations must be independent of one another (i.e., no repeated measures)\n",
+    "* **Linearity**: There must be a linear relationship between the predictors and the *logit* of the response\n",
+    "* **No Multicollinearity**: The predictors should not be highly correlated with one another\n",
+    "* **Sample Size**: Since LR uses MLE, it typically requires a larger sample size than ordinary linear regression for the results to be reliable (asymptotic properties)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## Logistic Regression\n",
+    "\n",
+    "$E\left(Y|x_1, x_2, \dots\right) = \mu$
+",
+    "\n",
+    "Linear model (assume $y$ is normal):\n",
+    "\n",
+    "$\mu = \boldsymbol{\beta}\boldsymbol{X}$\n",
+    "\n",
+    "Generalized linear model (covers exponential family of distributions):\n",
+    "\n",
+    "$g\left(\mu\right) = \boldsymbol{\beta}\boldsymbol{X}$\n",
+    "\n",
+    "Logistic regression (assume $y$ is Bernoulli):\n",
+    "\n",
+    "$\mu = p \in \left[0, 1\right]$ and $g\left(\mu\right) = \log\left(\frac{p}{1 - p}\right)$"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# Mapping real numbers on the logit scale to the probability scale\n",
+    "x <- seq(from = -10, to = 10, length = 999)  \n",
+    "y <- 1 / (1 + exp(-x))  # same as y <- plogis(x) or y <- exp(x) / (1 + exp(x))\n",
+    "plot(x, y, type = \"l\", xlab = \"Logits\", ylab = \"Probability\")\n",
+    "abline(h = c(0, 1), lty = 2)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# Fit a generalized linear model (GLM); a logistic regression model, in this case\n",
+    "better.fit <- glm(chd ~ height + cigs, data = wcgs, family = binomial(link = \"logit\"))\n",
+    "summary(better.fit)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# Comparing models (analogous to general linear F-test for comparing nested linear models)\n",
+    "fit0 <- glm(chd ~ 1, family = binomial(link = \"logit\" ), data = wcgs)\n",
+    "fit3 <- glm(chd ~ height + cigs, family = binomial(link = \"logit\" ), data = wcgs)\n",
+    "\n",
+    "# What statistical hypothesis is being tested here?\n",
+    "anova(fit3, fit0, test = \"Chi\")"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## Effect visualization"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# Let's visualize the effect of height on the probability scale while holding cigs constant\n",
+    "newd <- data.frame(\"height\" = 60:80, \"cigs\" = 0)\n",
+    "pred <- predict(better.fit, newdata = newd, type = \"response\")\n",
+    "plot(newd$height, pred, type = \"l\", xlab = \"Height\", ylab = \"Predicted Probability\")"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "library(pdp)\n",
+    "\n",
+    "# Prediction wrapper that tells `pdp::partial()` how to compute predictions from given model\n",
+    "pfun <- function(object, newdata) {\n",
+    "  mean(predict(object, newdata = newdata, type = \"response\"))\n",
+    "}\n",
+    "\n",
+    "# Compute (approximate) partial dependence\n",
+    "pd <- partial(better.fit, pred.var = \"height\", pred.fun = pfun)\n",
+    "plot(pd, type = \"l\")"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "pd2 <- partial(better.fit, pred.var = c(\"height\", \"cigs\"), chull = TRUE, pred.fun = pfun, progress = \"text\")\n",
+    "lattice::wireframe(yhat ~ height * cigs, data = pd2, shade = TRUE)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## Variable selection"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# Backward elimination\n",
+    "fit.back <- MASS::stepAIC(better.fit, direction = \"backward\")\n",
+    "coef(fit.back)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# Forward selection\n",
+    "fit.forw <- MASS::stepAIC(fit0, direction = \"forward\")\n",
+    "coef(fit.forw)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# WTF?"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## Optimization (Under the hood)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# Response (as a binary 0/1 variable)\n",
+    "y <- wcgs$y\n",
+    "\n",
+    "# Model matrix; includes a column for the intercept by default\n",
+    "X <- model.matrix(~ height + cigs, data = wcgs)\n",
+    "\n",
+    "# Function to compute the negative log-likelihood (as a function of the betas)\n",
+    "nll <- function(beta) {\n",
+    "  lp <- X %*% beta\n",
+    "  -sum(y * lp - log(1 + exp(lp)))\n",
+    "}\n",
+    "\n",
+    "# Use general optimization\n",
+    "optim(coef(wrong.fit), fn = nll, \n",
+    "      control = list(\"maxit\" = 9999, \"reltol\" = 1e-20))"
+   ]
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "R",
+   "language": "R",
+   "name": "ir"
+  },
+  "language_info": {
+   "codemirror_mode": "r",
+   "file_extension": ".r",
+   "mimetype": "text/x-r-source",
+   "name": "R",
+   "pygments_lexer": "r",
+   "version": "4.2.3"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 4
+}

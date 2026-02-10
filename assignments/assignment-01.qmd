@@ -244,8 +244,11 @@ b. Suppose you want to allow both slope (of height) and intercept to be differen
 **Question 27:** (3 pts.) Explain the purpose of $k$-fold cross-validation in regression modeling. Why is it generally preferred over a single train-test split for assessing model performance? (2-3 sentences)
 
 
-**Question 28:** (3 pts.) Consider a dataset where the response variable $Y$ is binary (0 or 1). Explain why ordinary linear regression is not appropriate for modeling this relationship, and what problem arises if you try to use it. (2-3 sentences)
+**Question 28:** Consider a dataset where the response variable $Y$ is binary (0 or 1). Explain why ordinary linear regression is not appropriate for modeling this relationship, and what problem arises if you try to use it. (2-3 sentences)
 
 
-**Question 29 (Bonus):** (5 pts.) An analyst wanted to fit the regression model $Y_i = \beta_0 + \beta_1 X_{1i} + \beta_2 X_{2i} + \dots + \beta_p X_{p-1, i} + \epsilon_i$ by the method of least squares when it is known that $\beta_2 = 4$. How can the analyst obtain the desired fit using standard statistical software (e.g., R, Python, or SAS)? No need to run any code, just describe in general how you could accomplish this.
+**Question 29:** In the updated review slides, we discussed linear regression within the framework of Generalized Linear Models (GLMs). Identify and describe the three components of a GLM (Random Component, Systematic Component, and Link Function) specifically as they apply to the normal linear regression model.
+
+
+**Question 30 (Bonus):** (5 pts.) An analyst wanted to fit the regression model $Y_i = \beta_0 + \beta_1 X_{1i} + \beta_2 X_{2i} + \dots + \beta_p X_{p-1, i} + \epsilon_i$ by the method of least squares when it is known that $\beta_2 = 4$. How can the analyst obtain the desired fit using standard statistical software (e.g., R, Python, or SAS)? No need to run any code, just describe in general how you could accomplish this.
 

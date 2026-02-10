@@ -1,4 +1,4 @@
----
+--- 
 title: "Linear Regression"
 subtitle: "A Brief Review"
 author: "Brandon M. Greenwell, PhD"
@@ -89,8 +89,12 @@ values:
 
 ```{r import-ames}
 #| echo: true
+
+
 ames <- AmesHousing::make_ames()  # install.packages("AmesHousing")
+
 ames$Sale_Price <- ames$Sale_Price / 10000
+
 head(ames)
 ```
 
@@ -99,15 +103,14 @@ head(ames)
 
 We'll focus on a handful of variables:
 
-* `Sale_Price` - Sale price of the house / \$10K (response variable)
+* `Sale_Price` - Sale price of the house / $10K (response variable)
 * `Gr_Liv_Area` - Above grade (ground) living area square feet
-* `Overall_Qual⁠` - Rates the overall material and finish of the house
+* `Overall_Qual` - Rates the overall material and finish of the house
 
 
 ## Statistical relationships
 
 ```{r slr-sim, par=TRUE}
-#| par: true
 # Simulate data from different SLR models
 set.seed(101)  # for reproducibility
 x <- seq(from = 0, to = 4, length = 100)
@@ -127,51 +130,6 @@ for (i in 1:4) {
 ```
 
 
-## Are $X$ and $Y$ correlated?
-
-```{r pearson-corr, par=TRUE}
-plot(x, y[, 3], col = adjustcolor("cornflowerblue", alpha.f = 0.7),
-     pch = 19, xlab = "X", ylab = "Y")
-r <- round(cor(x, y[, 3]), digits = 3)
-legend("bottomright", legend = paste0("r = ", r), bty = "n", inset = 0.01)
-```
-
-
-## Pearson's correlation coefficient 
-
-* The (Pearson) correlation between two random variables $X$ and $Y$ is given by
-
-$$Cor\left(X, Y\right) = \rho = \frac{Cov\left(X,Y\right)}{\sigma_X\sigma_Y}$$
-
-* Given a sample of $n$ pairs $\left\{\left(x_i, y_i\right)\right\}_{i=1}^n$, we estimate $\rho$ with $r = S_{xy} / \sqrt{S_{xx}S_{yy}}$, where, for example, $$S_{xx} = \sum_{i=1}^n\left(x_i - \bar{x}\right)^2 \text{ and } S_{xy} = \sum_{i=1}^n\left(x_i - \bar{x}\right)\left(y_i - \bar{y}\right)$$
-
-
-## Pearson's correlation coefficient
-
-* Range: $-1 \le r \le 1$
-
-* What does it measure?
-
-  - Pearson's correlation coefficient is a **unitless** measure of the strength of the **linear** relationship between two variables
-
-* Other useful correlation measures also exist:
-
-  - Spearman's rank correlation (or Spearman's $\rho$) only assumes a *monotonic relationship* between $X$ and $Y$
-
-    * Equivalent to computing $r$ on the *ranks* of $X$ and $Y$
-
-
-## Pearson's correlation coefficient
-
-* It is common to test the hypothesis $H_0: \rho = 0$ vs. $H_1: \rho \ne 0$
-
-  - Rejecting $H_0$ is only evidence that $\rho$ is **not exactly zero** (NOT VERY USEFUL, OR INTERESTING)
-
-  - A $p$-value **does not measure the magnitude/strength of the (linear) association**
-
-  - Sample size affects the $p$-value! :scream:
-
-
 ## Are $x$ and $y$ correlated?
 
 ```{r spurious-corr-1}
@@ -182,33 +140,6 @@ x <- rnorm(n)
 y <- 1 + 0.001*x + rnorm(n)
 plot(x, y, asp = 1, col = adjustcolor("black", alpha.f = 0.3))
 ```
-
-
-## Pearson's correlation coefficient
-
-::: columns
-::: {.column width="50%"}
-```{r spurious-corr-small}
-set.seed(1050)  # for reproducibility
-n <- 100
-x <- rnorm(n)
-y <- 1 + 0.001*x + rnorm(n)
-cor.test(x, y)
-```
-:::
-
-::: {.column width="50%"}
-```{r spurious-corr-large}
-set.seed(1051)  # for reproducibility
-n <- 10000000  # n = ten million
-x <- rnorm(n)
-y <- 1 + 0.001*x + rnorm(n)
-cor.test(x, y)
-```
-:::
-:::
-
-The real question is, are $X$ and $Y$ *practically* uncorrelated?
 
 
 ## Correlation is not causation
@@ -238,76 +169,31 @@ The real question is, are $X$ and $Y$ *practically* uncorrelated?
 Also, see [this talk](https://statmodeling.stat.columbia.edu/wp-content/uploads/2012/03/tarpey.pdf) by my old adviser, Thad Tarpey: "All Models are Right... most are useless."
 
 
+## Modeling the mean response
+
+* Assume that $Y \sim N\left(\mu, \sigma^2\right)$, where
+
+$$\mu = \mu\left(x\right) = \beta_0 + \beta_1 x = E\left(Y|x\right)$$
+
+. . .
+
+* In other words: $Y \sim N\left(\beta_0 + \beta_1 x, \sigma^2\right)$
+* Alternatively, we could write $Y = \beta_0 + \beta_1 x + \epsilon$, where $\epsilon \sim N\left(0, \sigma^2\right)$
+* This is called the simple linear regression (SLR) model
+
+
+## The idea behind SLR
+
+![](https://2012books.lardbucket.org/books/beginning-statistics/section_14/88a6e0919d8617c025826c1e187ad591.jpg)
+
+[Image source](https://2012books.lardbucket.org/books/beginning-statistics/s14-03-modelling-linear-relationships.html)
+
+
 # Simple Linear Regression (SLR)
-
-## Pearson's correlation vs. SLR
-
-* There's a formal relationship between Pearson's correlation coefficient ($\rho$) and the SLR model
-
-* "Simple" linear relationships can be described by an *intercept* and *slope*:
-
-  - $y = mx + b$ (algebra)
-  - $\mu = \beta_0 + \beta_1x$ (statistics)
-
-* "Simple" here means two variables, $x$ and $y$ (but $y$ can be linearly related to several variables)
-
-
-## Example: Ames housing
-
-Check out [this paper](http://jse.amstat.org/v19n3/decock.pdf) for useful background on the Ames housing data in regression 
-
-
-## Example: Ames housing
-
-```{r ames-explore}
-head(cbind(ames$Sale_Price, ames$Gr_Liv_Area))
-cor.test(ames$Sale_Price, y = ames$Gr_Liv_Area)  # see ?cor.test
-```
-
-This doesn't tell us much about the nature of the linear relationship between `Gr_Liv_Area` and `Sale_Price`
-
-
-## Statistical relationships
-
-```{r statistical-relationships}
-library(ggplot2) 
-
-p1 <- ggplot(investr::crystal, aes(x = time, y = weight)) +
-  geom_point() +
-  labs(x = "Time (hours)", 
-       y = "Weight (grams)", 
-       title = "Crystal weight data")
-p2 <- ggplot(investr::arsenic, aes(x = actual, y = measured)) +
-  geom_point() +
-  labs(x = "True amount of arsenic", 
-       y = "Measured amount of arsenic",
-       title = "Arsenic concentration data")
-gridExtra::grid.arrange(p1, p2, nrow = 1)
-```
-
-
-## Examples of statistical relationships
-
--   Simple linear regression: $Y = \beta_0 + \beta_1 X + \epsilon$
-
--   Multiple linear regression: $Y = \beta_0 + \sum_{i=1}^p \beta_p X_p + \epsilon$
-
--   Polynomial regression: $Y = \beta_0 + \sum_{i=1}^p \beta_p X^p + \epsilon$
-
--   Logarithmic: $Y = \beta_0 + \beta_1 \log\left(X + 0.1\right) + \epsilon$
-
--   Nonlinear regression: $Y = \frac{\beta_1 X}{\left(\beta_2 + X\right)} + \epsilon$
-
--   Multiplicative: $Y = \beta X \epsilon$
-
-    -   $\log\left(Y\right) = \alpha + \log\left(X\right) + \log\left(\epsilon\right)$
-
-Assuming $\epsilon \sim D\left(\mu, \sigma\right)$
-
 
 ## Simple linear regression (SLR)
 
-* Data: $\left\{\left(X_i, Y_i\right)\right\}_{i=1}^n$
+* Data: $\left\{(X_i, Y_i)\right\}_{i=1}^n$
 
 * Model: $Y_i = \beta_0 + \beta_1 X_i + \epsilon_i$
 
@@ -332,8 +218,6 @@ For $i$ and $j$ in $\left\{1, 2, \dots, n\right\}$ and $i \ne j$
 
 3)  $\quad Cov\left(\epsilon_i, \epsilon_j\right) = 0$ (independence)
 
-
-
 Assumptions 1--3 can be summarized as $\epsilon_i \stackrel{iid}{\sim} D\left(0, \sigma^2\right)$, where $iid$ refers to [independent and identically distributed](https://en.wikipedia.org/wiki/Independent_and_identically_distributed_random_variables).
 
 
@@ -352,7 +236,7 @@ Assumptions 1--3 can be summarized as $\epsilon_i \stackrel{iid}{\sim} D\left(0,
 
 ## Inference for a single variable {.smaller}
 
-* Is it useful to test the hypothesis that `Sale_Price` = \$160K?
+* Is it useful to test the hypothesis that `Sale_Price` = $160K$? 
 
 . . .
 
@@ -362,9 +246,9 @@ Assumptions 1--3 can be summarized as $\epsilon_i \stackrel{iid}{\sim} D\left(0,
 
 * We're more interested in questions such as:
 
-  - What is the chance that `Sale_Price` > \$160K? (above median sale price)
-  - What is the chance that `Sale_Price` < \$105K? (lowest decile)
-  - What is the chance that \$129,500 < `Sale_Price` < \$213,500? (within IQR)
+  - What is the chance that `Sale_Price` > $160K$? (above median sale price)
+  - What is the chance that `Sale_Price` < $105K$? (lowest decile)
+  - What is the chance that $129,500 < `Sale_Price` < $213,500$? (within IQR)
 
 
 ## Distribution of `Sale_Price`
@@ -373,45 +257,10 @@ Can look at historgram and empirical [CDF](https://en.wikipedia.org/wiki/Cumulat
 
 ```{r}
 #| echo: true
-#| par: true
 par(mfrow = c(1, 2), las = 1)
 hist(ames$Sale_Price, br = 50, xlab = "Sale price ($)", freq = FALSE, main = "")
 plot(ecdf(ames$Sale_Price), xlab = "Sale price ($)", main = "",
      col = adjustcolor(1, alpha.f = 0.1))
-```
-
-
-## Distribution of `Sale_Price`
-
-* Histograms and ECDFs are nonparammetric in nature
-* A simple parametric approach might assume a particular distribution for `Sale_Price`
-* For instance, we might assume `Sale_Price` $\sim N\left(\mu, \sigma^2\right)$
-* How can we estimate $\mu$ and $\sigma^2$?
-
-. . .
-
-```{r}
-#| echo: true
-# Maximum likelihiid estimates
-c("sample mean" = mean(ames$Sale_Price), "sample stdev" = sd(ames$Sale_Price))
-```
-
-. . .
-
-* Is the normal distribution a reasonable assumption here?
-
-
-## Normal QQ plot
-
-* Normal quantile-quantile (Q-Q) plot* can be used to asses the "normalityness" of a set of observations
-
-* Q-Q plots can, in general, be used to compare data with any distribution!
-
-```{r}
-#| echo: true
-#| par: true
-qqnorm(ames$Sale_Price, col = 2, las = 1)
-qqline(ames$Sale_Price)
 ```
 
 
@@ -421,51 +270,9 @@ qqline(ames$Sale_Price)
 
   - I STRONGLY ADVISE AGAINST USING THEM!
   
-* No data is normally distributes, what we care about is whether enough a normal approximation is close enough!
+* No data is normally distributed, what we care about is whether a normal approximation is close enough!
 
-* Normality tests provide a $p$-value, which only gives a yes/no conclusion
-
-
-## Normality tests :vomiting_face: 
-
-Recall that $p$-values are a function of sample size!
-
-```{r}
-#| echo: true
-# Shapiro-Wilk test results vs. sample size
-set.seed(101)  # for reproducibility
-x <- replicate(100, c(
-  shapiro.test(rt(10, df = 40))$p.value,
-  shapiro.test(rt(100, df = 40))$p.value,
-  shapiro.test(rt(500, df = 40))$p.value,
-  shapiro.test(rt(1000, df = 40))$p.value,
-  shapiro.test(rt(2500, df = 40))$p.value,
-  shapiro.test(rt(5000, df = 40))$p.value
-))
-rownames(x) <- paste0("n=", c(10, 100, 500, 1000, 2500, 5000))
-rowMeans(x < 0.05)
-```
-
-
-## Normality tests :vomiting_face: 
-
-```{r}
-#| echo: false
-#| par: true
-x <- seq(from = -5, to = 5, length = 500)
-y1 <- dnorm(x)
-y2 <- dt(x, df = 40)
-# palette("Okabe-Ito")
-plot(x, y1, type = "l", xlab = "", ylab = "Density")
-lines(x, y2, col = 2)
-legend("topleft", legend = c("Standard normal", "t (df = 40)"), lty = 1,
-       col = c(1, 2), inset = 0.01, bty = "n")
-# palette("default")
-```
-
-1. Are these two distributions significantly different?
-
-2. Are these two distributions practically different?
+* Normality tests provide a $p$-value, which only gives a yes/no conclusion and is heavily dependent on sample size.
 
 
 ## What can we do if the normality assumption isn't justified?
@@ -477,59 +284,6 @@ legend("topleft", legend = c("Standard normal", "t (df = 40)"), lty = 1,
 * Try a more appropriate distribution (e.g., Poisson or gamma distribution)
 
 * Try more advanced approaches, like the nonparametric [bootstrapping](https://en.wikipedia.org/wiki/Bootstrapping_(statistics))!
-
-
-## Modeling the mean response
-
-* Assume that $Y \sim N\left(\mu, \sigma^2\right)$, where
-
-$$\mu = \mu\left(x\right) = \beta_0 + \beta_1 x = E\left(Y|x\right)$$
-
-. . .
-
-* In other words: $Y \sim N\left(\beta_0 + \beta_1 x, \sigma^2\right)$
-* Alternatively, we could write $Y = \beta_0 + \beta_1 x + \epsilon$, where $\epsilon \sim N\left(0, \sigma^2\right)$
-* This is called the simple linear regression (SLR) model
-
-
-## The idea behind SLR
-
-![](https://2012books.lardbucket.org/books/beginning-statistics/section_14/88a6e0919d8617c025826c1e187ad591.jpg)
-
-[Image source](https://2012books.lardbucket.org/books/beginning-statistics/s14-03-modelling-linear-relationships.html)
-
-
-## Arsenic experiment example
-
-```{r arsenic-plot}
-#| echo: true
-#| par: true
-plot(investr::arsenic, las = 1)  # see ?investr::arsenic for details
-```
-
-
-## Is linear regression reasonable here?
-
-```{r sim-quadratic}
-x <- rep(c(1:10 / 10, 1.5, 2), each = 30)
-y <- 1 + 2*x^2 + rnorm(length(x), sd = 1)
-par(mfrow = c(1, 2), las = 1)
-plot(x, y, col = "dodgerblue2")
-#abline(lm(y ~ x), lwd = 2)
-hist(y, main = "", col = "dodgerblue2", border = "white")
-```
-
-
-## Is linear regression reasonable here?
-
-```{r resid-quadratic}
-#| echo: true
-#| par: true
-fit <- lm(y ~ x)
-res <- residuals(fit)
-qqnorm(res, las = 1)
-qqline(res, col = 2)
-```
 
 
 ## Least squares (LS) estimation
@@ -587,19 +341,6 @@ Which assumptions seem violated to some degree?
 * Many other kinds of residuals exist for different purposes (e.g., standardized, [studentized](https://en.wikipedia.org/wiki/Studentized_residual), jackknife or [PRESS](https://en.wikipedia.org/wiki/PRESS_statistic) residuals, etc.)
 
 
-## Properties of the residuals
-
-* $\sum_{i=1}^n e_i = 0$ 
-
-* $\sum_{i=1}^n e_i^2$ is a minimum
-
-* $\sum_{i=1}^n X_ie_i = 0$
-
-* $\sum_{i=1}^n \hat{Y}_ie_i = 0$
-
-* The LS regression line passes through the point $\left(\bar{X}, \bar{Y}\right)$ (i.e., the center of the training data)
-
-
 ## What can residual plots tell us?
 
 * Residuals vs. predictor values (**checking non-linearity**).
@@ -620,7 +361,6 @@ Which assumptions seem violated to some degree?
 Residual analysis:
 ```{r ames-slr-resid}
 #| echo: true
-#| par: true
 par(mfrow = c(2, 3), las = 1)
 plot(fit, which = 1:6)
 ```
@@ -640,20 +380,11 @@ abline(fit2, lwd = 2, col = 2)  # add SLR fit
 ```
 
 
-## Let's try a log transformation
-
-```{r ames-log-summary}
-#| echo: true
-summary(fit2)
-```
-
-
 ## `log(Sale_Price) ~ Gr_Liv_Area`
 
 Residual analysis:
 ```{r ames-log-resid}
 #| echo: true
-#| par: true
 par(mfrow = c(2, 3), las = 1)
 plot(fit2, which = 1:6)
 ```
@@ -680,7 +411,7 @@ Any better?
 
 * A second order model in a single predictor: $$Y = \beta_0 + \beta_1 X + \beta_2 X^2 + \epsilon$$
 
-* A *k*-th order model in a single predictor (Typically $k \le 3$): $$Y = \beta_0 + \sum_{j=1}^k\beta_j X^j + \epsilon$$ 
+* A *k*-th order model in a single predictor (Typically $k \le 3$): $$Y = \beta_0 + \sum_{j=1}^k\beta_j X^j + \epsilon$$
 
 
 ## Example: paper strength data
@@ -692,109 +423,17 @@ Data concerning the strength of kraft paper and the percentage of hardwood in th
 # Load the hardwood conentration data
 url <- "https://bgreenwell.github.io/uc-bana7052/data/hardwood.csv"
 hardwood <- read.csv(url)
-
-# Print first few observations
-head(hardwood)
 ```
-
-
-## Example: paper strength data
-
-```{r hardwood-plot}
-#| echo: true
-#| par: true
-plot(hardwood, pch = 19)
-```
-
-
-## Example: paper strength data
 
 ```{r hardwood-slr}
 #| echo: true
-#| par: true
 fit1 <- lm(TsStr ~ HwdCon, data = hardwood)
-investr::plotFit(fit1, pch = 19, col.fit = "red2")
-```
-
-
-## Example: paper strength data
-
-```{r hardwood-resid}
-#| echo: true
-#| par: true
-par(mfrow = c(1, 2), las = 1)
-
-# Plot residuals vs HwdCon (i.e., X)
-par(mfrow = c(1, 2))
-plot(x = hardwood$HwdCon, y = residuals(fit1), xlab = "HwdCon",
-     ylab = "Residuals", main = "Residuals vs HwdCon")
-abline(h = 0, lty = "dotted")
-plot(fit1, which = 1, caption = "", main = "Residuals vs Fitted")
-```
-
-
-## Example: paper strength data
-
-```{r hardwood-poly2}
-#| echo: true
-#| par: true
 fit2 <- lm(TsStr ~ HwdCon + I(HwdCon^2), data = hardwood)
-investr::plotFit(fit2, pch = 19, col.fit = "red2")
+
+par(mfrow = c(1, 2), las = 1)
+investr::plotFit(fit1, pch = 19, col.fit = "red2", main = "Linear Fit")
+investr::plotFit(fit2, pch = 19, col.fit = "red2", main = "Quadratic Fit")
 ```
-
-
-## Example: paper strength data
-
-```{r hardwood-poly-compare}
-#| echo: true
-#| par: true
-par(mfrow = c(2, 3), las = 1)
-for (i in 1:6) {  # try higher-order models
-  fit <- lm(TsStr ~ poly(HwdCon, degree = i), data = hardwood)
-  investr::plotFit(fit, main = paste("Degree =", i))
-}
-```
-
-
-## Example: paper strength data
-
-```{r hardwood-poly-ci}
-#| echo: true
-#| par: true
-par(mfrow = c(2, 3))
-for (i in 1:6) {  # try higher-order models
-  fit <- lm(TsStr ~poly(HwdCon, degree = i), data = hardwood)
-  investr::plotFit(fit, main = paste("Degree =", i), 
-                   interval = "confidence", shade = TRUE,
-                   xlim = c(-10, 30))
-}
-```
-
-
-## Polynomial regression
-
-Some cautions :warning:
-
-Keep the order of the model as low as possible
-
-* Avoid interpolating the data or *over fitting*
-
-* Use the simplest model possible to explain the data, but no simpler (*parsimony*)
-
-* An $n - 1$ order model can perfectly fit a data set with $n$ observations (Why is this bad :thinking:)
-
-
-## Polynomial regression
-
-Two model-building strategies:
-
-1. Fit the lowest order polynomial possible and build up (forward selection)
-    
-2. Fit the highest order polynomial of interest, and remove terms one at a time (backward elimination)
-    
-These two procedures may not result in the same final model
-
-Increasing the order can result in an ill-conditioned $\boldsymbol{X}^\top\boldsymbol{X}$ and [multicollinearity](https://en.wikipedia.org/wiki/Multicollinearity) 
 
 
 ## Categorical variables
@@ -803,40 +442,6 @@ Increasing the order can result in an ill-conditioned $\boldsymbol{X}^\top\bolds
 
   - [Dummy encoding](https://en.wikipedia.org/wiki/Dummy_variable_(statistics)) (nominal)
   - Orthogonal polynomials (ordinal)
-
-
-## Categorical variables
-
-Let's look at two (nominal) categorical variables:
-
-```{r categorical-table}
-#| echo: true
-table(ames$Central_Air)
-table(ames$Paved_Drive)
-```
-
-
-## Categorical variables
-
-```{r categorical-central-air}
-#| echo: true
-#| par: true
-plot(log(Sale_Price) ~ Central_Air, data = ames, las = 1, col = c(2, 3))
-```
-
-
-## Categorical variables
-
-```{r categorical-paved-drive}
-#| echo: true
-#| par: true
-plot(log(Sale_Price) ~ Paved_Drive, data = ames, las = 1, col = c(2, 3, 4))
-```
-
-If one of these homes downgraded from a paved driveway to a gravel driveway, would that **cause** the sale price to decrease? (Think very carefully here!)
-
-
-## Categorical variables
 
 R dummy encodes nominal factors by default:
 
@@ -899,11 +504,19 @@ Adjusted R-squared ($R_{adj}^2$)
 * [Leakage](https://reproducible.cs.princeton.edu/) is a huge concern here, so data splitting ALWAYS has to be done carefully!
 
 
-## Data splitting: $k$-fold cross-validation {.smaller}
+## Linear Regression as a GLM
 
-![](https://bradleyboehmke.github.io/HOML/images/cv.png)
+We can define the (normal) linear regression model as a specific type of **Generalized Linear Model (GLM)**:
 
-The [PRESS statistic](https://en.wikipedia.org/wiki/PRESS_statistic) in linear regression is a special case ($k = n$) we get for free!
+1.  **Random Component:** The response variable $Y$ follows a normal distribution: $Y \sim N(\mu, \sigma^2)$.
 
+2.  **Systematic Component:** The linear predictor $\alpha$ is a linear function of the regressors: $\eta = \boldsymbol{x}^\top\boldsymbol{\beta}$.
+
+3.  **Link Function:** The link function $g(\cdot)$ connects the mean response $\mu$ to the linear predictor $\eta$. For linear regression, we use the **identity link**:
+    $$g(\mu) = \mu = \eta$$
+
+This framework allows us to generalize to other types of response variables (e.g., binary, count) by changing the random component and the link function!
 
 ## Questions?
+
+```

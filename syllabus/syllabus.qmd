@@ -1,6 +1,7 @@
 ---
 title: "Syllabus"
-format: html
+format: 
+  pdf: default
 ---
 ![Lindner College of Business logo](images/lindner_logo.jpg)
 
@@ -60,21 +61,25 @@ This course aligns with PACE, the Lindner College of Business platform for devel
 
 ## **P – Professionalism**
 
-*   Enhance oral & written ***communication*** through technical documentation and project presentations.
-*   Practice professional habits of punctuality, preparation, respect and participation in modern software development environments.
+* Enhance oral & written ***communication*** through technical documentation, code comments, and project presentations
+* Develop and practice ***teamwork*** skills through collaborative coding projects and version control workflows
+* Practice professional habits of punctuality, preparation, respect and participation in modern software development environments
 
 ## **A – Academics**
 
-*   Develop foundational knowledge of ***statistical modeling concepts*** and their applications in real-world business problems.
-*   Apply rigorous ***analytical techniques to critically analyze and solve technical problems*** using data.
+* Develop foundational knowledge of ***programming concepts*** and their applications in real-world software development
+* Begin applying programming and ***AI-assisted development techniques to critically analyze and solve technical problems***
 
 ## **C – Character**
 
-*   Understand importance of ***ethics and social responsibility*** in statistical modeling and data analysis.
+* Learn and apply ***leadership*** techniques for project management in software development (plan, brief, execute, debrief)
+* Build an understanding and initial skills of ***managing varied backgrounds and perspectives*** in diverse development teams
+* Understand importance of ***ethics and social responsibility*** in AI-assisted development and software engineering practices
 
 ## **E – Engagement** 
 
-*   Develop awareness and appreciation of ***involvement*** in the data science community.
+* Build understanding of importance and practices of ***networking*** through interactions with the developer community and open-source contributions
+* Develop awareness and appreciation of ***involvement*** in technology communities, coding bootcamps, and professional development opportunities
 
 # VIII. Instructional Methods:
 
@@ -104,52 +109,3 @@ Late submissions will be penalized 10% per calendar day unless prior arrangement
 90% = A-	87% = B+	84% = B  
 80% = B-	77% = C+	74% = C  
 70% = C-	60% = D	Below 60% = F
-
-# XII. Course Schedule:
-
-| Week | Module | Topic | Assignment |
-|:-----|:-------|:------|:-----------|
-| 1 | Linear Regression | Linear Regression: A Brief Review | **Assignment 01** |
-| 2 | Logistic Regression | Logistic Regression (Part I): Binary Outcomes | **Assignment 02** |
-| 3 | Logistic Regression | Logistic Regression (Part II): Model Evaluation | **Assignment 03** |
-| 4 | Logistic Regression | Logistic Regression (Part III): Advanced Topics | **Assignment 04** |
-| 5 | GLMs for Multiclass Data | Regression for Multinomial and Ordinal Outcomes | **Assignment 05** |
-| 6 | Count Regression | Regression for Counts and Rates | **Assignment 06** |
-| 7 | Final Exam | Comprehensive Final Exam | **Final Exam** |
-
-### Detailed Session Schedule:
-
-#### Week 1: Linear Regression
-*   **Topic:** Linear Regression: A Brief Review
-*   **Content:** Simple and multiple linear regression, assumptions, diagnostics, and interpretation.
-*   **Deliverable:** Assignment 01
-
-#### Week 2: Logistic Regression (Part I)
-*   **Topic:** Logistic Regression for Binary Outcomes
-*   **Content:** Modeling binary data, the logistic function, maximum likelihood estimation, and interpretation of coefficients (odds ratios).
-*   **Deliverable:** Assignment 02
-
-#### Week 3: Logistic Regression (Part II)
-*   **Topic:** Model Evaluation
-*   **Content:** Assessing model performance, confusion matrices, ROC curves, AUC, and calibration plots.
-*   **Deliverable:** Assignment 03
-
-#### Week 4: Logistic Regression (Part III)
-*   **Topic:** Advanced Topics
-*   **Content:** Variable selection, regularization (Lasso, Ridge), and "dealing" with imbalanced data.
-*   **Deliverable:** Assignment 04
-
-#### Week 5: Regression for Multiclass Data
-*   **Topic:** Multinomial and Ordinal Regression
-*   **Content:** Extending logistic regression to categorical outcomes with more than two levels (nominal and ordinal).
-*   **Deliverable:** Assignment 05
-
-#### Week 6: Count Regression
-*   **Topic:** Regression for Counts and Rates
-*   **Content:** Modeling count data using Poisson regression, overdispersion, and Negative Binomial regression.
-*   **Deliverable:** Assignment 06
-
-#### Week 7: Final Exam
-*   **Topic:** Final Assessment
-*   **Content:** Comprehensive evaluation of all course topics.
-*   **Deliverable:** Final Exam due

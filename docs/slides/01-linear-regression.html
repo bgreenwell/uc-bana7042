@@ -267,8 +267,10 @@ Brandon M. Greenwell, PhD
 <details class="code-fold">
 <summary>Show R code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a></a>ames <span class="ot">&lt;-</span> AmesHousing<span class="sc">::</span><span class="fu">make_ames</span>()  <span class="co"># install.packages("AmesHousing")</span></span>
-<span id="cb1-2"><a></a>ames<span class="sc">$</span>Sale_Price <span class="ot">&lt;-</span> ames<span class="sc">$</span>Sale_Price <span class="sc">/</span> <span class="dv">10000</span></span>
-<span id="cb1-3"><a></a><span class="fu">head</span>(ames)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb1-2"><a></a></span>
+<span id="cb1-3"><a></a>ames<span class="sc">$</span>Sale_Price <span class="ot">&lt;-</span> ames<span class="sc">$</span>Sale_Price <span class="sc">/</span> <span class="dv">10000</span></span>
+<span id="cb1-4"><a></a></span>
+<span id="cb1-5"><a></a><span class="fu">head</span>(ames)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
 <div data-pagedtable="false">
@@ -285,7 +287,7 @@ Brandon M. Greenwell, PhD
 <ul>
 <li><code>Sale_Price</code> - Sale price of the house / $10K (response variable)</li>
 <li><code>Gr_Liv_Area</code> - Above grade (ground) living area square feet</li>
-<li><code>Overall_Qual⁠</code> - Rates the overall material and finish of the house</li>
+<li><code>Overall_Qual</code> - Rates the overall material and finish of the house</li>
 </ul>
 </section>
 <section id="statistical-relationships" class="slide level2">
@@ -314,124 +316,19 @@ Brandon M. Greenwell, PhD
 </div>
 <img data-src="01-linear-regression_files/figure-revealjs/slr-sim-1.png" class="quarto-figure quarto-figure-center r-stretch" style="width:100.0%"></section>
 <section id="are-x-and-y-correlated" class="slide level2">
-<h2>Are <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> correlated?</h2>
-<div class="cell" data-layout-align="center" data-par="true">
-<details class="code-fold">
-<summary>Show R code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a></a><span class="fu">plot</span>(x, y[, <span class="dv">3</span>], <span class="at">col =</span> <span class="fu">adjustcolor</span>(<span class="st">"cornflowerblue"</span>, <span class="at">alpha.f =</span> <span class="fl">0.7</span>),</span>
-<span id="cb3-2"><a></a>     <span class="at">pch =</span> <span class="dv">19</span>, <span class="at">xlab =</span> <span class="st">"X"</span>, <span class="at">ylab =</span> <span class="st">"Y"</span>)</span>
-<span id="cb3-3"><a></a>r <span class="ot">&lt;-</span> <span class="fu">round</span>(<span class="fu">cor</span>(x, y[, <span class="dv">3</span>]), <span class="at">digits =</span> <span class="dv">3</span>)</span>
-<span id="cb3-4"><a></a><span class="fu">legend</span>(<span class="st">"bottomright"</span>, <span class="at">legend =</span> <span class="fu">paste0</span>(<span class="st">"r = "</span>, r), <span class="at">bty =</span> <span class="st">"n"</span>, <span class="at">inset =</span> <span class="fl">0.01</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
-
-</div>
-<img data-src="01-linear-regression_files/figure-revealjs/pearson-corr-1.png" class="quarto-figure quarto-figure-center r-stretch" style="width:100.0%"></section>
-<section id="pearsons-correlation-coefficient" class="slide level2">
-<h2>Pearson’s correlation coefficient</h2>
-<ul>
-<li>The (Pearson) correlation between two random variables <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> is given by</li>
-</ul>
-<p><span class="math display">\[Cor\left(X, Y\right) = \rho = \frac{Cov\left(X,Y\right)}{\sigma_X\sigma_Y}\]</span></p>
-<ul>
-<li>Given a sample of <span class="math inline">\(n\)</span> pairs <span class="math inline">\(\left\{\left(x_i, y_i\right)\right\}_{i=1}^n\)</span>, we estimate <span class="math inline">\(\rho\)</span> with <span class="math inline">\(r = S_{xy} / \sqrt{S_{xx}S_{yy}}\)</span>, where, for example, <span class="math display">\[S_{xx} = \sum_{i=1}^n\left(x_i - \bar{x}\right)^2 \text{ and } S_{xy} = \sum_{i=1}^n\left(x_i - \bar{x}\right)\left(y_i - \bar{y}\right)\]</span></li>
-</ul>
-</section>
-<section id="pearsons-correlation-coefficient-1" class="slide level2">
-<h2>Pearson’s correlation coefficient</h2>
-<ul>
-<li><p>Range: <span class="math inline">\(-1 \le r \le 1\)</span></p></li>
-<li><p>What does it measure?</p>
-<ul>
-<li>Pearson’s correlation coefficient is a <strong>unitless</strong> measure of the strength of the <strong>linear</strong> relationship between two variables</li>
-</ul></li>
-<li><p>Other useful correlation measures also exist:</p>
-<ul>
-<li><p>Spearman’s rank correlation (or Spearman’s <span class="math inline">\(\rho\)</span>) only assumes a <em>monotonic relationship</em> between <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span></p>
-<ul>
-<li>Equivalent to computing <span class="math inline">\(r\)</span> on the <em>ranks</em> of <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span></li>
-</ul></li>
-</ul></li>
-</ul>
-</section>
-<section id="pearsons-correlation-coefficient-2" class="slide level2">
-<h2>Pearson’s correlation coefficient</h2>
-<ul>
-<li><p>It is common to test the hypothesis <span class="math inline">\(H_0: \rho = 0\)</span> vs.&nbsp;<span class="math inline">\(H_1: \rho \ne 0\)</span></p>
-<ul>
-<li><p>Rejecting <span class="math inline">\(H_0\)</span> is only evidence that <span class="math inline">\(\rho\)</span> is <strong>not exactly zero</strong> (NOT VERY USEFUL, OR INTERESTING)</p></li>
-<li><p>A <span class="math inline">\(p\)</span>-value <strong>does not measure the magnitude/strength of the (linear) association</strong></p></li>
-<li><p>Sample size affects the <span class="math inline">\(p\)</span>-value! <span class="emoji" data-emoji="scream">😱</span></p></li>
-</ul></li>
-</ul>
-</section>
-<section id="are-x-and-y-correlated-1" class="slide level2">
 <h2>Are <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span> correlated?</h2>
 <div class="cell" data-layout-align="center" data-par="true">
 <details class="code-fold">
 <summary>Show R code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a></a><span class="fu">set.seed</span>(<span class="dv">1051</span>)  <span class="co"># for reproducibility</span></span>
-<span id="cb4-2"><a></a>n <span class="ot">&lt;-</span> <span class="dv">1000</span> </span>
-<span id="cb4-3"><a></a>x <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n)</span>
-<span id="cb4-4"><a></a>y <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">+</span> <span class="fl">0.001</span><span class="sc">*</span>x <span class="sc">+</span> <span class="fu">rnorm</span>(n)</span>
-<span id="cb4-5"><a></a><span class="fu">plot</span>(x, y, <span class="at">asp =</span> <span class="dv">1</span>, <span class="at">col =</span> <span class="fu">adjustcolor</span>(<span class="st">"black"</span>, <span class="at">alpha.f =</span> <span class="fl">0.3</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a></a><span class="fu">set.seed</span>(<span class="dv">1051</span>)  <span class="co"># for reproducibility</span></span>
+<span id="cb3-2"><a></a>n <span class="ot">&lt;-</span> <span class="dv">1000</span> </span>
+<span id="cb3-3"><a></a>x <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n)</span>
+<span id="cb3-4"><a></a>y <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">+</span> <span class="fl">0.001</span><span class="sc">*</span>x <span class="sc">+</span> <span class="fu">rnorm</span>(n)</span>
+<span id="cb3-5"><a></a><span class="fu">plot</span>(x, y, <span class="at">asp =</span> <span class="dv">1</span>, <span class="at">col =</span> <span class="fu">adjustcolor</span>(<span class="st">"black"</span>, <span class="at">alpha.f =</span> <span class="fl">0.3</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 
 </div>
 <img data-src="01-linear-regression_files/figure-revealjs/spurious-corr-1-1.png" class="quarto-figure quarto-figure-center r-stretch" style="width:100.0%"></section>
-<section id="pearsons-correlation-coefficient-3" class="slide level2">
-<h2>Pearson’s correlation coefficient</h2>
-<div class="columns">
-<div class="column" style="width:50%;">
-<div class="cell" data-layout-align="center">
-<details class="code-fold">
-<summary>Show R code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a></a><span class="fu">set.seed</span>(<span class="dv">1050</span>)  <span class="co"># for reproducibility</span></span>
-<span id="cb5-2"><a></a>n <span class="ot">&lt;-</span> <span class="dv">100</span></span>
-<span id="cb5-3"><a></a>x <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n)</span>
-<span id="cb5-4"><a></a>y <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">+</span> <span class="fl">0.001</span><span class="sc">*</span>x <span class="sc">+</span> <span class="fu">rnorm</span>(n)</span>
-<span id="cb5-5"><a></a><span class="fu">cor.test</span>(x, y)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-    Pearson's product-moment correlation
-
-data:  x and y
-t = -0.0028012, df = 98, p-value = 0.9978
-alternative hypothesis: true correlation is not equal to 0
-95 percent confidence interval:
- -0.1966901  0.1961461
-sample estimates:
-          cor 
--0.0002829617 </code></pre>
-</div>
-</div>
-</div><div class="column" style="width:50%;">
-<div class="cell" data-layout-align="center">
-<details class="code-fold">
-<summary>Show R code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a></a><span class="fu">set.seed</span>(<span class="dv">1051</span>)  <span class="co"># for reproducibility</span></span>
-<span id="cb7-2"><a></a>n <span class="ot">&lt;-</span> <span class="dv">10000000</span>  <span class="co"># n = ten million</span></span>
-<span id="cb7-3"><a></a>x <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n)</span>
-<span id="cb7-4"><a></a>y <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">+</span> <span class="fl">0.001</span><span class="sc">*</span>x <span class="sc">+</span> <span class="fu">rnorm</span>(n)</span>
-<span id="cb7-5"><a></a><span class="fu">cor.test</span>(x, y)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-    Pearson's product-moment correlation
-
-data:  x and y
-t = 3.731, df = 9999998, p-value = 0.0001907
-alternative hypothesis: true correlation is not equal to 0
-95 percent confidence interval:
- 0.0005600528 0.0017996412
-sample estimates:
-        cor 
-0.001179847 </code></pre>
-</div>
-</div>
-</div></div>
-<p>The real question is, are <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> <em>practically</em> uncorrelated?</p>
-</section>
 <section id="correlation-is-not-causation" class="slide level2">
 <h2>Correlation is not causation</h2>
 <iframe width="800" height="450" src="https://www.youtube.com/embed/ntnalq-2nNU" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen="">
@@ -451,104 +348,34 @@ sample estimates:
 </center>
 <p>Also, see <a href="https://statmodeling.stat.columbia.edu/wp-content/uploads/2012/03/tarpey.pdf">this talk</a> by my old adviser, Thad Tarpey: “All Models are Right… most are useless.”</p>
 </section>
+<section id="modeling-the-mean-response" class="slide level2">
+<h2>Modeling the mean response</h2>
+<ul>
+<li>Assume that <span class="math inline">\(Y \sim N\left(\mu, \sigma^2\right)\)</span>, where</li>
+</ul>
+<p><span class="math display">\[\mu = \mu\left(x\right) = \beta_0 + \beta_1 x = E\left(Y|x\right)\]</span></p>
+<div class="fragment">
+<ul>
+<li>In other words: <span class="math inline">\(Y \sim N\left(\beta_0 + \beta_1 x, \sigma^2\right)\)</span></li>
+<li>Alternatively, we could write <span class="math inline">\(Y = \beta_0 + \beta_1 x + \epsilon\)</span>, where <span class="math inline">\(\epsilon \sim N\left(0, \sigma^2\right)\)</span></li>
+<li>This is called the simple linear regression (SLR) model</li>
+</ul>
+</div>
+</section>
+<section id="the-idea-behind-slr" class="slide level2">
+<h2>The idea behind SLR</h2>
+
+<img data-src="https://2012books.lardbucket.org/books/beginning-statistics/section_14/88a6e0919d8617c025826c1e187ad591.jpg" class="r-stretch"><p><a href="https://2012books.lardbucket.org/books/beginning-statistics/s14-03-modelling-linear-relationships.html">Image source</a></p>
+</section>
 <section>
 <section id="simple-linear-regression-slr" class="title-slide slide level1 center">
 <h1>Simple Linear Regression (SLR)</h1>
 
 </section>
-<section id="pearsons-correlation-vs.-slr" class="slide level2">
-<h2>Pearson’s correlation vs.&nbsp;SLR</h2>
-<ul>
-<li><p>There’s a formal relationship between Pearson’s correlation coefficient (<span class="math inline">\(\rho\)</span>) and the SLR model</p></li>
-<li><p>“Simple” linear relationships can be described by an <em>intercept</em> and <em>slope</em>:</p>
-<ul>
-<li><span class="math inline">\(y = mx + b\)</span> (algebra)</li>
-<li><span class="math inline">\(\mu = \beta_0 + \beta_1x\)</span> (statistics)</li>
-</ul></li>
-<li><p>“Simple” here means two variables, <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span> (but <span class="math inline">\(y\)</span> can be linearly related to several variables)</p></li>
-</ul>
-</section>
-<section id="example-ames-housing" class="slide level2">
-<h2>Example: Ames housing</h2>
-<p>Check out <a href="http://jse.amstat.org/v19n3/decock.pdf">this paper</a> for useful background on the Ames housing data in regression</p>
-</section>
-<section id="example-ames-housing-1" class="slide level2">
-<h2>Example: Ames housing</h2>
-<div class="cell" data-layout-align="center">
-<details class="code-fold">
-<summary>Show R code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a></a><span class="fu">head</span>(<span class="fu">cbind</span>(ames<span class="sc">$</span>Sale_Price, ames<span class="sc">$</span>Gr_Liv_Area))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>      [,1] [,2]
-[1,] 21.50 1656
-[2,] 10.50  896
-[3,] 17.20 1329
-[4,] 24.40 2110
-[5,] 18.99 1629
-[6,] 19.55 1604</code></pre>
-</div>
-<details class="code-fold">
-<summary>Show R code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a></a><span class="fu">cor.test</span>(ames<span class="sc">$</span>Sale_Price, <span class="at">y =</span> ames<span class="sc">$</span>Gr_Liv_Area)  <span class="co"># see ?cor.test</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-    Pearson's product-moment correlation
-
-data:  ames$Sale_Price and ames$Gr_Liv_Area
-t = 54.061, df = 2928, p-value &lt; 2.2e-16
-alternative hypothesis: true correlation is not equal to 0
-95 percent confidence interval:
- 0.6881814 0.7244502
-sample estimates:
-      cor 
-0.7067799 </code></pre>
-</div>
-</div>
-<p>This doesn’t tell us much about the nature of the linear relationship between <code>Gr_Liv_Area</code> and <code>Sale_Price</code></p>
-</section>
-<section id="statistical-relationships-1" class="slide level2">
-<h2>Statistical relationships</h2>
-<div class="cell" data-layout-align="center">
-<details class="code-fold">
-<summary>Show R code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a></a><span class="fu">library</span>(ggplot2) </span>
-<span id="cb13-2"><a></a></span>
-<span id="cb13-3"><a></a>p1 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(investr<span class="sc">::</span>crystal, <span class="fu">aes</span>(<span class="at">x =</span> time, <span class="at">y =</span> weight)) <span class="sc">+</span></span>
-<span id="cb13-4"><a></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb13-5"><a></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Time (hours)"</span>, </span>
-<span id="cb13-6"><a></a>       <span class="at">y =</span> <span class="st">"Weight (grams)"</span>, </span>
-<span id="cb13-7"><a></a>       <span class="at">title =</span> <span class="st">"Crystal weight data"</span>)</span>
-<span id="cb13-8"><a></a>p2 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(investr<span class="sc">::</span>arsenic, <span class="fu">aes</span>(<span class="at">x =</span> actual, <span class="at">y =</span> measured)) <span class="sc">+</span></span>
-<span id="cb13-9"><a></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb13-10"><a></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"True amount of arsenic"</span>, </span>
-<span id="cb13-11"><a></a>       <span class="at">y =</span> <span class="st">"Measured amount of arsenic"</span>,</span>
-<span id="cb13-12"><a></a>       <span class="at">title =</span> <span class="st">"Arsenic concentration data"</span>)</span>
-<span id="cb13-13"><a></a>gridExtra<span class="sc">::</span><span class="fu">grid.arrange</span>(p1, p2, <span class="at">nrow =</span> <span class="dv">1</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
-
-</div>
-<img data-src="01-linear-regression_files/figure-revealjs/statistical-relationships-1.png" class="quarto-figure quarto-figure-center r-stretch" style="width:100.0%"></section>
-<section id="examples-of-statistical-relationships" class="slide level2">
-<h2>Examples of statistical relationships</h2>
-<ul>
-<li><p>Simple linear regression: <span class="math inline">\(Y = \beta_0 + \beta_1 X + \epsilon\)</span></p></li>
-<li><p>Multiple linear regression: <span class="math inline">\(Y = \beta_0 + \sum_{i=1}^p \beta_p X_p + \epsilon\)</span></p></li>
-<li><p>Polynomial regression: <span class="math inline">\(Y = \beta_0 + \sum_{i=1}^p \beta_p X^p + \epsilon\)</span></p></li>
-<li><p>Logarithmic: <span class="math inline">\(Y = \beta_0 + \beta_1 \log\left(X + 0.1\right) + \epsilon\)</span></p></li>
-<li><p>Nonlinear regression: <span class="math inline">\(Y = \frac{\beta_1 X}{\left(\beta_2 + X\right)} + \epsilon\)</span></p></li>
-<li><p>Multiplicative: <span class="math inline">\(Y = \beta X \epsilon\)</span></p>
-<ul>
-<li><span class="math inline">\(\log\left(Y\right) = \alpha + \log\left(X\right) + \log\left(\epsilon\right)\)</span></li>
-</ul></li>
-</ul>
-<p>Assuming <span class="math inline">\(\epsilon \sim D\left(\mu, \sigma\right)\)</span></p>
-</section>
 <section id="simple-linear-regression-slr-1" class="slide level2">
 <h2>Simple linear regression (SLR)</h2>
 <ul>
-<li><p>Data: <span class="math inline">\(\left\{\left(X_i, Y_i\right)\right\}_{i=1}^n\)</span></p></li>
+<li><p>Data: <span class="math inline">\(\left\{(X_i, Y_i)\right\}_{i=1}^n\)</span></p></li>
 <li><p>Model: <span class="math inline">\(Y_i = \beta_0 + \beta_1 X_i + \epsilon_i\)</span></p>
 <ul>
 <li><p><span class="math inline">\(Y_i\)</span> is a continuous response</p></li>
@@ -586,7 +413,7 @@ sample estimates:
 <section id="inference-for-a-single-variable" class="slide level2 smaller">
 <h2>Inference for a single variable</h2>
 <ul>
-<li>Is it useful to test the hypothesis that <code>Sale_Price</code> = $160K?</li>
+<li>Is it useful to test the hypothesis that <code>Sale_Price</code> = <span class="math inline">\(160K\)</span>?</li>
 </ul>
 <div class="fragment">
 <ul>
@@ -597,9 +424,9 @@ sample estimates:
 <ul>
 <li><p>We’re more interested in questions such as:</p>
 <ul>
-<li>What is the chance that <code>Sale_Price</code> &gt; $160K? (above median sale price)</li>
-<li>What is the chance that <code>Sale_Price</code> &lt; $105K? (lowest decile)</li>
-<li>What is the chance that $129,500 &lt; <code>Sale_Price</code> &lt; $213,500? (within IQR)</li>
+<li>What is the chance that <code>Sale_Price</code> &gt; <span class="math inline">\(160K\)</span>? (above median sale price)</li>
+<li>What is the chance that <code>Sale_Price</code> &lt; <span class="math inline">\(105K\)</span>? (lowest decile)</li>
+<li>What is the chance that $129,500 &lt; <code>Sale_Price</code> &lt; <span class="math inline">\(213,500\)</span>? (within IQR)</li>
 </ul></li>
 </ul>
 </div>
@@ -607,59 +434,17 @@ sample estimates:
 <section id="distribution-of-sale_price" class="slide level2">
 <h2>Distribution of <code>Sale_Price</code></h2>
 <p>Can look at historgram and empirical <a href="https://en.wikipedia.org/wiki/Cumulative_distribution_function">CDF</a>:</p>
-<div class="cell" data-layout-align="center" data-par="true">
+<div class="cell" data-layout-align="center">
 <details class="code-fold">
 <summary>Show R code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>), <span class="at">las =</span> <span class="dv">1</span>)</span>
-<span id="cb14-2"><a></a><span class="fu">hist</span>(ames<span class="sc">$</span>Sale_Price, <span class="at">br =</span> <span class="dv">50</span>, <span class="at">xlab =</span> <span class="st">"Sale price ($)"</span>, <span class="at">freq =</span> <span class="cn">FALSE</span>, <span class="at">main =</span> <span class="st">""</span>)</span>
-<span id="cb14-3"><a></a><span class="fu">plot</span>(<span class="fu">ecdf</span>(ames<span class="sc">$</span>Sale_Price), <span class="at">xlab =</span> <span class="st">"Sale price ($)"</span>, <span class="at">main =</span> <span class="st">""</span>,</span>
-<span id="cb14-4"><a></a>     <span class="at">col =</span> <span class="fu">adjustcolor</span>(<span class="dv">1</span>, <span class="at">alpha.f =</span> <span class="fl">0.1</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>), <span class="at">las =</span> <span class="dv">1</span>)</span>
+<span id="cb4-2"><a></a><span class="fu">hist</span>(ames<span class="sc">$</span>Sale_Price, <span class="at">br =</span> <span class="dv">50</span>, <span class="at">xlab =</span> <span class="st">"Sale price ($)"</span>, <span class="at">freq =</span> <span class="cn">FALSE</span>, <span class="at">main =</span> <span class="st">""</span>)</span>
+<span id="cb4-3"><a></a><span class="fu">plot</span>(<span class="fu">ecdf</span>(ames<span class="sc">$</span>Sale_Price), <span class="at">xlab =</span> <span class="st">"Sale price ($)"</span>, <span class="at">main =</span> <span class="st">""</span>,</span>
+<span id="cb4-4"><a></a>     <span class="at">col =</span> <span class="fu">adjustcolor</span>(<span class="dv">1</span>, <span class="at">alpha.f =</span> <span class="fl">0.1</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 
 </div>
 <img data-src="01-linear-regression_files/figure-revealjs/unnamed-chunk-1-1.png" class="quarto-figure quarto-figure-center r-stretch" style="width:100.0%"></section>
-<section id="distribution-of-sale_price-1" class="slide level2">
-<h2>Distribution of <code>Sale_Price</code></h2>
-<ul>
-<li>Histograms and ECDFs are nonparammetric in nature</li>
-<li>A simple parametric approach might assume a particular distribution for <code>Sale_Price</code></li>
-<li>For instance, we might assume <code>Sale_Price</code> <span class="math inline">\(\sim N\left(\mu, \sigma^2\right)\)</span></li>
-<li>How can we estimate <span class="math inline">\(\mu\)</span> and <span class="math inline">\(\sigma^2\)</span>?</li>
-</ul>
-<div class="fragment">
-<div class="cell" data-layout-align="center">
-<details class="code-fold">
-<summary>Show R code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a></a><span class="co"># Maximum likelihiid estimates</span></span>
-<span id="cb15-2"><a></a><span class="fu">c</span>(<span class="st">"sample mean"</span> <span class="ot">=</span> <span class="fu">mean</span>(ames<span class="sc">$</span>Sale_Price), <span class="st">"sample stdev"</span> <span class="ot">=</span> <span class="fu">sd</span>(ames<span class="sc">$</span>Sale_Price))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code> sample mean sample stdev 
-   18.079606     7.988669 </code></pre>
-</div>
-</div>
-</div>
-<div class="fragment">
-<ul>
-<li>Is the normal distribution a reasonable assumption here?</li>
-</ul>
-</div>
-</section>
-<section id="normal-qq-plot" class="slide level2">
-<h2>Normal QQ plot</h2>
-<ul>
-<li><p>Normal quantile-quantile (Q-Q) plot* can be used to asses the “normalityness” of a set of observations</p></li>
-<li><p>Q-Q plots can, in general, be used to compare data with any distribution!</p></li>
-</ul>
-<div class="cell" data-layout-align="center" data-par="true">
-<details class="code-fold">
-<summary>Show R code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a></a><span class="fu">qqnorm</span>(ames<span class="sc">$</span>Sale_Price, <span class="at">col =</span> <span class="dv">2</span>, <span class="at">las =</span> <span class="dv">1</span>)</span>
-<span id="cb17-2"><a></a><span class="fu">qqline</span>(ames<span class="sc">$</span>Sale_Price)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
-
-</div>
-<img data-src="01-linear-regression_files/figure-revealjs/unnamed-chunk-3-1.png" class="quarto-figure quarto-figure-center r-stretch" style="width:100.0%"></section>
 <section id="normality-tests" class="slide level2 scrollable">
 <h2>Normality tests <span class="emoji" data-emoji="vomiting_face">🤮</span></h2>
 <ul>
@@ -667,43 +452,10 @@ sample estimates:
 <ul>
 <li>I STRONGLY ADVISE AGAINST USING THEM!</li>
 </ul></li>
-<li><p>No data is normally distributes, what we care about is whether enough a normal approximation is close enough!</p></li>
-<li><p>Normality tests provide a <span class="math inline">\(p\)</span>-value, which only gives a yes/no conclusion</p></li>
+<li><p>No data is normally distributed, what we care about is whether a normal approximation is close enough!</p></li>
+<li><p>Normality tests provide a <span class="math inline">\(p\)</span>-value, which only gives a yes/no conclusion and is heavily dependent on sample size.</p></li>
 </ul>
 <aside><ol class="aside-footnotes"><li id="fn1"><p>In R, see <code>?shapiro.test</code> for details.</p></li></ol></aside></section>
-<section id="normality-tests-1" class="slide level2">
-<h2>Normality tests <span class="emoji" data-emoji="vomiting_face">🤮</span></h2>
-<p>Recall that <span class="math inline">\(p\)</span>-values are a function of sample size!</p>
-<div class="cell" data-layout-align="center">
-<details class="code-fold">
-<summary>Show R code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a></a><span class="co"># Shapiro-Wilk test results vs. sample size</span></span>
-<span id="cb18-2"><a></a><span class="fu">set.seed</span>(<span class="dv">101</span>)  <span class="co"># for reproducibility</span></span>
-<span id="cb18-3"><a></a>x <span class="ot">&lt;-</span> <span class="fu">replicate</span>(<span class="dv">100</span>, <span class="fu">c</span>(</span>
-<span id="cb18-4"><a></a>  <span class="fu">shapiro.test</span>(<span class="fu">rt</span>(<span class="dv">10</span>, <span class="at">df =</span> <span class="dv">40</span>))<span class="sc">$</span>p.value,</span>
-<span id="cb18-5"><a></a>  <span class="fu">shapiro.test</span>(<span class="fu">rt</span>(<span class="dv">100</span>, <span class="at">df =</span> <span class="dv">40</span>))<span class="sc">$</span>p.value,</span>
-<span id="cb18-6"><a></a>  <span class="fu">shapiro.test</span>(<span class="fu">rt</span>(<span class="dv">500</span>, <span class="at">df =</span> <span class="dv">40</span>))<span class="sc">$</span>p.value,</span>
-<span id="cb18-7"><a></a>  <span class="fu">shapiro.test</span>(<span class="fu">rt</span>(<span class="dv">1000</span>, <span class="at">df =</span> <span class="dv">40</span>))<span class="sc">$</span>p.value,</span>
-<span id="cb18-8"><a></a>  <span class="fu">shapiro.test</span>(<span class="fu">rt</span>(<span class="dv">2500</span>, <span class="at">df =</span> <span class="dv">40</span>))<span class="sc">$</span>p.value,</span>
-<span id="cb18-9"><a></a>  <span class="fu">shapiro.test</span>(<span class="fu">rt</span>(<span class="dv">5000</span>, <span class="at">df =</span> <span class="dv">40</span>))<span class="sc">$</span>p.value</span>
-<span id="cb18-10"><a></a>))</span>
-<span id="cb18-11"><a></a><span class="fu">rownames</span>(x) <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">"n="</span>, <span class="fu">c</span>(<span class="dv">10</span>, <span class="dv">100</span>, <span class="dv">500</span>, <span class="dv">1000</span>, <span class="dv">2500</span>, <span class="dv">5000</span>))</span>
-<span id="cb18-12"><a></a><span class="fu">rowMeans</span>(x <span class="sc">&lt;</span> <span class="fl">0.05</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>  n=10  n=100  n=500 n=1000 n=2500 n=5000 
-  0.01   0.08   0.11   0.22   0.24   0.39 </code></pre>
-</div>
-</div>
-</section>
-<section id="normality-tests-2" class="slide level2 scrollable">
-<h2>Normality tests <span class="emoji" data-emoji="vomiting_face">🤮</span></h2>
-
-<img data-src="01-linear-regression_files/figure-revealjs/unnamed-chunk-5-1.png" class="quarto-figure quarto-figure-center r-stretch" style="width:100.0%"><ol type="1">
-<li><p>Are these two distributions significantly different?</p></li>
-<li><p>Are these two distributions practically different?</p></li>
-</ol>
-</section>
 <section id="what-can-we-do-if-the-normality-assumption-isnt-justified" class="slide level2">
 <h2>What can we do if the normality assumption isn’t justified?</h2>
 <ul>
@@ -716,63 +468,6 @@ sample estimates:
 <li><p>Try more advanced approaches, like the nonparametric <a href="https://en.wikipedia.org/wiki/Bootstrapping_(statistics)">bootstrapping</a>!</p></li>
 </ul>
 </section>
-<section id="modeling-the-mean-response" class="slide level2">
-<h2>Modeling the mean response</h2>
-<ul>
-<li>Assume that <span class="math inline">\(Y \sim N\left(\mu, \sigma^2\right)\)</span>, where</li>
-</ul>
-<p><span class="math display">\[\mu = \mu\left(x\right) = \beta_0 + \beta_1 x = E\left(Y|x\right)\]</span></p>
-<div class="fragment">
-<ul>
-<li>In other words: <span class="math inline">\(Y \sim N\left(\beta_0 + \beta_1 x, \sigma^2\right)\)</span></li>
-<li>Alternatively, we could write <span class="math inline">\(Y = \beta_0 + \beta_1 x + \epsilon\)</span>, where <span class="math inline">\(\epsilon \sim N\left(0, \sigma^2\right)\)</span></li>
-<li>This is called the simple linear regression (SLR) model</li>
-</ul>
-</div>
-</section>
-<section id="the-idea-behind-slr" class="slide level2">
-<h2>The idea behind SLR</h2>
-
-<img data-src="https://2012books.lardbucket.org/books/beginning-statistics/section_14/88a6e0919d8617c025826c1e187ad591.jpg" class="r-stretch"><p><a href="https://2012books.lardbucket.org/books/beginning-statistics/s14-03-modelling-linear-relationships.html">Image source</a></p>
-</section>
-<section id="arsenic-experiment-example" class="slide level2">
-<h2>Arsenic experiment example</h2>
-<div class="cell" data-layout-align="center" data-par="true">
-<details class="code-fold">
-<summary>Show R code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a></a><span class="fu">plot</span>(investr<span class="sc">::</span>arsenic, <span class="at">las =</span> <span class="dv">1</span>)  <span class="co"># see ?investr::arsenic for details</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
-
-</div>
-<img data-src="01-linear-regression_files/figure-revealjs/arsenic-plot-1.png" class="quarto-figure quarto-figure-center r-stretch" style="width:100.0%"></section>
-<section id="is-linear-regression-reasonable-here" class="slide level2">
-<h2>Is linear regression reasonable here?</h2>
-<div class="cell" data-layout-align="center">
-<details class="code-fold">
-<summary>Show R code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a></a>x <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span> <span class="sc">/</span> <span class="dv">10</span>, <span class="fl">1.5</span>, <span class="dv">2</span>), <span class="at">each =</span> <span class="dv">30</span>)</span>
-<span id="cb21-2"><a></a>y <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">+</span> <span class="dv">2</span><span class="sc">*</span>x<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> <span class="fu">rnorm</span>(<span class="fu">length</span>(x), <span class="at">sd =</span> <span class="dv">1</span>)</span>
-<span id="cb21-3"><a></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>), <span class="at">las =</span> <span class="dv">1</span>)</span>
-<span id="cb21-4"><a></a><span class="fu">plot</span>(x, y, <span class="at">col =</span> <span class="st">"dodgerblue2"</span>)</span>
-<span id="cb21-5"><a></a><span class="co">#abline(lm(y ~ x), lwd = 2)</span></span>
-<span id="cb21-6"><a></a><span class="fu">hist</span>(y, <span class="at">main =</span> <span class="st">""</span>, <span class="at">col =</span> <span class="st">"dodgerblue2"</span>, <span class="at">border =</span> <span class="st">"white"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
-
-</div>
-<img data-src="01-linear-regression_files/figure-revealjs/sim-quadratic-1.png" class="quarto-figure quarto-figure-center r-stretch" style="width:100.0%"></section>
-<section id="is-linear-regression-reasonable-here-1" class="slide level2">
-<h2>Is linear regression reasonable here?</h2>
-<div class="cell" data-layout-align="center" data-par="true">
-<details class="code-fold">
-<summary>Show R code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a></a>fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(y <span class="sc">~</span> x)</span>
-<span id="cb22-2"><a></a>res <span class="ot">&lt;-</span> <span class="fu">residuals</span>(fit)</span>
-<span id="cb22-3"><a></a><span class="fu">qqnorm</span>(res, <span class="at">las =</span> <span class="dv">1</span>)</span>
-<span id="cb22-4"><a></a><span class="fu">qqline</span>(res, <span class="at">col =</span> <span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
-
-</div>
-<img data-src="01-linear-regression_files/figure-revealjs/resid-quadratic-1.png" class="quarto-figure quarto-figure-center r-stretch" style="width:100.0%"></section>
 <section id="least-squares-ls-estimation" class="slide level2">
 <h2>Least squares (LS) estimation</h2>
 <p>Idea of LS is to find <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span> so that the sum of squared residuals (i.e., errors) is minimized: <span class="math display">\[SSE = \sum_{i=1}^n\left(y_i - \beta_0 - \beta_1x_i\right)^2\]</span></p>
@@ -790,8 +485,8 @@ sample estimates:
 <div class="cell" data-layout-align="center" data-par="true">
 <details class="code-fold">
 <summary>Show R code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a></a><span class="fu">plot</span>(Sale_Price <span class="sc">~</span> Gr_Liv_Area, <span class="at">data =</span> ames, <span class="at">las =</span> <span class="dv">1</span>,</span>
-<span id="cb23-2"><a></a>     <span class="at">col =</span> <span class="fu">adjustcolor</span>(<span class="dv">1</span>, <span class="at">alpha.f =</span> <span class="fl">0.3</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a></a><span class="fu">plot</span>(Sale_Price <span class="sc">~</span> Gr_Liv_Area, <span class="at">data =</span> ames, <span class="at">las =</span> <span class="dv">1</span>,</span>
+<span id="cb5-2"><a></a>     <span class="at">col =</span> <span class="fu">adjustcolor</span>(<span class="dv">1</span>, <span class="at">alpha.f =</span> <span class="fl">0.3</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 
 </div>
@@ -801,7 +496,7 @@ sample estimates:
 <div class="cell" data-layout-align="center">
 <details class="code-fold">
 <summary>Show R code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a></a><span class="fu">summary</span>(fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(Sale_Price <span class="sc">~</span> Gr_Liv_Area, <span class="at">data =</span> ames))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a></a><span class="fu">summary</span>(fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(Sale_Price <span class="sc">~</span> Gr_Liv_Area, <span class="at">data =</span> ames))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>
@@ -830,9 +525,9 @@ F-statistic:  2923 on 1 and 2928 DF,  p-value: &lt; 2.2e-16</code></pre>
 <div class="cell" data-layout-align="center" data-par="true">
 <details class="code-fold">
 <summary>Show R code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a></a><span class="fu">plot</span>(Sale_Price <span class="sc">~</span> Gr_Liv_Area, <span class="at">data =</span> ames,</span>
-<span id="cb26-2"><a></a>     <span class="at">col =</span> <span class="fu">adjustcolor</span>(<span class="dv">1</span>, <span class="at">alpha.f =</span> <span class="fl">0.3</span>))</span>
-<span id="cb26-3"><a></a><span class="fu">abline</span>(fit, <span class="at">lwd =</span> <span class="dv">2</span>, <span class="at">col =</span> <span class="dv">2</span>)  <span class="co"># add SLR fit</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a></a><span class="fu">plot</span>(Sale_Price <span class="sc">~</span> Gr_Liv_Area, <span class="at">data =</span> ames,</span>
+<span id="cb8-2"><a></a>     <span class="at">col =</span> <span class="fu">adjustcolor</span>(<span class="dv">1</span>, <span class="at">alpha.f =</span> <span class="fl">0.3</span>))</span>
+<span id="cb8-3"><a></a><span class="fu">abline</span>(fit, <span class="at">lwd =</span> <span class="dv">2</span>, <span class="at">col =</span> <span class="dv">2</span>)  <span class="co"># add SLR fit</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 
 </div>
@@ -844,16 +539,6 @@ F-statistic:  2923 on 1 and 2928 DF,  p-value: &lt; 2.2e-16</code></pre>
 <li>The standard residual is defined as <span class="math inline">\(e_i = y_i - \hat{y}_i\)</span> and can be regarded as the <em>observed error</em></li>
 <li>The residuals hold a lot of properties that make them useful for diagnosing potential issues with the model (e.g., suggesting potential transformations to try)</li>
 <li>Many other kinds of residuals exist for different purposes (e.g., standardized, <a href="https://en.wikipedia.org/wiki/Studentized_residual">studentized</a>, jackknife or <a href="https://en.wikipedia.org/wiki/PRESS_statistic">PRESS</a> residuals, etc.)</li>
-</ul>
-</section>
-<section id="properties-of-the-residuals" class="slide level2">
-<h2>Properties of the residuals</h2>
-<ul>
-<li><p><span class="math inline">\(\sum_{i=1}^n e_i = 0\)</span></p></li>
-<li><p><span class="math inline">\(\sum_{i=1}^n e_i^2\)</span> is a minimum</p></li>
-<li><p><span class="math inline">\(\sum_{i=1}^n X_ie_i = 0\)</span></p></li>
-<li><p><span class="math inline">\(\sum_{i=1}^n \hat{Y}_ie_i = 0\)</span></p></li>
-<li><p>The LS regression line passes through the point <span class="math inline">\(\left(\bar{X}, \bar{Y}\right)\)</span> (i.e., the center of the training data)</p></li>
 </ul>
 </section>
 <section id="what-can-residual-plots-tell-us" class="slide level2">
@@ -870,11 +555,11 @@ F-statistic:  2923 on 1 and 2928 DF,  p-value: &lt; 2.2e-16</code></pre>
 <section id="sale_price-gr_liv_area" class="slide level2">
 <h2><code>Sale_Price ~ Gr_Liv_Area</code></h2>
 <p>Residual analysis:</p>
-<div class="cell" data-layout-align="center" data-par="true">
+<div class="cell" data-layout-align="center">
 <details class="code-fold">
 <summary>Show R code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">3</span>), <span class="at">las =</span> <span class="dv">1</span>)</span>
-<span id="cb27-2"><a></a><span class="fu">plot</span>(fit, <span class="at">which =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">3</span>), <span class="at">las =</span> <span class="dv">1</span>)</span>
+<span id="cb9-2"><a></a><span class="fu">plot</span>(fit, <span class="at">which =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 
 </div>
@@ -885,51 +570,22 @@ F-statistic:  2923 on 1 and 2928 DF,  p-value: &lt; 2.2e-16</code></pre>
 <div class="cell" data-layout-align="center" data-par="true">
 <details class="code-fold">
 <summary>Show R code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a></a>fit2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="fu">log</span>(Sale_Price) <span class="sc">~</span> Gr_Liv_Area, <span class="at">data =</span> ames)</span>
-<span id="cb28-2"><a></a><span class="fu">plot</span>(<span class="fu">log</span>(Sale_Price) <span class="sc">~</span> Gr_Liv_Area, <span class="at">data =</span> ames,</span>
-<span id="cb28-3"><a></a>     <span class="at">col =</span> <span class="fu">adjustcolor</span>(<span class="dv">1</span>, <span class="at">alpha.f =</span> <span class="fl">0.3</span>))</span>
-<span id="cb28-4"><a></a><span class="fu">abline</span>(fit2, <span class="at">lwd =</span> <span class="dv">2</span>, <span class="at">col =</span> <span class="dv">2</span>)  <span class="co"># add SLR fit</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a></a>fit2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="fu">log</span>(Sale_Price) <span class="sc">~</span> Gr_Liv_Area, <span class="at">data =</span> ames)</span>
+<span id="cb10-2"><a></a><span class="fu">plot</span>(<span class="fu">log</span>(Sale_Price) <span class="sc">~</span> Gr_Liv_Area, <span class="at">data =</span> ames,</span>
+<span id="cb10-3"><a></a>     <span class="at">col =</span> <span class="fu">adjustcolor</span>(<span class="dv">1</span>, <span class="at">alpha.f =</span> <span class="fl">0.3</span>))</span>
+<span id="cb10-4"><a></a><span class="fu">abline</span>(fit2, <span class="at">lwd =</span> <span class="dv">2</span>, <span class="at">col =</span> <span class="dv">2</span>)  <span class="co"># add SLR fit</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 
 </div>
 <img data-src="01-linear-regression_files/figure-revealjs/ames-log-fit-1.png" class="quarto-figure quarto-figure-center r-stretch" style="width:100.0%"></section>
-<section id="lets-try-a-log-transformation-1" class="slide level2">
-<h2>Let’s try a log transformation</h2>
-<div class="cell" data-layout-align="center">
-<details class="code-fold">
-<summary>Show R code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a></a><span class="fu">summary</span>(fit2)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-Call:
-lm(formula = log(Sale_Price) ~ Gr_Liv_Area, data = ames)
-
-Residuals:
-     Min       1Q   Median       3Q      Max 
--2.36215 -0.15145  0.03091  0.16583  0.90332 
-
-Coefficients:
-             Estimate Std. Error t value Pr(&gt;|t|)    
-(Intercept) 1.9692014  0.0169355  116.28   &lt;2e-16 ***
-Gr_Liv_Area 0.0005611  0.0000107   52.43   &lt;2e-16 ***
----
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-
-Residual standard error: 0.2928 on 2928 degrees of freedom
-Multiple R-squared:  0.4842,    Adjusted R-squared:  0.484 
-F-statistic:  2749 on 1 and 2928 DF,  p-value: &lt; 2.2e-16</code></pre>
-</div>
-</div>
-</section>
 <section id="logsale_price-gr_liv_area" class="slide level2">
 <h2><code>log(Sale_Price) ~ Gr_Liv_Area</code></h2>
 <p>Residual analysis:</p>
-<div class="cell" data-layout-align="center" data-par="true">
+<div class="cell" data-layout-align="center">
 <details class="code-fold">
 <summary>Show R code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">3</span>), <span class="at">las =</span> <span class="dv">1</span>)</span>
-<span id="cb31-2"><a></a><span class="fu">plot</span>(fit2, <span class="at">which =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">3</span>), <span class="at">las =</span> <span class="dv">1</span>)</span>
+<span id="cb11-2"><a></a><span class="fu">plot</span>(fit2, <span class="at">which =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 
 </div>
@@ -963,121 +619,24 @@ F-statistic:  2749 on 1 and 2928 DF,  p-value: &lt; 2.2e-16</code></pre>
 <div class="cell" data-layout-align="center">
 <details class="code-fold">
 <summary>Show R code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a></a><span class="co"># Load the hardwood conentration data</span></span>
-<span id="cb32-2"><a></a>url <span class="ot">&lt;-</span> <span class="st">"https://bgreenwell.github.io/uc-bana7052/data/hardwood.csv"</span></span>
-<span id="cb32-3"><a></a>hardwood <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(url)</span>
-<span id="cb32-4"><a></a></span>
-<span id="cb32-5"><a></a><span class="co"># Print first few observations</span></span>
-<span id="cb32-6"><a></a><span class="fu">head</span>(hardwood)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a></a><span class="co"># Load the hardwood conentration data</span></span>
+<span id="cb12-2"><a></a>url <span class="ot">&lt;-</span> <span class="st">"https://bgreenwell.github.io/uc-bana7052/data/hardwood.csv"</span></span>
+<span id="cb12-3"><a></a>hardwood <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(url)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
-<div class="cell-output-display">
-<div data-pagedtable="false">
-  <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["HwdCon"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["TsStr"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"1.0","2":"6.3","_rn_":"1"},{"1":"1.5","2":"11.1","_rn_":"2"},{"1":"2.0","2":"20.0","_rn_":"3"},{"1":"3.0","2":"24.0","_rn_":"4"},{"1":"4.0","2":"26.1","_rn_":"5"},{"1":"4.5","2":"30.0","_rn_":"6"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
-  </script>
 </div>
-</div>
-</div>
-</section>
-<section id="example-paper-strength-data-1" class="slide level2">
-<h2>Example: paper strength data</h2>
-<div class="cell" data-layout-align="center" data-par="true">
+<div class="cell" data-layout-align="center">
 <details class="code-fold">
 <summary>Show R code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a></a><span class="fu">plot</span>(hardwood, <span class="at">pch =</span> <span class="dv">19</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
-
-</div>
-<img data-src="01-linear-regression_files/figure-revealjs/hardwood-plot-1.png" class="quarto-figure quarto-figure-center r-stretch" style="width:100.0%"></section>
-<section id="example-paper-strength-data-2" class="slide level2">
-<h2>Example: paper strength data</h2>
-<div class="cell" data-layout-align="center" data-par="true">
-<details class="code-fold">
-<summary>Show R code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a></a>fit1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(TsStr <span class="sc">~</span> HwdCon, <span class="at">data =</span> hardwood)</span>
-<span id="cb34-2"><a></a>investr<span class="sc">::</span><span class="fu">plotFit</span>(fit1, <span class="at">pch =</span> <span class="dv">19</span>, <span class="at">col.fit =</span> <span class="st">"red2"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a></a>fit1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(TsStr <span class="sc">~</span> HwdCon, <span class="at">data =</span> hardwood)</span>
+<span id="cb13-2"><a></a>fit2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(TsStr <span class="sc">~</span> HwdCon <span class="sc">+</span> <span class="fu">I</span>(HwdCon<span class="sc">^</span><span class="dv">2</span>), <span class="at">data =</span> hardwood)</span>
+<span id="cb13-3"><a></a></span>
+<span id="cb13-4"><a></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>), <span class="at">las =</span> <span class="dv">1</span>)</span>
+<span id="cb13-5"><a></a>investr<span class="sc">::</span><span class="fu">plotFit</span>(fit1, <span class="at">pch =</span> <span class="dv">19</span>, <span class="at">col.fit =</span> <span class="st">"red2"</span>, <span class="at">main =</span> <span class="st">"Linear Fit"</span>)</span>
+<span id="cb13-6"><a></a>investr<span class="sc">::</span><span class="fu">plotFit</span>(fit2, <span class="at">pch =</span> <span class="dv">19</span>, <span class="at">col.fit =</span> <span class="st">"red2"</span>, <span class="at">main =</span> <span class="st">"Quadratic Fit"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 
 </div>
 <img data-src="01-linear-regression_files/figure-revealjs/hardwood-slr-1.png" class="quarto-figure quarto-figure-center r-stretch" style="width:100.0%"></section>
-<section id="example-paper-strength-data-3" class="slide level2">
-<h2>Example: paper strength data</h2>
-<div class="cell" data-layout-align="center" data-par="true">
-<details class="code-fold">
-<summary>Show R code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>), <span class="at">las =</span> <span class="dv">1</span>)</span>
-<span id="cb35-2"><a></a></span>
-<span id="cb35-3"><a></a><span class="co"># Plot residuals vs HwdCon (i.e., X)</span></span>
-<span id="cb35-4"><a></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
-<span id="cb35-5"><a></a><span class="fu">plot</span>(<span class="at">x =</span> hardwood<span class="sc">$</span>HwdCon, <span class="at">y =</span> <span class="fu">residuals</span>(fit1), <span class="at">xlab =</span> <span class="st">"HwdCon"</span>,</span>
-<span id="cb35-6"><a></a>     <span class="at">ylab =</span> <span class="st">"Residuals"</span>, <span class="at">main =</span> <span class="st">"Residuals vs HwdCon"</span>)</span>
-<span id="cb35-7"><a></a><span class="fu">abline</span>(<span class="at">h =</span> <span class="dv">0</span>, <span class="at">lty =</span> <span class="st">"dotted"</span>)</span>
-<span id="cb35-8"><a></a><span class="fu">plot</span>(fit1, <span class="at">which =</span> <span class="dv">1</span>, <span class="at">caption =</span> <span class="st">""</span>, <span class="at">main =</span> <span class="st">"Residuals vs Fitted"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
-
-</div>
-<img data-src="01-linear-regression_files/figure-revealjs/hardwood-resid-1.png" class="quarto-figure quarto-figure-center r-stretch" style="width:100.0%"></section>
-<section id="example-paper-strength-data-4" class="slide level2">
-<h2>Example: paper strength data</h2>
-<div class="cell" data-layout-align="center" data-par="true">
-<details class="code-fold">
-<summary>Show R code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a></a>fit2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(TsStr <span class="sc">~</span> HwdCon <span class="sc">+</span> <span class="fu">I</span>(HwdCon<span class="sc">^</span><span class="dv">2</span>), <span class="at">data =</span> hardwood)</span>
-<span id="cb36-2"><a></a>investr<span class="sc">::</span><span class="fu">plotFit</span>(fit2, <span class="at">pch =</span> <span class="dv">19</span>, <span class="at">col.fit =</span> <span class="st">"red2"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
-
-</div>
-<img data-src="01-linear-regression_files/figure-revealjs/hardwood-poly2-1.png" class="quarto-figure quarto-figure-center r-stretch" style="width:100.0%"></section>
-<section id="example-paper-strength-data-5" class="slide level2">
-<h2>Example: paper strength data</h2>
-<div class="cell" data-layout-align="center" data-par="true">
-<details class="code-fold">
-<summary>Show R code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb37"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">3</span>), <span class="at">las =</span> <span class="dv">1</span>)</span>
-<span id="cb37-2"><a></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>) {  <span class="co"># try higher-order models</span></span>
-<span id="cb37-3"><a></a>  fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(TsStr <span class="sc">~</span> <span class="fu">poly</span>(HwdCon, <span class="at">degree =</span> i), <span class="at">data =</span> hardwood)</span>
-<span id="cb37-4"><a></a>  investr<span class="sc">::</span><span class="fu">plotFit</span>(fit, <span class="at">main =</span> <span class="fu">paste</span>(<span class="st">"Degree ="</span>, i))</span>
-<span id="cb37-5"><a></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
-
-</div>
-<img data-src="01-linear-regression_files/figure-revealjs/hardwood-poly-compare-1.png" class="quarto-figure quarto-figure-center r-stretch" style="width:100.0%"></section>
-<section id="example-paper-strength-data-6" class="slide level2">
-<h2>Example: paper strength data</h2>
-<div class="cell" data-layout-align="center" data-par="true">
-<details class="code-fold">
-<summary>Show R code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">3</span>))</span>
-<span id="cb38-2"><a></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>) {  <span class="co"># try higher-order models</span></span>
-<span id="cb38-3"><a></a>  fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(TsStr <span class="sc">~</span><span class="fu">poly</span>(HwdCon, <span class="at">degree =</span> i), <span class="at">data =</span> hardwood)</span>
-<span id="cb38-4"><a></a>  investr<span class="sc">::</span><span class="fu">plotFit</span>(fit, <span class="at">main =</span> <span class="fu">paste</span>(<span class="st">"Degree ="</span>, i), </span>
-<span id="cb38-5"><a></a>                   <span class="at">interval =</span> <span class="st">"confidence"</span>, <span class="at">shade =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb38-6"><a></a>                   <span class="at">xlim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">10</span>, <span class="dv">30</span>))</span>
-<span id="cb38-7"><a></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
-
-</div>
-<img data-src="01-linear-regression_files/figure-revealjs/hardwood-poly-ci-1.png" class="quarto-figure quarto-figure-center r-stretch" style="width:100.0%"></section>
-<section id="polynomial-regression-1" class="slide level2">
-<h2>Polynomial regression</h2>
-<p>Some cautions <span class="emoji" data-emoji="warning">⚠️</span></p>
-<p>Keep the order of the model as low as possible</p>
-<ul>
-<li><p>Avoid interpolating the data or <em>over fitting</em></p></li>
-<li><p>Use the simplest model possible to explain the data, but no simpler (<em>parsimony</em>)</p></li>
-<li><p>An <span class="math inline">\(n - 1\)</span> order model can perfectly fit a data set with <span class="math inline">\(n\)</span> observations (Why is this bad <span class="emoji" data-emoji="thinking">🤔</span>)</p></li>
-</ul>
-</section>
-<section id="polynomial-regression-2" class="slide level2 scrollable">
-<h2>Polynomial regression</h2>
-<p>Two model-building strategies:</p>
-<ol type="1">
-<li><p>Fit the lowest order polynomial possible and build up (forward selection)</p></li>
-<li><p>Fit the highest order polynomial of interest, and remove terms one at a time (backward elimination)</p></li>
-</ol>
-<p>These two procedures may not result in the same final model</p>
-<p>Increasing the order can result in an ill-conditioned <span class="math inline">\(\boldsymbol{X}^\top\boldsymbol{X}\)</span> and <a href="https://en.wikipedia.org/wiki/Multicollinearity">multicollinearity</a></p>
-</section>
 <section id="categorical-variables" class="slide level2">
 <h2>Categorical variables</h2>
 <ul>
@@ -1087,61 +646,13 @@ F-statistic:  2749 on 1 and 2928 DF,  p-value: &lt; 2.2e-16</code></pre>
 <li>Orthogonal polynomials (ordinal)</li>
 </ul></li>
 </ul>
-</section>
-<section id="categorical-variables-1" class="slide level2">
-<h2>Categorical variables</h2>
-<p>Let’s look at two (nominal) categorical variables:</p>
-<div class="cell" data-layout-align="center">
-<details class="code-fold">
-<summary>Show R code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb39"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a></a><span class="fu">table</span>(ames<span class="sc">$</span>Central_Air)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-   N    Y 
- 196 2734 </code></pre>
-</div>
-<details class="code-fold">
-<summary>Show R code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb41"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a></a><span class="fu">table</span>(ames<span class="sc">$</span>Paved_Drive)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-     Dirt_Gravel Partial_Pavement            Paved 
-             216               62             2652 </code></pre>
-</div>
-</div>
-</section>
-<section id="categorical-variables-2" class="slide level2">
-<h2>Categorical variables</h2>
-<div class="cell" data-layout-align="center" data-par="true">
-<details class="code-fold">
-<summary>Show R code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb43"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a></a><span class="fu">plot</span>(<span class="fu">log</span>(Sale_Price) <span class="sc">~</span> Central_Air, <span class="at">data =</span> ames, <span class="at">las =</span> <span class="dv">1</span>, <span class="at">col =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">3</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
-
-</div>
-<img data-src="01-linear-regression_files/figure-revealjs/categorical-central-air-1.png" class="quarto-figure quarto-figure-center r-stretch" style="width:100.0%"></section>
-<section id="categorical-variables-3" class="slide level2">
-<h2>Categorical variables</h2>
-<div class="cell" data-layout-align="center" data-par="true">
-<details class="code-fold">
-<summary>Show R code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb44"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a></a><span class="fu">plot</span>(<span class="fu">log</span>(Sale_Price) <span class="sc">~</span> Paved_Drive, <span class="at">data =</span> ames, <span class="at">las =</span> <span class="dv">1</span>, <span class="at">col =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
-
-</div>
-<img data-src="01-linear-regression_files/figure-revealjs/categorical-paved-drive-1.png" class="quarto-figure quarto-figure-center r-stretch" style="width:100.0%"><p>If one of these homes downgraded from a paved driveway to a gravel driveway, would that <strong>cause</strong> the sale price to decrease? (Think very carefully here!)</p>
-</section>
-<section id="categorical-variables-4" class="slide level2">
-<h2>Categorical variables</h2>
 <p>R dummy encodes nominal factors by default:</p>
 <div class="cell" data-layout-align="center" data-par="true">
 <details class="code-fold">
 <summary>Show R code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb45"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a></a>fit3 <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="fu">log</span>(Sale_Price) <span class="sc">~</span> Gr_Liv_Area <span class="sc">+</span> Central_Air <span class="sc">+</span> Paved_Drive, </span>
-<span id="cb45-2"><a></a>           <span class="at">data =</span> ames)</span>
-<span id="cb45-3"><a></a><span class="fu">summary</span>(fit3)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a></a>fit3 <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="fu">log</span>(Sale_Price) <span class="sc">~</span> Gr_Liv_Area <span class="sc">+</span> Central_Air <span class="sc">+</span> Paved_Drive, </span>
+<span id="cb14-2"><a></a>           <span class="at">data =</span> ames)</span>
+<span id="cb14-3"><a></a><span class="fu">summary</span>(fit3)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>
@@ -1209,13 +720,19 @@ F-statistic:  1105 on 4 and 2925 DF,  p-value: &lt; 2.2e-16</code></pre>
 <li><p><a href="https://reproducible.cs.princeton.edu/">Leakage</a> is a huge concern here, so data splitting ALWAYS has to be done carefully!</p></li>
 </ul>
 </section>
-<section id="data-splitting-k-fold-cross-validation" class="slide level2 smaller">
-<h2>Data splitting: <span class="math inline">\(k\)</span>-fold cross-validation</h2>
-
-<img data-src="https://bradleyboehmke.github.io/HOML/images/cv.png" class="r-stretch"><p>The <a href="https://en.wikipedia.org/wiki/PRESS_statistic">PRESS statistic</a> in linear regression is a special case (<span class="math inline">\(k = n\)</span>) we get for free!</p>
+<section id="linear-regression-as-a-glm" class="slide level2 scrollable">
+<h2>Linear Regression as a GLM</h2>
+<p>We can define the (normal) linear regression model as a specific type of <strong>Generalized Linear Model (GLM)</strong>:</p>
+<ol type="1">
+<li><p><strong>Random Component:</strong> The response variable <span class="math inline">\(Y\)</span> follows a normal distribution: <span class="math inline">\(Y \sim N(\mu, \sigma^2)\)</span>.</p></li>
+<li><p><strong>Systematic Component:</strong> The linear predictor <span class="math inline">\(\alpha\)</span> is a linear function of the regressors: <span class="math inline">\(\eta = \boldsymbol{x}^\top\boldsymbol{\beta}\)</span>.</p></li>
+<li><p><strong>Link Function:</strong> The link function <span class="math inline">\(g(\cdot)\)</span> connects the mean response <span class="math inline">\(\mu\)</span> to the linear predictor <span class="math inline">\(\eta\)</span>. For linear regression, we use the <strong>identity link</strong>: <span class="math display">\[g(\mu) = \mu = \eta\]</span></p></li>
+</ol>
+<p>This framework allows us to generalize to other types of response variables (e.g., binary, count) by changing the random component and the link function!</p>
 </section>
 <section id="questions" class="slide level2">
 <h2>Questions?</h2>
+<p>```</p>
 
 
 </section></section>
