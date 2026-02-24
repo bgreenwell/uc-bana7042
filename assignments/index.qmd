@@ -1,9 +1,9 @@
 ---
 title: "Assignments"
 listing:
-  contents: 
+  contents:
     - "assignment-*.qmd"
-    - "final-exam.qmd"
+    - "final.qmd"
   type: table
   fields: [title, subtitle]
   sort: "title"

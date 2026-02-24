@@ -137,7 +137,7 @@ window.Quarto = {
 <link rel="stylesheet" href="../styles.css">
 </head>
 
-<body class="nav-fixed quarto-light">
+<body class="nav-sidebar floating nav-fixed quarto-light">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -157,7 +157,7 @@ window.Quarto = {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../index.html"> 
+    <a class="nav-link active" href="../index.html" aria-current="page"> 
 <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
@@ -235,7 +235,7 @@ window.Quarto = {
     </ul>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="../assignments/final-exam.html"> 
+    <a class="nav-link" href="../assignments/final.html"> 
 <span class="menu-text">Final Exam</span></a>
   </li>  
 </ul>
@@ -251,13 +251,88 @@ window.Quarto = {
 </div>
       </div> <!-- /container-fluid -->
     </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../assignments/final.html">BANA 7042: Final Assignment/Exam</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+    </div>
+  </nav>
 </header>
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
+      <a href="../index.html" class="sidebar-logo-link">
+      </a>
+      </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../assignments/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Assignments</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../assignments/assignment-01.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">BANA 7042: Assignment 1</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../assignments/assignment-02.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">BANA 7042: Assignment 2</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../assignments/assignment-03.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">BANA 7042: Assignment 3</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../assignments/assignment-04.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">BANA 7042: Assignment 4</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../assignments/assignment-05.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">BANA 7042: Assignment 5</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../assignments/assignment-06.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">BANA 7042: Assignment 6</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../assignments/final.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">BANA 7042: Final Assignment/Exam</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#data-files" id="toc-data-files" class="nav-link active" data-scroll-target="#data-files">Data Files</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -282,7 +357,14 @@ window.Quarto = {
 
 
 <p><strong>Note:</strong> Please be sure to properly label all figures and include a caption for each!</p>
-<p>Question 1. The data below gives the number of new AIDS cases each year in a country, from 1981 onwards (Source: Venables and Ripley (2003), slightly modified).</p>
+<section id="data-files" class="level2">
+<h2 class="anchored" data-anchor-id="data-files">Data Files</h2>
+<p>Some questions require external data files. Download the following data sets as needed:</p>
+<ul>
+<li>Question 2: <a href="../data/cereal.csv">cereal.csv</a></li>
+<li>Question 3: <a href="../data/challenger.csv">challenger.csv</a></li>
+</ul>
+<p><strong>Question 1</strong>. The data below gives the number of new AIDS cases each year in a country, from 1981 onwards (Source: Venables and Ripley (2003), slightly modified).</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>cases <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">12</span>, <span class="dv">14</span>, <span class="dv">33</span>, <span class="dv">50</span>, <span class="dv">67</span>, <span class="dv">74</span>, <span class="dv">123</span>, <span class="dv">141</span>, <span class="dv">165</span>, <span class="dv">204</span>, <span class="dv">253</span>, <span class="dv">246</span>, <span class="dv">240</span>, <span class="dv">246</span>, <span class="dv">232</span>)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>year <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">15</span> <span class="sc">+</span> <span class="dv">1980</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -302,7 +384,7 @@ window.Quarto = {
 <li><p>Based on your assessment of the residuals, does it seem like a quadratic model would provide a better fit? Fit a second degree polynomial model (i.e., a model using the formula <code>cases ~ year + I(year^2)</code>). How does this model comapre to the simpler model. Be sure to provide a plot of the fitted regression line on top of a scatter plot fo the raw data.</p></li>
 <li><p>Use a likilhood ratio test to comapre the two models and interpret the results. Be sure to write out the associated null and alternative hypotheses. (Hint: use R’s built-in <code>anova()</code> function with the previous two models and specify <code>test = "Chisq"</code> like we’ve done in class.)</p></li>
 </ol>
-<p><strong>Question2</strong></p>
+<p><strong>Question 2</strong></p>
 <p>Source: <a href="https://www.chrisbilder.com/categorical/1stEdition/">Bilder and Loughin (2015)</a></p>
 <p>In order to maximize sales, items within grocery stores are strategically placed to draw customer attention. This exercise examines one type of item—breakfast cereal. Typically, in large grocery stores, boxes of cereal are placed on sets of shelves located on one side of the aisle. By placing particular boxes of cereals on specific shelves, grocery stores may better attract customers to them. To investigate this further, a random sample of size 10 was taken from each of four shelves at a Dillons grocery store in Manhattan, KS. These data are given in the <code>cereal.csv</code> file. The response variable is the shelf number, which is numbered from bottom (1) to top (4), and the explanatory variables are the sugar, fat, and sodium content of the cereals. Using these data, complete the following:</p>
 <ol type="a">
@@ -354,7 +436,13 @@ window.Quarto = {
 <li><p>Based on the background provided, along with your analysis, which shelf (i.e., 1, 2, 3, or 4) seems to be the most beneficial for targeting children and why?</p></li>
 </ol>
 <p><strong>Question 3</strong> The failure of an O-ring on the space shuttle Challenger’s booster rockets led to its destruction in 1986. Using data on previous space shuttle launches, Dalal et al.&nbsp;(1989) examine the probability of an O-ring failure as a function of temperature at launch and combustion pressure; in class, we looked at only temperature. Data from their paper is included in the <code>challenger.csv</code> file. Below are the variables:</p>
-<p>• <code>Flight</code>: Flight number • <code>Temp</code>: Temperature (F) at launch • <code>Pressure</code>: Combustion pressure (psi) • <code>O.ring</code>: Number of primary field O-ring failures • <code>Number</code>: Total number of primary field O-rings (six total, three each for the two booster rockets)</p>
+<ul>
+<li><code>Flight</code>: Flight number</li>
+<li><code>Temp</code>: Temperature (F) at launch</li>
+<li><code>Pressure</code>: Combustion pressure (psi)</li>
+<li><code>O.ring</code>: Number of primary field O-ring failures</li>
+<li><code>Number</code>: Total number of primary field O-rings (six total, three each for the two booster rockets)</li>
+</ul>
 <p>The response variable is <code>O.ring</code>, and the explanatory variables are <code>Temp</code> and <code>Pressure</code>. Complete the following:</p>
 <ol type="a">
 <li><p>The authors use logistic regression to estimate the probability an O-ring will fail. In order to use this model, the authors needed to assume that each O-ring is independent for each launch. <strong>Discuss why this assumption is necessary and the potential problems with it.</strong> Note that a subsequent analysis helped to alleviate the authors’ concerns about independence.</p></li>
@@ -372,6 +460,7 @@ window.Quarto = {
 <p>Read the help page for the data set using <code>?ISLR2::Bikeshare</code> in the R console or by visiting the package documentation at the above link. Build an appropriate model using <code>bikers</code> as the response against the following predictors: <code>workingday</code>, <code>temp</code>, <code>weathersit</code>, <code>mnth</code>, and <code>hr</code>. Create a 1-2 page report describing the data, variables, and model you’ve built (e.g., what kind of model did you choose and why). Be sure to include a well-formatted regression table with coefficients and standard errors. Any evidence of overdispersion or zero-inflation? If so, how did you deal with it. Provide an interpretation for each coefficient (for categorical variables, you only need to provide an interpretation for one of the categories). Discuss which variables seem the most important in predicting the response. Under what conditions does bike rentals seem to be highest? Do these results make sense? Include effect plots for what you consider to be the two most important predictors and describe any trends you see (be sure to explain how you selected these predictors in the first place). What recommendations can you make to the bike rental agency to improve the rental sales? <strong>DO NOT INCLUDE ANY R CODE OR DIRECT OUTPUT</strong>. Use well-formatted tables and graphics with captions. This is a report for a stakeholder, so simplicity, good grammar, and complete sentences are key. (Feel free to put R code and output in an appendix if you feel it’s necessary. <strong>Hint</strong>: It’s not.)</p>
 
 
+</section>
 
 
 <div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>

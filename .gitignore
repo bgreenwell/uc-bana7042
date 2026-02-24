@@ -33,7 +33,6 @@ env/
 .vscode/
 
 # Assignments
-assignments/final.*
-!assignments/final-exam.qmd
+# (Old final exam is now archived, new final.qmd is the actual exam)
 /.quarto/
 **/*.quarto_ipynb
